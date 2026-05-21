@@ -77,10 +77,11 @@ public sealed class PieceTable
 
     public void Load(string content)
     {
-        // NormaliseToCharArray: single-pass detect + normalise, zero extra alloc on LF files
+        // NormaliseToCharArray: single-pass detect + normalise, zero extra alloc on LF files.
+        // Pass char[] directly to CharBuffer so it takes ownership without copying.
         char[] norm  = _eol.NormaliseToCharArray(content.AsSpan());
-        _orig        = new CharBuffer(norm);
-        _add         = new CharBuffer(Math.Max(norm.Length / 8, 1 << 16));
+        _orig        = new CharBuffer(norm);   // owned — no copy
+        _add         = new CharBuffer(Math.Clamp(norm.Length / 8, 1 << 16, 1 << 22)); // 64 KB–4 MB
         _editCount   = 0;
         _linesDirty  = true;
         _flatDirty   = true;
@@ -594,7 +595,7 @@ public sealed class PieceTable
             GetBufferSpan(node).CopyTo(new Span<char>(buf, w, node.Length));
             w += node.Length;
         }
-        _orig           = new CharBuffer(buf.AsSpan(0, total));
+        _orig           = new CharBuffer(buf);   // owned — no copy
         _add            = new CharBuffer(1 << 16);
         _editCount      = 0;
         _linesDirty     = true;

@@ -22,10 +22,21 @@ internal sealed class CharBuffer
         _length = 0;
     }
 
-    /// <summary>Build a sealed original buffer directly from a char span (zero extra alloc).</summary>
+    /// <summary>
+    /// Takes ownership of an existing char[] without copying.
+    /// Use when the caller has just allocated the array (e.g. from NormaliseToCharArray)
+    /// and will not use it again — saves one O(n) copy on the Load hot path.
+    /// </summary>
+    internal CharBuffer(char[] ownedArray)
+    {
+        _data   = ownedArray;
+        _length = ownedArray.Length;
+    }
+
+    /// <summary>Build a sealed original buffer from a span — allocates one copy.</summary>
     internal CharBuffer(ReadOnlySpan<char> source)
     {
-        _data   = source.ToArray();   // one alloc, sealed from here
+        _data   = source.ToArray();
         _length = _data.Length;
     }
 

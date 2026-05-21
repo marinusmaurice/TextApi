@@ -704,71 +704,80 @@ public class MemoryTests
     private readonly ITestOutputHelper _out;
     public MemoryTests(ITestOutputHelper o) => _out = o;
 
+    // Creates the string AND the PieceTable inside its own stack frame so that
+    // when this method returns both the input string and any load temporaries
+    // become GC-eligible before the measurement is taken.
+    // (In Debug builds the JIT keeps locals alive for the entire enclosing method,
+    //  so inlining into the test body would keep the 200 MB string alive through
+    //  the measurement — giving a false ~400 MB reading.)
+    private static PieceTable LoadLargePieceTable()
+    {
+        var pt = new PieceTable();
+        pt.Load(new string('x', 100_000_000));
+        return pt;
+    }
+
     [Fact]
     public void Load_100MB_MemoryUnder250MB()
     {
         GC.Collect(); GC.WaitForPendingFinalizers(); GC.Collect();
         long before = GC.GetTotalMemory(true);
 
-        var pt = new PieceTable();
-        pt.Load(new string('x', 100_000_000));
+        // Both the 200 MB input string and its stack frame live only inside
+        // LoadLargePieceTable; once it returns the string is GC-eligible.
+        var pt = LoadLargePieceTable();
 
         GC.Collect(); GC.WaitForPendingFinalizers(); GC.Collect();
-        long after = GC.GetTotalMemory(false);
+        long after = GC.GetTotalMemory(true);   // force collect before reading
         long usedMB = (after - before) / 1024 / 1024;
 
         _out.WriteLine($"100MB load memory delta: {usedMB}MB");
-        // A 100MB file in UTF-16 = 200MB char data.
-        // Realistic breakdown:
-        //   • Input string (from test): 200MB
-        //   • EolRegistry.ToArray() on fast path: 200MB  (one copy for orig buffer)
-        //   • GC headroom and PieceTable metadata
-        // The input string is released after Load() returns so GC can collect it.
-        // After forced GC, we should hold ~200MB (just the orig buffer char[]).
-        // Allow 500MB to account for container GC timing and xUnit overhead.
-        usedMB.Should().BeLessThan(500, "piece table should not hold more than ~2× doc size after GC");
+        // Memory budget for a 100 MB file (100M chars = 200 MB in UTF-16):
+        //   • _orig._data (char[]):  200 MB  — the normalised original buffer (no extra copy)
+        //   • _add._data  (char[]):  ≤ 8 MB  — pre-allocated add buffer (capped at 4M chars)
+        //   • _lineStarts, tree, metadata: a few MB
+        // Total steady-state: ~210 MB.  Allow 250 MB for xUnit and GC headroom.
+        usedMB.Should().BeLessThan(250, "steady-state should be ~1× doc size (orig buffer) after input string is GC'd");
     }
 
     [Fact]
     public void FlatBuffer_ReleasedAfterEdit()
     {
-        // Use a WeakReference to verify the flat buffer char[] becomes GC-eligible after edit.
-        // This is the correct way to test "memory is releasable" — GetTotalMemory is non-deterministic.
+        // Verify the flat buffer is invalidated on edit and rebuilt correctly.
+        // We use a delta memory measurement so that concurrently-running tests do not
+        // affect the result (checking absolute GetTotalMemory() would be fragile in
+        // xUnit's parallel runner where other tests may hold large allocations).
         var pt = new PieceTable();
-        pt.Load(new string('x', 50_000));  // 50k char doc — large enough to be meaningful
+        pt.Load(new string('x', 50_000));  // 50k char doc
 
-        // Trigger flat buffer build (GetLine forces EnsureLineIndex + EnsureFlatBuffer)
+        // Trigger flat buffer build
         _ = pt.GetLine(0);
 
-        // Grab a WeakReference to the flat buffer — requires a helper method to avoid
-        // the local keeping the array alive on the stack. We verify via PieceCount diagnostic.
-        // The simplest verifiable property: after an edit, GetText() still returns correct content
-        // (the flat buffer was rebuilt correctly) and memory usage from the previous flat buffer
-        // is eligible for collection.
+        GC.Collect(2, GCCollectionMode.Forced, blocking: true);
+        GC.WaitForPendingFinalizers();
+        long before = GC.GetTotalMemory(true);
 
-        // Verify the flat buffer rebuilds correctly after edit (correctness aspect)
+        // Edit invalidates the old flat buffer, then GetText/GetLine force a rebuild.
         pt.Insert(25_000, "INSERTED");
         var text = pt.GetText();
         text.Length.Should().Be(50_008);
         text.Substring(25_000, 8).Should().Be("INSERTED");
 
-        // Verify subsequent GetLine still works (flat buffer was invalidated and rebuilt)
         var line = pt.GetLine(0);
         line.Should().NotBeNull();
         line.Length.Should().BeGreaterThan(0);
 
-        // Force a full GC cycle and verify the process hasn't OOM'd
-        // (the real concern: old flat buffer + new flat buffer shouldn't both be live)
         GC.Collect(2, GCCollectionMode.Forced, blocking: true);
         GC.WaitForPendingFinalizers();
+        long after = GC.GetTotalMemory(true);
+        long deltaMB = (after - before) / 1024 / 1024;
 
-        // Memory check with a generous but meaningful bound:
-        // A 50k-char doc = 100KB flat buffer. After edit + GC, we should not be
-        // holding multiples of that. Allow 10MB for xUnit/JIT overhead.
-        long mem = GC.GetTotalMemory(false);
-        _out.WriteLine($"Total managed memory after GC: {mem / 1024}KB");
-        mem.Should().BeLessThan(100 * 1024 * 1024,
-            "process should not accumulate excessive memory from flat buffer churn");
+        _out.WriteLine($"Flat buffer churn delta: {deltaMB}MB");
+        // The 50k-char doc = 100KB flat buffer rebuilt once = ~200KB delta.
+        // Allow 50MB for xUnit/JIT/parallel-test overhead; the real concern is accumulating
+        // O(N) copies of the flat buffer (that would be gigabytes on a large doc).
+        deltaMB.Should().BeLessThan(50,
+            "edit + rebuild should not accumulate many flat buffer copies");
     }
 
     [Fact]
