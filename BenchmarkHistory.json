@@ -1,1706 +1,5 @@
 [
   {
-    "RunId": "f6882d5a",
-    "Timestamp": "2026-05-20 11:58",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 15,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 38,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 91,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 6,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 55,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 11,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 39,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 57,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 54,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 81,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 634,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 30,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 107,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 56,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 20,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 101,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 35,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 106,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 30,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 63,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "4c7ea61b",
-    "Timestamp": "2026-05-20 12:00",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 10,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 37,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 83,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 3,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 58,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 11,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 56,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 27,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 53,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 61,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 682,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 29,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 103,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 45,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 81,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 75,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 107,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 74,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "a4449c01",
-    "Timestamp": "2026-05-20 14:25",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 13,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 86,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 72,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 52,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 51,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 15,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 31,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 40,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 44,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 682,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 46,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 117,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 82,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 69,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 51,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 110,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 90,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "e3aef29e",
-    "Timestamp": "2026-05-20 14:25",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 23,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 43,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 3,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 50,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 13,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 60,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 51,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 687,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 29,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 109,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 89,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 36,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 63,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 108,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 65,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "c7d1edd3",
-    "Timestamp": "2026-05-20 14:25",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 13,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 107,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 85,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 7,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 54,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 63,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 12,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 31,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 91,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 718,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 30,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 106,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 22,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 100,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 78,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 64,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 113,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 30,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 68,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "ae6f1e65",
-    "Timestamp": "2026-05-20 14:32",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 63,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 55,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 53,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 56,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 12,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 28,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 43,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 623,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 30,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 105,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 89,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 73,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 114,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 47,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 80,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "56afd7b6",
-    "Timestamp": "2026-05-20 14:32",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 79,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 74,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 7,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 59,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 11,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 34,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 34,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 52,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 45,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 675,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 29,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 103,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 103,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 66,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 0,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 47,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 122,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 34,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 91,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "ac6f9e9f",
-    "Timestamp": "2026-05-20 14:33",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 17,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 69,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 78,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 7,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 67,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 11,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 31,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 27,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 52,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 107,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 695,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 29,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 109,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 47,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 79,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 62,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 101,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 111,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "d7a44ced",
-    "Timestamp": "2026-05-20 14:33",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 17,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 80,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 111,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 6,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 44,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 11,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 58,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 34,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 52,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 134,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 780,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 30,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 105,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 88,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 74,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 52,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 112,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 35,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 72,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
     "RunId": "ded47735",
     "Timestamp": "2026-05-20 14:34",
     "Machine": "EON-ACER",
@@ -4434,6 +2733,5410 @@
         "Ms": 74,
         "Label": "10MB",
         "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "0c341e39",
+    "Timestamp": "2026-05-21 06:28",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 28,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 83,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 48,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 52,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 112,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 694,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 28,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 85,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 80,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 0,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 109,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 78,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "e7c10ad5",
+    "Timestamp": "2026-05-21 06:36",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 105,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 55,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 49,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 40,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 81,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 737,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 32,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 105,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 99,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 75,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 121,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 27,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "1b26fe9a",
+    "Timestamp": "2026-05-21 07:08",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 27,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 91,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 47,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 19,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 60,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 659,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 102,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 86,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 70,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 0,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "b2f37bd9",
+    "Timestamp": "2026-05-21 07:14",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 13,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 90,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 58,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 42,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 601,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 31,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 107,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 101,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 110,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 111,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 79,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "0f1b824a",
+    "Timestamp": "2026-05-21 07:20",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 89,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 95,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 50,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 45,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 15,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 30,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 65,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 50,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 42,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 628,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 86,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 72,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 0,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 108,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "93d092d7",
+    "Timestamp": "2026-05-21 07:21",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 73,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 89,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 44,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 30,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 41,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 122,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 656,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 99,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 63,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 125,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 70,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "38aea7a7",
+    "Timestamp": "2026-05-21 07:21",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 28,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 80,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 48,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 42,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 628,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 93,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 37,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 118,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "43a17c6b",
+    "Timestamp": "2026-05-21 07:21",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 20,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 112,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 50,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 53,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 30,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 40,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 604,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 30,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 96,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 68,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 112,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 74,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "30874bd0",
+    "Timestamp": "2026-05-21 11:32",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 102,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "b00be57a",
+    "Timestamp": "2026-05-21 11:33",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 35,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 84,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "596243d4",
+    "Timestamp": "2026-05-21 11:34",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 37,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "462133b5",
+    "Timestamp": "2026-05-21 11:34",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 65,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 15,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 44,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 71,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 55,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 771,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 134,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 30,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 134,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 79,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 63,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 110,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "cc20e37e",
+    "Timestamp": "2026-05-21 11:38",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 99,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 3,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 70,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 63,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 65,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 41,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 70,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 84,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 812,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 40,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 132,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 27,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 91,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 95,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 112,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 87,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 81,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "beceafba",
+    "Timestamp": "2026-05-21 11:38",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 67,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 64,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 77,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 826,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 113,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 84,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 85,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 107,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 73,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "9aa1bb92",
+    "Timestamp": "2026-05-21 11:38",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 20,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 110,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 29,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 138,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 782,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 109,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 79,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 105,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 76,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "ca0d1c27",
+    "Timestamp": "2026-05-21 11:39",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 118,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 63,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 83,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 110,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 776,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 53,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 30,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 112,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 44,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 87,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 73,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 114,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 74,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "c53d2483",
+    "Timestamp": "2026-05-21 11:39",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 92,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 127,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 16,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 20,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 64,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 41,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 40,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 94,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 749,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 64,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 30,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 108,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 44,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 78,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 71,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 0,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 76,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "40d4ed60",
+    "Timestamp": "2026-05-21 13:30",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 83,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 847,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 108,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 30,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 138,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 80,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 36,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 105,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 76,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "256a40e2",
+    "Timestamp": "2026-05-21 13:46",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 121,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 76,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 86,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 59,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 804,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 108,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 80,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 67,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 111,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 70,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "dac29bd6",
+    "Timestamp": "2026-05-21 14:54",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 20,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 98,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 93,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 62,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 632,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 122,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 40,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 121,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 87,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 59,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 111,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 94,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "dd2757b1",
+    "Timestamp": "2026-05-21 14:55",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 18,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 4,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 76,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 119,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 817,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 90,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 31,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 155,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 83,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 67,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 50,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 107,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 107,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "71419735",
+    "Timestamp": "2026-05-21 14:59",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 97,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 69,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 110,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 43,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 649,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 27,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 139,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 109,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 40,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 0,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 52,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 124,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 100,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "b1cbac67",
+    "Timestamp": "2026-05-21 15:00",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 56,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 75,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "4b2f964e",
+    "Timestamp": "2026-05-21 15:00",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 48,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 57,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "eff7e76c",
+    "Timestamp": "2026-05-22 05:02",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 97,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 100,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 87,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 13,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 78,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 751,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 45,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 151,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 94,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 53,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 112,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 74,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "c5e0e3ea",
+    "Timestamp": "2026-05-22 05:29",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 134,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 10,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 62,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 92,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 128,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 393,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 20,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 23,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 32,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 235,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 67,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 162,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 19,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 95,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 43,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 52,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "634d797a",
+    "Timestamp": "2026-05-22 05:29",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 135,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 10,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 76,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 372,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 135,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 28,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 26,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 66,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 296,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 43,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 117,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 4,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 124,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 45,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      }
+    ]
+  },
+  {
+    "RunId": "e904aaf9",
+    "Timestamp": "2026-05-22 05:29",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 97,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 310,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      }
+    ]
+  },
+  {
+    "RunId": "c6927e49",
+    "Timestamp": "2026-05-22 05:29",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 105,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 326,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      }
+    ]
+  },
+  {
+    "RunId": "e21f05b2",
+    "Timestamp": "2026-05-22 05:30",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 69,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 9,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 85,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 10,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 418,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 23,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 297,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 38,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 101,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 84,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 40,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      }
+    ]
+  },
+  {
+    "RunId": "fcc8413d",
+    "Timestamp": "2026-05-22 05:43",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 19,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 101,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 92,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 16,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 89,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 834,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 68,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 32,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 151,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 106,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 65,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 122,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 81,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "1d21c2b3",
+    "Timestamp": "2026-05-22 05:44",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 80,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 83,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 83,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 78,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 82,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 850,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 93,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 34,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 130,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 81,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 57,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 129,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 30,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "bf2f25cc",
+    "Timestamp": "2026-05-22 05:44",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 86,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 10,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 108,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 15,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 32,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 41,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 831,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 99,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 130,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 27,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 95,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 59,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 55,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 115,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 74,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "23456514",
+    "Timestamp": "2026-05-22 05:44",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 69,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 59,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 71,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 825,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 78,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 130,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 62,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 84,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 66,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 52,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 110,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 29,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 81,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      }
+    ]
+  },
+  {
+    "RunId": "3533aff0",
+    "Timestamp": "2026-05-22 06:06",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 94,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 119,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 372,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 71,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 289,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 49,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 103,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 94,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 76,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": "lines=1"
       }
     ]
   }

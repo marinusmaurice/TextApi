@@ -26,8 +26,12 @@ public sealed class TextDocument
 {
     private readonly PieceTable      _buffer;
     private readonly CommandHistory  _history;
+
+    /// <summary>Direct buffer access for multi-cursor command batching (same assembly only).</summary>
+    internal PieceTable InternalBuffer => _buffer;
     private readonly DecorationTree  _decorations;
     private          ISyntaxTokeniser _tokeniser;
+    private          LineHighlightCache _highlightCache;
 
     public TextDocument(
         ISyntaxTokeniser? tokeniser           = null,
@@ -39,6 +43,9 @@ public sealed class TextDocument
         _history     = new CommandHistory(undoHistoryLimit);
         _decorations = new DecorationTree();
         _tokeniser   = tokeniser ?? new NullTokeniser();
+
+        // _highlightCache is initialised after _buffer so LineCount is available.
+        _highlightCache = new LineHighlightCache(this, _tokeniser);
 
         // When auto-compaction fires, set a flag so we clear the history
         // AFTER the current command finishes executing (not mid-Execute).
@@ -71,6 +78,8 @@ public sealed class TextDocument
         _buffer.Load(content);
         _decorations.Clear();
         _history.Clear();
+        _highlightCache.InvalidateAll();
+        _foldingModel?.Invalidate();
         FilePath   = filePath;
         IsModified = false;
     }
@@ -82,6 +91,8 @@ public sealed class TextDocument
         await _buffer.LoadAsync(stream, encoding);
         _decorations.Clear();
         _history.Clear();
+        _highlightCache.InvalidateAll();
+        _foldingModel?.Invalidate();
         FilePath   = path;
         IsModified = false;
     }
@@ -98,6 +109,27 @@ public sealed class TextDocument
         set => _buffer.SaveEolStyle = value;
     }
 
+    // ── Encoding ──────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// The encoding detected (or defaulted) when the file was last loaded
+    /// via <see cref="LoadFileAsync"/>.
+    /// <see langword="null"/> when the document was loaded from a string.
+    /// </summary>
+    public Encoding.DetectedEncoding? DetectedEncoding => _buffer.DetectedEncoding;
+
+    /// <summary>
+    /// <see langword="true"/> when the file that was loaded had a byte-order mark.
+    /// </summary>
+    public bool HasBom => _buffer.DetectedEncoding?.HasBom ?? false;
+
+    /// <summary>
+    /// Override the encoding used the next time the document is saved.
+    /// <see langword="null"/> (the default) means use the detected encoding,
+    /// preserving the original file's encoding and BOM.
+    /// </summary>
+    public System.Text.Encoding? SaveEncoding { get; set; }
+
     // ── Edit operations (all via command pattern → undo/redo) ─────────────
 
     /// <summary>Insert text at a zero-based character offset.</summary>
@@ -106,6 +138,8 @@ public sealed class TextDocument
         var cmd = new InsertCommand(_buffer, offset, text);
         _history.Execute(cmd);
         _decorations.OnInsert(offset, text.Length);
+        _highlightCache.OnInsert(offset, text.Length);
+        _foldingModel?.OnInsert(offset, text.Count(c => c == '\n'));
         IsModified = true;
         PostEditHook();
     }
@@ -113,9 +147,14 @@ public sealed class TextDocument
     /// <summary>Delete characters in [offset, offset+length).</summary>
     public void Delete(int offset, int length)
     {
+        // Capture newline count BEFORE the delete executes (text is gone afterward).
+        int deletedNewlines = _foldingModel != null
+            ? _buffer.GetText(offset, length).Count(c => c == '\n') : 0;
         var cmd = new DeleteCommand(_buffer, offset, length);
         _history.Execute(cmd);
         _decorations.OnDelete(offset, length);
+        _highlightCache.OnDelete(offset, length);
+        _foldingModel?.OnDelete(offset, deletedNewlines);
         IsModified = true;
         PostEditHook();
     }
@@ -123,10 +162,17 @@ public sealed class TextDocument
     /// <summary>Replace characters in [offset, offset+deleteLength) with insertText.</summary>
     public void Replace(int offset, int deleteLength, string insertText)
     {
+        // Capture deleted newlines BEFORE the replace executes.
+        int deletedNewlines = _foldingModel != null
+            ? _buffer.GetText(offset, deleteLength).Count(c => c == '\n') : 0;
         var cmd = new ReplaceCommand(_buffer, offset, deleteLength, insertText);
         _history.Execute(cmd);
         _decorations.OnDelete(offset, deleteLength);
         _decorations.OnInsert(offset, insertText.Length);
+        _highlightCache.OnDelete(offset, deleteLength);
+        _highlightCache.OnInsert(offset, insertText.Length);
+        _foldingModel?.OnDelete(offset, deletedNewlines);
+        _foldingModel?.OnInsert(offset, insertText.Count(c => c == '\n'));
         IsModified = true;
         PostEditHook();
     }
@@ -136,6 +182,7 @@ public sealed class TextDocument
     {
         var composite = new CompositeCommand(description, commands);
         _history.Execute(composite);
+        _foldingModel?.Invalidate();
         IsModified = true;
         PostEditHook();
     }
@@ -149,6 +196,8 @@ public sealed class TextDocument
     {
         _history.Undo();
         _decorations.Clear();  // simplest safe approach; production = fine-grained decoration undo
+        _highlightCache.InvalidateAll();
+        _foldingModel?.Invalidate();
         IsModified = true;
     }
 
@@ -156,6 +205,8 @@ public sealed class TextDocument
     {
         _history.Redo();
         _decorations.Clear();
+        _highlightCache.InvalidateAll();
+        _foldingModel?.Invalidate();
         IsModified = true;
     }
 
@@ -184,27 +235,44 @@ public sealed class TextDocument
 
     // ── Syntax / Tokenisation ─────────────────────────────────────────────
 
-    /// <summary>Replace the tokeniser (e.g. switch from null to C# tokeniser after detecting language).</summary>
-    public void SetTokeniser(ISyntaxTokeniser tokeniser) => _tokeniser = tokeniser;
-
-    /// <summary>Tokenise a single line and return syntax tokens.</summary>
-    public IReadOnlyList<SyntaxToken> TokeniseLine(int lineIndex)
+    /// <summary>
+    /// Replace the tokeniser (e.g. switch from null to C# tokeniser after
+    /// detecting language).  Fully invalidates the highlight cache.
+    /// </summary>
+    public void SetTokeniser(ISyntaxTokeniser tokeniser)
     {
-        var line = GetLine(lineIndex);
-        var offset = _buffer.PositionToOffset(lineIndex, 0);
-        return _tokeniser.TokeniseLine(line, offset);
+        _tokeniser = tokeniser;
+        _highlightCache.SetTokeniser(tokeniser);
     }
 
     /// <summary>
-    /// Tokenise a range of lines and push results into the decoration tree
-    /// as SyntaxHighlight decorations. Previous syntax decorations are cleared first.
+    /// Get syntax tokens for a single line, using the incremental cache.
+    /// The line is re-tokenised only when its content or incoming state has
+    /// changed since the last call.  O(1) for cached lines.
+    /// </summary>
+    public IReadOnlyList<SyntaxToken> GetSyntaxTokens(int lineIndex)
+        => _highlightCache.GetTokens(lineIndex);
+
+    /// <summary>
+    /// Tokenise a single line and return syntax tokens.
+    /// Uses the incremental cache; equivalent to <see cref="GetSyntaxTokens"/>.
+    /// </summary>
+    public IReadOnlyList<SyntaxToken> TokeniseLine(int lineIndex)
+        => _highlightCache.GetTokens(lineIndex);
+
+    /// <summary>
+    /// Tokenise a range of lines, propagate state past <paramref name="endLine"/>
+    /// until it stabilises, then push results into the decoration tree as
+    /// SyntaxHighlight decorations.  Previous syntax decorations are cleared first.
     /// </summary>
     public void TokeniseLines(int startLine, int endLine)
     {
         _decorations.RemoveAllOfType(DecorationType.SyntaxHighlight);
+        // WarmUp propagates state beyond endLine for future incremental calls.
+        _highlightCache.WarmUp(startLine, endLine);
         for (int i = startLine; i <= Math.Min(endLine, LineCount - 1); i++)
         {
-            var tokens = TokeniseLine(i);
+            var tokens = _highlightCache.GetTokens(i);
             foreach (var t in tokens)
             {
                 _decorations.AddDecoration(new Decoration
@@ -217,6 +285,52 @@ public sealed class TextDocument
             }
         }
     }
+
+    /// <summary>
+    /// Force the highlight cache to re-tokenise from <paramref name="fromLine"/>
+    /// onwards on the next <see cref="GetSyntaxTokens"/> or
+    /// <see cref="TokeniseLines"/> call.
+    /// </summary>
+    public void InvalidateHighlightCache(int fromLine = 0)
+    {
+        if (fromLine <= 0)
+            _highlightCache.InvalidateAll();
+        else
+            _highlightCache.InvalidateFrom(fromLine);
+    }
+
+    // ── Bracket matching + auto-indent ────────────────────────────────────
+
+    /// <summary>
+    /// Given an offset that points at an opening or closing bracket
+    /// (<c>(</c> <c>)</c> <c>[</c> <c>]</c> <c>{</c> <c>}</c>), returns the
+    /// offset of its matching counterpart.
+    /// Brackets inside string and comment tokens are correctly ignored.
+    /// Returns <c>-1</c> when the character is not a bracket or no match
+    /// exists (unbalanced source).
+    /// </summary>
+    public int FindMatchingBracket(int offset)
+        => Language.BracketMatcher.FindMatch(this, offset);
+
+    /// <summary>
+    /// Returns the indentation string to place at the start of the new line
+    /// created when the user presses Enter at <paramref name="caretOffset"/>.
+    /// Adds one extra <paramref name="tabText"/> level when the current line's
+    /// meaningful content ends with <c>{</c>; otherwise copies the current
+    /// line's leading whitespace.
+    /// </summary>
+    public string GetAutoIndent(int caretOffset, string tabText = "    ")
+        => Language.AutoIndent.GetIndent(this, caretOffset, tabText);
+
+    /// <summary>
+    /// When a <c>}</c> is typed at <paramref name="caretOffset"/>, returns
+    /// the leading whitespace of the line that contains the matching <c>{</c>,
+    /// ready to replace the current line's indentation.
+    /// Returns <see langword="null"/> when the offset is not a <c>}</c> or
+    /// has no matching <c>{</c>.
+    /// </summary>
+    public string? GetClosingBraceIndent(int caretOffset, string tabText = "    ")
+        => Language.AutoIndent.GetClosingBraceIndent(this, caretOffset, tabText);
 
     // ── Decorations ───────────────────────────────────────────────────────
 
@@ -232,11 +346,29 @@ public sealed class TextDocument
     public IEnumerable<Decoration> GetDecorationsInRange(int start, int end) =>
         _decorations.GetDecorationsInRange(start, end);
 
+    // ── Code folding ─────────────────────────────────────────────────────
+
+    private Folding.FoldingModel? _foldingModel;
+
+    /// <summary>
+    /// Returns the <see cref="Folding.FoldingModel"/> for this document,
+    /// creating it on first access.
+    ///
+    /// Call <see cref="Folding.FoldingModel.UpdateRegions"/> with a strategy
+    /// (e.g. <see cref="Folding.BraceFoldingStrategy"/>) to detect foldable
+    /// regions.  After document edits, call <c>UpdateRegions</c> again to
+    /// refresh the region list; existing fold state is preserved for any
+    /// region whose start line is unchanged.
+    /// </summary>
+    public Folding.FoldingModel GetFoldingModel()
+        => _foldingModel ??= new Folding.FoldingModel(this);
+
     // ── Save ─────────────────────────────────────────────────────────────
 
     public async Task SaveAsync(Stream stream, System.Text.Encoding? encoding = null)
     {
-        await _buffer.SaveAsync(stream, encoding);
+        // Explicit parameter beats SaveEncoding property; both beat auto-detected encoding.
+        await _buffer.SaveAsync(stream, encoding ?? SaveEncoding);
         IsModified = false;
     }
 
@@ -344,6 +476,8 @@ public sealed class TextDocument
 
         // Decorations are invalidated — simplest safe approach
         _decorations.Clear();
+        _highlightCache.InvalidateAll();
+        _foldingModel?.Invalidate();
         _searcher = null;  // invalidate cached searcher (buffer changed)
         IsModified = true;
 

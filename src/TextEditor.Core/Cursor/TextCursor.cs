@@ -219,26 +219,8 @@ public sealed class TextCursor
     /// </summary>
     public void SelectWordAtCaret()
     {
-        if (_doc.Length == 0) return;
-        int pos = Math.Min(_activeOffset, _doc.Length - 1);
-        char ch = GetChar(pos);
-
-        if (IsWordChar(ch))
-        {
-            int start = pos;
-            while (start > 0 && IsWordChar(GetChar(start - 1))) start--;
-            int end = pos + 1;
-            while (end < _doc.Length && IsWordChar(GetChar(end))) end++;
-            SetSelection(start, end);
-        }
-        else
-        {
-            int start = pos;
-            while (start > 0 && !IsWordChar(GetChar(start - 1)) && GetChar(start - 1) != '\n') start--;
-            int end = pos + 1;
-            while (end < _doc.Length && !IsWordChar(GetChar(end)) && GetChar(end) != '\n') end++;
-            SetSelection(start, end);
-        }
+        var span = WordBoundary.GetWordAt(_doc, _activeOffset);
+        if (!span.IsEmpty) SetSelection(span.Start, span.End);
     }
 
     // ── Vertical movement ─────────────────────────────────────────────────
@@ -371,52 +353,26 @@ public sealed class TextCursor
         _preferredColumn = -1;
     }
 
-    // ── Word boundary helpers (public — usable by callers building word-aware UIs) ──
+    // ── Word boundary helpers (delegates to WordBoundary — single source of truth) ──
 
     /// <summary>Returns true if <paramref name="c"/> is a word character (letter, digit, or underscore).</summary>
-    public static bool IsWordChar(char c) => char.IsLetterOrDigit(c) || c == '_';
+    public static bool IsWordChar(char c) => WordBoundary.IsWordChar(c);
 
     /// <summary>
     /// Returns the offset of the start of the word or non-word group immediately to the
     /// left of <paramref name="offset"/>.
-    /// Algorithm: step left one char, skip non-word chars, then skip word chars.
     /// </summary>
-    public int WordLeft(int offset)
-    {
-        if (offset <= 0) return 0;
-        offset--;
-        while (offset > 0 && !IsWordChar(GetChar(offset))) offset--;       // skip non-word
-        while (offset > 0 && IsWordChar(GetChar(offset - 1))) offset--;    // skip word
-        return offset;
-    }
+    public int WordLeft(int offset) => WordBoundary.GetWordBoundaryLeft(_doc, offset);
 
     /// <summary>
-    /// Returns the offset after the word or non-word group immediately to the
-    /// right of <paramref name="offset"/>.
-    /// Algorithm:
-    ///   • If on a word char: skip all word chars, then skip all non-word chars.
-    ///   • If on a non-word char: skip all non-word chars to reach the next word.
+    /// Returns the offset after the word or non-word group immediately to the right of
+    /// <paramref name="offset"/>.
     /// </summary>
-    public int WordRight(int offset)
-    {
-        int len = _doc.Length;
-        if (offset >= len) return len;
-        if (IsWordChar(GetChar(offset)))
-        {
-            while (offset < len && IsWordChar(GetChar(offset)))  offset++;   // skip word
-            while (offset < len && !IsWordChar(GetChar(offset))) offset++;   // skip trailing non-word
-        }
-        else
-        {
-            while (offset < len && !IsWordChar(GetChar(offset))) offset++;   // skip to next word start
-        }
-        return offset;
-    }
+    public int WordRight(int offset) => WordBoundary.GetWordBoundaryRight(_doc, offset);
 
     // ── Private ───────────────────────────────────────────────────────────
 
-    private int  Clamp(int offset)   => Math.Clamp(offset, 0, _doc.Length);
-    private char GetChar(int offset) => _doc.GetText(offset, 1)[0];
+    private int Clamp(int offset) => Math.Clamp(offset, 0, _doc.Length);
 
     /// <summary>
     /// Returns the preferred column for vertical movement, computing and caching it from

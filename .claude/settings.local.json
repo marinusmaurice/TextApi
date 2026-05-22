@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(wc:*)",
-      "Bash(dotnet test:*)"
+      "Bash(dotnet test:*)",
+      "Bash(dotnet build:*)",
+      "Bash(xargs grep:*)",
+      "Bash(find . -name TODO* -o -name PLAN*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet remove:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet run:*)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet restore:*)"
     ]
   }
 }

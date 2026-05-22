@@ -16,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TextEditor.Core\TextEditor.Core.csproj" />
+    <ProjectReference Include="..\TextEditor.Repl\TextEditor.Repl.csproj" />
   </ItemGroup>
 </Project>

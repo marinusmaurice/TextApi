@@ -103,10 +103,28 @@ public sealed class PieceTable
         }
     }
 
+    // ── Encoding ──────────────────────────────────────────────────────────
+
+    private TextEditor.Core.Encoding.DetectedEncoding? _detectedEncoding;
+
+    /// <summary>
+    /// The encoding detected when the stream was last loaded, or
+    /// <see langword="null"/> when the document was loaded from a string.
+    /// </summary>
+    public TextEditor.Core.Encoding.DetectedEncoding? DetectedEncoding => _detectedEncoding;
+
     public async Task LoadAsync(Stream stream, System.Text.Encoding? encoding = null)
     {
-        encoding ??= System.Text.Encoding.UTF8;
-        using var reader = new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks: true, bufferSize: 65536);
+        // Always run detection to capture BOM presence and metadata.
+        // Detect() positions the stream past any BOM on return.
+        _detectedEncoding = TextEditor.Core.Encoding.EncodingDetector.Detect(stream);
+
+        // If the caller overrode the encoding, use that for actual decoding
+        // (but keep _detectedEncoding for BOM round-trip on save).
+        var readEncoding = encoding ?? _detectedEncoding.Encoding;
+
+        using var reader = new StreamReader(stream, readEncoding,
+            detectEncodingFromByteOrderMarks: false, bufferSize: 65536, leaveOpen: true);
         Load(await reader.ReadToEndAsync());
     }
 
@@ -561,9 +579,15 @@ public sealed class PieceTable
     public async Task SaveAsync(Stream stream, System.Text.Encoding? encoding = null,
                                 System.Threading.CancellationToken ct = default)
     {
-        encoding ??= System.Text.Encoding.UTF8;
+        // Determine the encoding to use.
+        var enc = encoding ?? _detectedEncoding?.Encoding ?? System.Text.Encoding.UTF8;
+
+        // Reproduce the original BOM when no explicit encoding override is given.
+        if (encoding == null && _detectedEncoding is { HasBom: true })
+            TextEditor.Core.Encoding.BomWriter.WriteBom(stream, _detectedEncoding);
+
         // Stream pieces as ReadOnlyMemory<char> — no giant intermediate string
-        await _eol.WriteToStreamAsync(PieceMemories(), stream, encoding, ct);
+        await _eol.WriteToStreamAsync(PieceMemories(), stream, enc, ct);
     }
 
     private IEnumerable<ReadOnlyMemory<char>> PieceMemories()

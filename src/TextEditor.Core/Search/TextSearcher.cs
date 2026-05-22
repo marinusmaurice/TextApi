@@ -357,14 +357,14 @@ public sealed class TextSearcher
         {
             Span<char> c = stackalloc char[1];
             _table.GetTextInto(offset - 1, 1, c);
-            if (char.IsLetterOrDigit(c[0]) || c[0] == '_') return false;
+            if (Cursor.WordBoundary.IsWordChar(c[0])) return false;
         }
         int end = offset + length;
         if (end < _table.Length)
         {
             Span<char> c = stackalloc char[1];
             _table.GetTextInto(end, 1, c);
-            if (char.IsLetterOrDigit(c[0]) || c[0] == '_') return false;
+            if (Cursor.WordBoundary.IsWordChar(c[0])) return false;
         }
         return true;
     }

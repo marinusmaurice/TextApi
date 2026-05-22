@@ -8,17 +8,17 @@ namespace TextEditor.Tests;
 public sealed class BenchmarkResult
 {
     public string Suite { get; set; } = "";
-    public string Name  { get; set; } = "";
-    public long   Ms    { get; set; }
+    public string Name { get; set; } = "";
+    public long Ms { get; set; }
     public string Label { get; set; } = "";
     public string Extra { get; set; } = "";
 }
 
 public sealed class BenchmarkRun
 {
-    public string              RunId     { get; set; } = "";
-    public string              Timestamp { get; set; } = "";
-    public string              Machine   { get; set; } = "";
+    public string RunId { get; set; } = "";
+    public string Timestamp { get; set; } = "";
+    public string Machine { get; set; } = "";
     public List<BenchmarkResult> Results { get; set; } = [];
 }
 
@@ -39,7 +39,7 @@ public static class BenchmarkHistory
 
     // Shared run ID for the entire process lifetime — all tests in one dotnet test run
     // share the same run ID so they group together in the history table.
-    public static readonly string CurrentRunId =
+    internal static readonly string CurrentRunId =
         Guid.NewGuid().ToString("N")[..8];
     private static readonly string CurrentTimestamp =
         DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm");
@@ -60,10 +60,10 @@ public static class BenchmarkHistory
                 {
                     run = new BenchmarkRun
                     {
-                        RunId     = CurrentRunId,
+                        RunId = CurrentRunId,
                         Timestamp = CurrentTimestamp,
-                        Machine   = Environment.MachineName,
-                        Results   = []
+                        Machine = Environment.MachineName,
+                        Results = []
                     };
                     history.Add(run);
                 }
@@ -95,13 +95,14 @@ public static class BenchmarkHistory
     /// <summary>
     /// Print a comparison table of the last N runs to the test output.
     /// Δ% is vs the immediately previous run.
+    /// Green = faster (negative Δ), Red = slower (positive Δ).
     /// </summary>
     public static void PrintComparison(ITestOutputHelper out_, int lastNRuns = 5)
     {
         var history = Load();
         if (history.Count == 0) return;
 
-        var runs  = history.TakeLast(lastNRuns).ToList();
+        var runs = history.TakeLast(lastNRuns).ToList();
         var names = runs.SelectMany(r => r.Results.Select(b => $"{b.Suite}|{b.Name}|{b.Label}"))
                         .Distinct().ToList();
 
@@ -124,9 +125,9 @@ public static class BenchmarkHistory
         {
             var parts = key.Split('|');
             // parts[0]=Suite, parts[1]=Name, parts[2]=Label
-            string nameLabel   = parts[1] + (parts[2].Length > 0 ? $" [{parts[2]}]" : "");
+            string nameLabel = parts[1] + (parts[2].Length > 0 ? $" [{parts[2]}]" : "");
             string suitePrefix = parts[0].Length > 0 ? $"{parts[0]}: " : "";
-            string display     = (suitePrefix + nameLabel).Length > 35
+            string display = (suitePrefix + nameLabel).Length > 35
                 ? (suitePrefix + nameLabel)[..35]
                 : suitePrefix + nameLabel;
 
@@ -140,7 +141,7 @@ public static class BenchmarkHistory
                 string cell;
                 if (prev != null && prev.Ms > 0)
                 {
-                    double pct  = (b.Ms - prev.Ms) * 100.0 / prev.Ms;
+                    double pct = (b.Ms - prev.Ms) * 100.0 / prev.Ms;
                     string sign = pct > 0 ? "+" : "";
                     cell = $"{b.Ms}ms{sign}{pct:0}%".PadLeft(10);
                 }
@@ -165,22 +166,22 @@ public static class BenchmarkHistory
 /// </summary>
 public sealed class BenchmarkSession
 {
-    private readonly string            _suite;
+    private readonly string _suite;
     private readonly ITestOutputHelper _out;
 
     public BenchmarkSession(string suite, ITestOutputHelper out_)
     {
         _suite = suite;
-        _out   = out_;
+        _out = out_;
     }
 
     public long Record(string name, string label, Action action, string extra = "")
     {
-        var sw = Stopwatch.StartNew();
+        var sw = System.Diagnostics.Stopwatch.StartNew();
         action();
         long ms = sw.ElapsedMilliseconds;
         _out.WriteLine($"{name} [{label}]: {ms}ms  {extra}");
-        Debug.WriteLine("Record");
+        Debug.WriteLine("REcord");
         BenchmarkHistory.Record(_suite, name, ms, label, extra);
         return ms;
     }
