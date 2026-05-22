@@ -1,3 +1,5 @@
+using TextEditor.Core.Language;
+
 namespace TextEditor.Core.Cursor;
 
 /// <summary>
@@ -110,24 +112,30 @@ public sealed class TextCursor
     // ── Horizontal movement ───────────────────────────────────────────────
 
     /// <summary>
-    /// Move left by <paramref name="count"/> characters, collapsing any selection.
+    /// Move left by <paramref name="count"/> grapheme clusters, collapsing any selection.
     /// When count == 1 and a selection is active, collapses to SelectionStart without moving further
     /// (VS Code behaviour for the Left arrow key).
     /// </summary>
     public void MoveLeft(int count = 1)
     {
         if (HasSelection && count == 1) { CollapseToStart(); return; }
-        MoveTo(Math.Max(0, _activeOffset - count));
+        int offset = _activeOffset;
+        for (int i = 0; i < count && offset > 0; i++)
+            offset = GetPreviousClusterOffset(offset);
+        MoveTo(offset);
     }
 
     /// <summary>
-    /// Move right by <paramref name="count"/> characters, collapsing any selection.
+    /// Move right by <paramref name="count"/> grapheme clusters, collapsing any selection.
     /// When count == 1 and a selection is active, collapses to SelectionEnd without moving further.
     /// </summary>
     public void MoveRight(int count = 1)
     {
         if (HasSelection && count == 1) { CollapseToEnd(); return; }
-        MoveTo(Math.Min(_doc.Length, _activeOffset + count));
+        int offset = _activeOffset;
+        for (int i = 0; i < count && offset < _doc.Length; i++)
+            offset = GetNextClusterOffset(offset);
+        MoveTo(offset);
     }
 
     /// <summary>Move to column 0 of the current line.</summary>
@@ -158,11 +166,23 @@ public sealed class TextCursor
 
     // ── Horizontal selection ──────────────────────────────────────────────
 
-    /// <summary>Extend selection left by <paramref name="count"/> characters.</summary>
-    public void SelectLeft(int count = 1)  => SelectTo(Math.Max(0, _activeOffset - count));
+    /// <summary>Extend selection left by <paramref name="count"/> grapheme clusters.</summary>
+    public void SelectLeft(int count = 1)
+    {
+        int offset = _activeOffset;
+        for (int i = 0; i < count && offset > 0; i++)
+            offset = GetPreviousClusterOffset(offset);
+        SelectTo(offset);
+    }
 
-    /// <summary>Extend selection right by <paramref name="count"/> characters.</summary>
-    public void SelectRight(int count = 1) => SelectTo(Math.Min(_doc.Length, _activeOffset + count));
+    /// <summary>Extend selection right by <paramref name="count"/> grapheme clusters.</summary>
+    public void SelectRight(int count = 1)
+    {
+        int offset = _activeOffset;
+        for (int i = 0; i < count && offset < _doc.Length; i++)
+            offset = GetNextClusterOffset(offset);
+        SelectTo(offset);
+    }
 
     /// <summary>Extend selection to column 0 of the current line.</summary>
     public void SelectToLineStart()
@@ -301,13 +321,15 @@ public sealed class TextCursor
     }
 
     /// <summary>
-    /// Delete <paramref name="count"/> characters to the LEFT (Backspace key).
+    /// Delete <paramref name="count"/> grapheme clusters to the LEFT (Backspace key).
     /// Deletes the selection instead when one is active.
     /// </summary>
     public void DeleteLeft(int count = 1)
     {
         if (HasSelection) { DeleteSelection(); return; }
-        int target = Math.Max(0, _activeOffset - count);
+        int target = _activeOffset;
+        for (int i = 0; i < count && target > 0; i++)
+            target = GetPreviousClusterOffset(target);
         int delLen = _activeOffset - target;
         if (delLen == 0) return;
         _doc.Delete(target, delLen);
@@ -316,13 +338,16 @@ public sealed class TextCursor
     }
 
     /// <summary>
-    /// Delete <paramref name="count"/> characters to the RIGHT (Delete key).
+    /// Delete <paramref name="count"/> grapheme clusters to the RIGHT (Delete key).
     /// Deletes the selection instead when one is active.
     /// </summary>
     public void DeleteRight(int count = 1)
     {
         if (HasSelection) { DeleteSelection(); return; }
-        int delLen = Math.Min(count, _doc.Length - _activeOffset);
+        int target = _activeOffset;
+        for (int i = 0; i < count && target < _doc.Length; i++)
+            target = GetNextClusterOffset(target);
+        int delLen = target - _activeOffset;
         if (delLen == 0) return;
         _doc.Delete(_activeOffset, delLen);
         _anchorOffset    = _activeOffset = Clamp(_activeOffset);
@@ -383,5 +408,44 @@ public sealed class TextCursor
         if (_preferredColumn < 0)
             _preferredColumn = _doc.OffsetToPosition(_activeOffset).Column;
         return _preferredColumn;
+    }
+
+    // ── Grapheme-cluster navigation helpers ───────────────────────────────
+
+    /// <summary>
+    /// Returns the code-unit offset of the start of the next grapheme cluster
+    /// after <paramref name="offset"/>, crossing a newline as a single step when
+    /// the cursor is at the end of a line.
+    /// </summary>
+    private int GetNextClusterOffset(int offset)
+    {
+        var (line, col) = _doc.OffsetToPosition(offset);
+        string lineText = _doc.GetLine(line);
+        if (col < lineText.Length)
+        {
+            // Within the line: advance by one grapheme cluster.
+            int nextCol = GraphemeHelper.NextCluster(lineText.AsSpan(), col);
+            return _doc.PositionToOffset(line, nextCol);
+        }
+        // At end of line → step over the newline character (or stay at doc end).
+        return Math.Min(_doc.Length, offset + 1);
+    }
+
+    /// <summary>
+    /// Returns the code-unit offset of the start of the grapheme cluster immediately
+    /// before <paramref name="offset"/>, crossing a newline as a single step when
+    /// the cursor is at the start of a line.
+    /// </summary>
+    private int GetPreviousClusterOffset(int offset)
+    {
+        var (line, col) = _doc.OffsetToPosition(offset);
+        if (col > 0)
+        {
+            string lineText = _doc.GetLine(line);
+            int prevCol = GraphemeHelper.PreviousCluster(lineText.AsSpan(), col);
+            return _doc.PositionToOffset(line, prevCol);
+        }
+        // At start of line → step over the preceding newline (or stay at 0).
+        return Math.Max(0, offset - 1);
     }
 }

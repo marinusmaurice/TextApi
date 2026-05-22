@@ -103,6 +103,55 @@ public sealed class TextDocument
     public int LineCount => _buffer.LineCount;
     public EolStyle OriginalEolStyle => _buffer.OriginalEolStyle;
 
+    /// <summary>
+    /// Returns grapheme-aware statistics for the current document content.
+    ///
+    /// <list type="bullet">
+    ///   <item><see cref="DocumentStats.GraphemeCount"/> — user-perceived character count
+    ///   (Unicode grapheme clusters; an emoji like 👨‍👩‍👧‍👦 counts as 1).</item>
+    ///   <item><see cref="DocumentStats.CodeUnitCount"/> — <c>doc.Length</c> (UTF-16 code units).</item>
+    ///   <item><see cref="DocumentStats.RuneCount"/> — Unicode code points.</item>
+    ///   <item><see cref="DocumentStats.WordCount"/> — whitespace-delimited words.</item>
+    ///   <item><see cref="DocumentStats.LineCount"/> — line count.</item>
+    ///   <item><see cref="DocumentStats.DisplayColumns"/> — East Asian Width–aware total columns.</item>
+    /// </list>
+    /// </summary>
+    public DocumentStats GetStats()
+    {
+        string text = _buffer.GetText();
+        var span    = text.AsSpan();
+
+        int graphemes = Language.GraphemeHelper.ClusterCount(span);
+        int codeUnits = text.Length;
+
+        int runes = 0;
+        foreach (var _ in text.EnumerateRunes()) runes++;
+
+        int words   = CountWords(span);
+        int lines   = _buffer.LineCount;
+        int dispCols = Language.GraphemeHelper.TotalDisplayWidth(span);
+
+        return new DocumentStats(graphemes, codeUnits, runes, words, lines, dispCols);
+    }
+
+    private static int CountWords(ReadOnlySpan<char> text)
+    {
+        bool inWord = false;
+        int  count  = 0;
+        foreach (char c in text)
+        {
+            if (!char.IsWhiteSpace(c))
+            {
+                if (!inWord) { count++; inWord = true; }
+            }
+            else
+            {
+                inWord = false;
+            }
+        }
+        return count;
+    }
+
     public EolStyle SaveEolStyle
     {
         get => _buffer.SaveEolStyle;

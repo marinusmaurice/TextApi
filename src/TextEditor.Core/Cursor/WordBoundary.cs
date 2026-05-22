@@ -1,3 +1,5 @@
+using TextEditor.Core.Language;
+
 namespace TextEditor.Core.Cursor;
 
 /// <summary>
@@ -31,7 +33,29 @@ public static class WordBoundary
     /// <summary>Returns true if <paramref name="c"/> is a word character (letter, digit, or underscore).</summary>
     public static bool IsWordChar(char c) => char.IsLetterOrDigit(c) || c == '_';
 
+    /// <summary>
+    /// Returns true if the grapheme cluster starting at <paramref name="offset"/> in
+    /// <paramref name="text"/> is a word character.
+    /// Correctly handles supplementary-plane code points (emoji, CJK Extension B, etc.)
+    /// via <see cref="System.Text.Rune"/>.
+    /// </summary>
+    internal static bool IsWordCluster(ReadOnlySpan<char> text, int offset)
+    {
+        if ((uint)offset >= (uint)text.Length) return false;
+        char c = text[offset];
+        if ((uint)c < 0x80) return IsWordChar(c); // ASCII fast path
+
+        // Decode the first code point of the cluster (handles surrogate pairs)
+        if (System.Text.Rune.DecodeFromUtf16(text[offset..], out var rune, out _)
+            == System.Buffers.OperationStatus.Done)
+            return System.Text.Rune.IsLetterOrDigit(rune) || rune.Value == '_';
+
+        return false;
+    }
+
     // ── Span-based core (internal — used by TextCursor and GetWordAt) ─────
+    // All scan methods step by grapheme clusters so that surrogate pairs, emoji,
+    // and combining-mark sequences are treated as atomic units.
 
     /// <summary>
     /// Returns the start offset of the word or non-word group immediately to the left
@@ -40,9 +64,22 @@ public static class WordBoundary
     internal static int ScanLeft(ReadOnlySpan<char> text, int offset)
     {
         if (offset <= 0) return 0;
-        offset--;
-        while (offset > 0 && !IsWordChar(text[offset])) offset--;       // skip non-word
-        while (offset > 0 && IsWordChar(text[offset - 1])) offset--;    // skip word
+
+        // Step back one cluster to land on the character just before offset.
+        offset = GraphemeHelper.PreviousCluster(text, offset);
+
+        // Skip non-word clusters to the left.
+        while (offset > 0 && !IsWordCluster(text, offset))
+            offset = GraphemeHelper.PreviousCluster(text, offset);
+
+        // Skip word clusters to the left (find the start of the word run).
+        while (offset > 0)
+        {
+            int prev = GraphemeHelper.PreviousCluster(text, offset);
+            if (!IsWordCluster(text, prev)) break;
+            offset = prev;
+        }
+
         return offset;
     }
 
@@ -54,14 +91,18 @@ public static class WordBoundary
     {
         int len = text.Length;
         if (offset >= len) return len;
-        if (IsWordChar(text[offset]))
+
+        if (IsWordCluster(text, offset))
         {
-            while (offset < len && IsWordChar(text[offset]))  offset++;   // skip word
-            while (offset < len && !IsWordChar(text[offset])) offset++;   // skip trailing non-word
+            while (offset < len && IsWordCluster(text, offset))
+                offset = GraphemeHelper.NextCluster(text, offset);  // skip word clusters
+            while (offset < len && !IsWordCluster(text, offset))
+                offset = GraphemeHelper.NextCluster(text, offset);  // skip trailing non-word
         }
         else
         {
-            while (offset < len && !IsWordChar(text[offset])) offset++;   // skip to next word start
+            while (offset < len && !IsWordCluster(text, offset))
+                offset = GraphemeHelper.NextCluster(text, offset);  // skip to next word start
         }
         return offset;
     }
@@ -73,21 +114,36 @@ public static class WordBoundary
     internal static (int Start, int End) ExpandAt(ReadOnlySpan<char> text, int pos)
     {
         if (text.IsEmpty) return (0, 0);
-        pos = Math.Clamp(pos, 0, text.Length - 1);
-        if (IsWordChar(text[pos]))
+
+        // Snap pos to the nearest cluster start to avoid landing mid-surrogate.
+        pos = GraphemeHelper.SnapToClusterStart(text, Math.Clamp(pos, 0, text.Length - 1));
+
+        if (IsWordCluster(text, pos))
         {
             int s = pos;
-            while (s > 0 && IsWordChar(text[s - 1])) s--;
-            int e = pos + 1;
-            while (e < text.Length && IsWordChar(text[e])) e++;
+            while (s > 0)
+            {
+                int prev = GraphemeHelper.PreviousCluster(text, s);
+                if (!IsWordCluster(text, prev)) break;
+                s = prev;
+            }
+            int e = GraphemeHelper.NextCluster(text, pos);
+            while (e < text.Length && IsWordCluster(text, e))
+                e = GraphemeHelper.NextCluster(text, e);
             return (s, e);
         }
         else
         {
             int s = pos;
-            while (s > 0 && !IsWordChar(text[s - 1]) && text[s - 1] != '\n') s--;
-            int e = pos + 1;
-            while (e < text.Length && !IsWordChar(text[e]) && text[e] != '\n') e++;
+            while (s > 0)
+            {
+                int prev = GraphemeHelper.PreviousCluster(text, s);
+                if (IsWordCluster(text, prev) || text[prev] == '\n') break;
+                s = prev;
+            }
+            int e = GraphemeHelper.NextCluster(text, pos);
+            while (e < text.Length && !IsWordCluster(text, e) && text[e] != '\n')
+                e = GraphemeHelper.NextCluster(text, e);
             return (s, e);
         }
     }

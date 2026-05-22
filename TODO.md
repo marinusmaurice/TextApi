@@ -1,40 +1,267 @@
 Outstanding features — priority order
-1
-Cursor + selection model
-Caret position, selection anchor/active, MoveWordLeft/Right, SelectAll, SelectLine. Everything else builds on this.
-2
-Word boundary operations
-GetWordAt(offset), GetWordBoundaryLeft/Right. Needed by cursor model, search (whole-word), scripting shell.
-3
-Multi-cursor + multi-selection
-Multiple independent cursors, all edits as one undo unit. VS Code's signature feature. Hard to retrofit.
-4
-Scripting shell / macro runner
-Parse + execute text commands (INSERT, DELETE_LINE, REPLACE ALL, GOTO). All primitives exist — just needs a runner.
-5
-Incremental syntax highlighting
-StateTable per line — only re-tokenise changed lines. Current tokeniser re-scans from scratch every call.
-6
-Diff engine
-Myers or patience diff between two document versions. Needed for git integration and scripting shell "what changed".
-7
-Bracket matching + auto-indent
-FindMatchingBracket(offset), smart indent on newline. Depends on syntax layer being solid.
-8
-Code folding model
-FoldRegion(startLine, endLine, label). Separate from text model, driven by syntax layer.
-9
-Encoding detection + BOM handling
-Currently assumes UTF-8. Real files come as UTF-16 LE/BE, Latin-1, Windows-1252. Load path needs a CharsetDetector.
-10
-LSP client
-Separate process, async JSON-RPC. Autocomplete, hover, go-to-definition, diagnostics. Significant scope — save for last.
-11
-Large-file streaming load
-Paged/lazy load for files >500MB. Specialist use case — current full-load strategy is fine for <200MB.
-Container timings ÷3 for dev machine estimate. VS Code figures derived from Peng Lyu 2018 blog — no raw ms published, chart-proportion estimates only. GetLine comparison is the clearest win: flat buffer O(n) single-pass vs VS Code's acknowledged per-call weakness after many edits.
 
-Where you genuinely beat VS Code now (not just match it):
-GetLine after many edits is the standout — 25ms vs their ~300ms. The flat buffer approach (materialise once, slice by index) beats their per-call piece-tree lookup which was their own acknowledged weakness. ReplaceAll is another clear win — 73ms O(n) single-pass rewrite vs their O(n log n) sequential approach.
-The three red items (1–3) are the critical path. Cursor/selection model → word boundaries → multi-cursor. These three together are what turns a buffer engine into something a front-end can actually drive. Without a cursor model you can't build a real editor on top of this — you'd have to implement cursor tracking externally, which defeats the purpose. Once those three are in, items 4–6 (scripting shell, incremental highlighting, diff) follow naturally because they all consume the cursor/selection API.
-Items 7–11 are genuinely optional for your stated goal of a programmable text manipulation API. A scripting shell doesn't need bracket matching or LSP — those are UI features for a human typing in a text box. If the target is "Notepad++ macros but faster and on 100MB files", you could ship after items 1–4.
+Items 1–9 are COMPLETE.
+
+────────────────────────────────────────────────────────────────────────
+COMPLETED
+────────────────────────────────────────────────────────────────────────
+
+1  ✅  Cursor + selection model
+       TextCursor with anchor/active, MoveWordLeft/Right, SelectAll, SelectLine.
+
+2  ✅  Word boundary operations
+       WordBoundary static class, GetWordAt/Left/Right, WordSpan record struct.
+
+3  ✅  Multi-cursor + multi-selection
+       MultiCursor managing N TextCursors, all edits as one undo unit.
+
+4  ✅  Scripting shell / macro runner
+       ScriptRunner/ScriptParser/ScriptCommand. Commands: MOVE GOTO INSERT
+       INSERT_AT DELETE DELETE_AT DELETE_LINE SELECT REPLACE_ALL FIND
+       FIND_PREV FIND_ALL UNDO REDO NOP.
+
+5  ✅  Incremental syntax highlighting
+       LineHighlightCache with per-line state tracking.
+       CSharpTokeniser implements IStatefulSyntaxTokeniser.
+       SyntaxDemo CLI app.
+
+6  ✅  Diff engine
+       Myers O(ND) algorithm; line-level DiffResult with ToUnifiedDiff;
+       DiffChars for inline highlighting. DiffDemo CLI app.
+
+7  ✅  Bracket matching + auto-indent
+       BracketMatcher (forward/backward scan skipping string/comment tokens);
+       AutoIndent (copy-indent + +1 level after {, closing-brace de-indent).
+       BracketDemo CLI app.
+
+8  ✅  Code folding model
+       FoldRegion/FoldingModel/IFoldingStrategy/BraceFoldingStrategy.
+       Display-line ↔ doc-line mapping with nested-fold overlap fix.
+       Auto-update via OnInsert/OnDelete; IsStale/Invalidate for destructive
+       ops; RegionsChanged/FoldStateChanged events. FoldingDemo CLI app.
+
+9  ✅  Encoding detection + BOM handling
+       EncodingDetector: BOM table (UTF-8/16/32 LE/BE) + heuristic path
+       (valid UTF-8, Windows-1252, Latin-1 fallback).
+       BomWriter. DetectedEncoding record + EncodingConfidence enum.
+       Wired into PieceTable.LoadAsync/SaveAsync.
+       TextDocument.DetectedEncoding / HasBom / SaveEncoding.
+       EncodingDemo CLI app.
+
+────────────────────────────────────────────────────────────────────────
+REMAINING — ordered most-impactful to least
+────────────────────────────────────────────────────────────────────────
+
+10  Smart undo grouping / coalescing                           (~100 lines)
+    Sequential same-direction character inserts (and deletes) are batched
+    into a single undo unit, flushed on cursor jump, paste, or idle timeout.
+    The difference between "undo a word" and "undo a letter."
+    Touches CommandHistory only.
+    Tests: coalesce insert run, coalesce delete run, flush on paste,
+           flush on cursor jump, max-group-size limit, undo/redo symmetry.
+    Demo: UndoGroupingDemo — type sentence, undo word-by-word, compare
+          with grouping off.
+
+11  Diagnostics model                                          (~140 lines)
+    DiagnosticsModel mirrors FoldingModel: stores
+    Diagnostic(range, severity, message, code) entries, remaps them on
+    OnInsert/OnDelete, fires DiagnosticsChanged.
+    Consumers populate from linter, test runner, or later the LSP client.
+    TextDocument.GetDiagnosticsModel() lazy factory, same pattern as
+    GetFoldingModel().
+    Tests: add diagnostic, insert before/after shifts range, delete
+           removes covered diagnostics, severity filter query,
+           GetDiagnosticsInRange(), event firing.
+    Demo: DiagnosticsDemo — loads a C# snippet, adds synthetic errors,
+          shows gutter error markers, inserts text and shows ranges shift.
+
+12  Change tracking / dirty-line markers                       (~180 lines)
+    ChangeTracker records which lines are Added / Modified / Deleted
+    relative to a saved baseline (captured at Load/Save).
+    Incrementally updated on every Insert/Delete (same hook pattern as
+    FoldingModel). Uses the existing Myers diff engine to compute the
+    initial per-line delta from the baseline string.
+    TextDocument.GetChangeTracker() lazy factory.
+    Events: ChangesUpdated.
+    Tests: fresh load all-clean, single-line insert marks Added,
+           edit existing line marks Modified, delete marks Deleted,
+           save clears all marks, round-trip after undo restores marks.
+    Demo: ChangeTrackingDemo — loads sample, makes edits, prints gutter
+          with ✚ / ~ / ✖ per line, saves and shows all-clean.
+
+13  Word wrap layout model                                     (~220 lines)
+    WordWrapModel computes how many display rows each document line
+    occupies given a viewport width (columns). Maps document lines ↔
+    wrapped display rows. Same structural pattern as FoldingModel.
+    TextDocument.GetWordWrapModel(int viewportWidth).
+    Methods: ToDisplayRows(docLine), ToDocumentLine(displayRow),
+             DisplayRowCount, IsWrapped(docLine), GetWrappedSegments(docLine).
+    Invalidated on every Insert/Delete; no incremental remap (recompute
+    is O(changed lines), not O(n)).
+    Tests: no-wrap passthrough, single long line wraps to N rows,
+           display↔doc round-trip, insert inside wrapped line updates
+           row count, viewport resize recomputes.
+    Demo: WordWrapDemo — renders a long prose document in a narrow
+          (40-col) viewport, shows line numbers vs display rows.
+
+14  Inlay hints model                                          (~150 lines)
+    InlayHintModel stores InlayHint(offset, text, kind) annotations
+    displayed inline without modifying the document (parameter names,
+    inferred types, return values).
+    Remaps offsets on Insert/Delete; fires HintsChanged.
+    TextDocument.GetInlayHintModel() lazy factory.
+    Kinds: Parameter, Type, Return (extensible).
+    Tests: add hint, insert before shifts offset, delete covering hint
+           removes it, GetHintsInRange(), kind filter, event firing.
+    Demo: InlayHintsDemo — loads a C# method call, adds synthetic
+          parameter-name hints, inserts text and shows offsets shift.
+
+15  Snippet engine                                             (~250 lines)
+    SnippetEngine expands tab-stop bodies into a document insertion plus
+    a live SnippetSession tracking tab-stop offsets.
+    Syntax: $1 $2 … $0 (exit), ${1:placeholder}, $TM_FILENAME,
+            $CLIPBOARD, mirror fields (same $n appears twice → typed in
+            sync via MultiCursor).
+    API: SnippetEngine.Parse(body) → Snippet;
+         doc.BeginSnippet(Snippet, insertOffset) → SnippetSession;
+         session.NextTabStop() / PrevTabStop() / Commit() / Cancel().
+    Tests: parse simple snippet, tab-stop ordering, placeholder text,
+           mirror field sync, variable substitution, nested placeholders,
+           commit writes final text, cancel removes inserted text.
+    Demo: SnippetDemo — expands a "for loop" snippet, shows tab-stop
+          navigation.
+
+16  Bracket pair colorization                                  (~80 lines)
+    BracketPairColorizer walks the document using BracketMatcher logic
+    and returns IReadOnlyList<BracketPair(OpenOffset, CloseOffset,
+    ColorIndex)>. Color index cycles 0→1→2 with nesting depth.
+    Unmatched brackets get ColorIndex = -1.
+    API: TextDocument.GetBracketPairs(int startLine, int endLine).
+    Tests: flat pairs all color-0, nested increments depth, triple-nested
+           resets to 0, unmatched open = -1, string/comment brackets
+           excluded.
+    Demo: BracketColorDemo — renders source with [ ], { }, ( ) each
+          tinted by depth using ANSI color codes.
+
+17  TextMate grammar tokeniser                                 (~400 lines)
+    TmLanguageTokeniser implements IStatefulSyntaxTokeniser by loading
+    a .tmLanguage JSON file and evaluating its scope-stack rule engine.
+    Replaces the hand-rolled CSharpTokeniser with a universal solution —
+    any VS Code grammar file works automatically.
+    API: new TmLanguageTokeniser(string jsonPath);
+         doc.SetTokeniser(new TmLanguageTokeniser("csharp.tmLanguage.json")).
+    Scope names are mapped to SyntaxToken.Type strings so the existing
+    highlight cache and decoration tree need no changes.
+    Tests: load minimal grammar JSON, tokenise known string, scope-stack
+           push/pop, end pattern terminates scope, include rules,
+           fallback to prior tokeniser on parse error.
+    Demo: TmLanguageDemo — loads the bundled minimal JSON grammar for
+          C# and Python, tokenises sample files, prints colored output.
+
+18  Indent guide computation                                   (~90 lines)
+    IndentGuideProvider.GetGuides(TextDocument, int startLine, int endLine)
+    returns IReadOnlyList<IndentGuide(column, startLine, endLine)>.
+    Uses leading-whitespace scan; collapses blank lines into surrounding
+    guide spans. Respects tab-width parameter.
+    Tests: single indent level, nested levels, blank line inside block,
+           mixed tabs/spaces, empty document.
+    Demo: integrated into WordWrapDemo or a standalone IndentGuideDemo
+          that renders vertical │ characters at guide columns.
+
+19  Multi-line paste across multi-cursors                      (~120 lines)
+    When the clipboard contains exactly N lines and there are exactly N
+    active cursors, MultiCursor.Paste(lines[]) distributes one line per
+    cursor (sorted by position). Falls back to normal paste otherwise.
+    API: MultiCursor.Paste(IReadOnlyList<string> lines).
+    Tests: N lines N cursors distributes correctly, N lines 1 cursor
+           pastes all, 1 line N cursors pastes to all, cursor order
+           (top-to-bottom) is correct.
+    Demo: MultiPasteDemo — sets up 3 cursors on 3 blank lines, pastes
+          3-line clipboard, shows result.
+
+20  Read-only regions                                          (~80 lines)
+    ReadOnlyRegionModel marks offset ranges as immutable. Insert/Delete/
+    Replace on TextDocument checks this model and throws
+    ReadOnlyViolationException (or silently ignores, configurable).
+    TextDocument.GetReadOnlyModel() lazy factory.
+    API: model.Protect(start, end) → Guid; model.Unprotect(id);
+         model.IsReadOnly(offset).
+    Tests: protect region, insert inside throws, delete spanning boundary
+           throws, insert before/after allowed, unprotect re-enables edit,
+           overlapping regions handled.
+    Demo: ReadOnlyDemo — loads a file, protects the first block comment,
+          demonstrates that edits outside work and inside are rejected.
+
+21  Sticky scroll context provider                             (~50 lines)
+    StickyScroll.GetContext(FoldingModel, int firstVisibleLine)
+    returns IReadOnlyList<StickyScrollEntry(label, documentLine)> — the
+    chain of enclosing scope headers that are scrolled above the viewport.
+    Walks FoldingModel.Regions looking for regions that StartLine <
+    firstVisibleLine and EndLine >= firstVisibleLine, sorted outermost
+    first.
+    Tests: no folds = empty context, single enclosing scope, nested
+           scopes returned outermost-first, line exactly on start = not
+           in context (header is visible), line past last scope = empty.
+    Demo: StickyScrollDemo — scrolls a large class through 5 viewport
+          positions and prints the context header chain at each.
+
+22  Document outline                                           (~60 lines)
+    OutlineProvider.GetOutline(FoldingModel) returns a tree of
+    OutlineNode(label, startLine, endLine, depth, children[]) built from
+    the existing FoldingModel regions. Zero new parsing — purely a
+    structural projection of fold data.
+    Tests: flat regions = depth-0 nodes, nested regions build parent/
+           child tree, label matches FoldRegion.Label, empty model =
+           empty tree.
+    Demo: integrated into FoldingDemo Scenario 6, or OutlineDemo that
+          prints a tree with indented labels.
+
+23  Cursor position history (Back / Forward)                   (~60 lines)
+    CursorHistory is a bounded ring buffer (default cap 100) of
+    HistoryEntry(offset, filePath?). TextCursor pushes an entry on every
+    Jump-type move (FindNext, GoTo, click). Navigate with Back()/Forward().
+    TextDocument.GetCursorHistory() or attach to a TextCursor instance.
+    Tests: push entries, Back returns previous, Forward returns next,
+           Back at start is no-op, cap evicts oldest, clear on load.
+    Demo: CursorHistoryDemo — simulates 5 find-next jumps, navigates
+          back/forward and prints position at each step.
+
+24  LSP client                                                 (large)
+    Separate process, async JSON-RPC 2.0 (Content-Length framing).
+    Lifecycle: initialize → initialized → shutdown/exit.
+    Core capabilities wired to TextDocument:
+      textDocument/didOpen, didChange, didClose (keeps server in sync),
+      textDocument/completion, hover, definition,
+      textDocument/publishDiagnostics → DiagnosticsModel (item 11).
+    API: LspClient.StartAsync(serverPath, args);
+         doc.AttachLspClient(client);
+         doc.RequestCompletionsAsync(offset),
+         doc.RequestHoverAsync(offset),
+         doc.RequestDefinitionAsync(offset).
+    Tests: JSON-RPC framing round-trip, initialize handshake mock,
+           didChange batching, completion response parsing,
+           diagnostics pushed into DiagnosticsModel.
+    Demo: LspDemo — starts omnisharp or clangd, opens a file, requests
+          completions at a known position, prints results.
+
+25  Large-file streaming load                                  (specialist)
+    Paged/lazy load for files >500 MB. Virtualised line cache — only
+    pages near the viewport are fully decoded into char[]. Transparent
+    to all existing APIs via a new ITextBuffer abstraction that both
+    PieceTable and the new StreamingBuffer implement.
+    Current full-load strategy is fine for files < 200 MB.
+
+────────────────────────────────────────────────────────────────────────
+NOTES
+────────────────────────────────────────────────────────────────────────
+
+Where this API beats VS Code today:
+  GetLine after many edits  25 ms vs ~300 ms (flat-buffer materialise once)
+  ReplaceAll                73 ms O(n) single-pass vs O(n log n) sequential
+
+Every new feature must:
+  • Include full xUnit test coverage in TextEditor.Tests
+  • Include a CLI demo app (or extend an existing one) in src/
+  • Follow the existing lazy-factory pattern (GetXxxModel()) for models
+  • Wire OnInsert/OnDelete into TextDocument for live remapping
+  • Fire events the UI layer can bind to
