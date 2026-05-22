@@ -78,11 +78,16 @@ public static class GraphemeHelper
         // For non-ASCII we must scan forward from a safe boundary, because Unicode
         // cluster rules are inherently left-to-right.
         //
-        // Lookback budget: ZWJ emoji sequences (e.g. 👨‍👩‍👧‍👦 with skin tones) can be up to
-        // ~25 code units. 64 is a safe margin for any known Unicode sequence.
-        int lookback = Math.Max(0, offset - 64);
+        // Strategy: look back far enough that the forward scan from that position will
+        // correctly reassemble any cluster that contains our target offset.
+        //
+        // Budget: 512 code units handles:
+        //   • ZWJ emoji sequences: max ~30 code units (👨‍👩‍👧‍👦 with skin tones ~25)
+        //   • Zalgo text:          practical max ~300 combining marks = 300 code units
+        //   • Any other combining  sequence in actual use
+        int lookback = Math.Max(0, offset - 512);
 
-        // Do not land in the middle of a surrogate pair.
+        // Do not land in the middle of a surrogate pair — step back one more if needed.
         if (lookback > 0 && char.IsLowSurrogate(text[lookback]) && char.IsHighSurrogate(text[lookback - 1]))
             lookback--;
 

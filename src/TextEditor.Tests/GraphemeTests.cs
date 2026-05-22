@@ -1299,6 +1299,63 @@ public class GraphemeHelper_EdgeCases
     }
 
     [Fact]
+    public void ZalgoText_ManyCombiners_OneCluster()
+    {
+        // Zalgo: base 'z' + 100 stacked combining marks — still 1 cluster
+        string zalgo = "z" + new string('\u0301', 100); // 101 code units
+        Assert.Equal(1, GraphemeHelper.ClusterCount(zalgo));
+    }
+
+    [Fact]
+    public void ZalgoText_PreviousCluster_FindsBaseEvenWithManyCombiners()
+    {
+        // 'z' + 100 combining acutes: PreviousCluster from end must return 0
+        string zalgo = "z" + new string('\u0301', 100);
+        Assert.Equal(0, GraphemeHelper.PreviousCluster(zalgo, zalgo.Length));
+    }
+
+    [Fact]
+    public void ZalgoText_DeleteLeft_RemovesWholeCluster()
+    {
+        // Backspace at end of a Zalgo character must delete the entire thing
+        string zalgo = "z" + new string('\u0301', 100);
+        var doc    = new TextDocument();
+        doc.Load(zalgo);
+        var cursor = new TextCursor(doc, doc.Length);
+        cursor.DeleteLeft();
+        Assert.Equal(0, doc.Length);
+    }
+
+    [Fact]
+    public void ZalgoText_DeleteRight_RemovesWholeCluster()
+    {
+        string zalgo = "z" + new string('\u0301', 100);
+        var doc    = new TextDocument();
+        doc.Load(zalgo);
+        var cursor = new TextCursor(doc, 0);
+        cursor.DeleteRight();
+        Assert.Equal(0, doc.Length);
+    }
+
+    [Fact]
+    public void ZalgoText_MoveLeft_SkipsWholeCluster()
+    {
+        string zalgo = "z" + new string('\u0301', 100);
+        var doc    = new TextDocument();
+        doc.Load(zalgo);
+        var cursor = new TextCursor(doc, doc.Length);
+        cursor.MoveLeft();
+        Assert.Equal(0, cursor.CaretOffset);
+    }
+
+    [Fact]
+    public void ZalgoText_NextCluster_SkipsAllCombiners()
+    {
+        string zalgo = "z" + new string('\u0301', 80);
+        Assert.Equal(zalgo.Length, GraphemeHelper.NextCluster(zalgo, 0));
+    }
+
+    [Fact]
     public void ZWJ_NotAlone_DoesNotCreateSpuriousBoundary()
     {
         // Inside a ZWJ sequence, the ZWJ position is not a cluster boundary
