@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.ReadOnlyDemo", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.StickyScrollDemo", "src\TextEditor.StickyScrollDemo\TextEditor.StickyScrollDemo.csproj", "{F3A4B5C6-D7E8-9012-5678-901234567890}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.OutlineDemo", "src\TextEditor.OutlineDemo\TextEditor.OutlineDemo.csproj", "{A4B5C6D7-E8F9-0123-6789-012345678901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -309,6 +311,18 @@ Global
 		{F3A4B5C6-D7E8-9012-5678-901234567890}.Release|x64.Build.0 = Release|Any CPU
 		{F3A4B5C6-D7E8-9012-5678-901234567890}.Release|x86.ActiveCfg = Release|Any CPU
 		{F3A4B5C6-D7E8-9012-5678-901234567890}.Release|x86.Build.0 = Release|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Debug|x64.Build.0 = Debug|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Debug|x86.Build.0 = Debug|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Release|x64.ActiveCfg = Release|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Release|x64.Build.0 = Release|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Release|x86.ActiveCfg = Release|Any CPU
+		{A4B5C6D7-E8F9-0123-6789-012345678901}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -332,5 +346,6 @@ Global
 		{D1E2F3A4-B5C6-7890-3456-789012345678} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{E2F3A4B5-C6D7-8901-4567-890123456789} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{F3A4B5C6-D7E8-9012-5678-901234567890} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{A4B5C6D7-E8F9-0123-6789-012345678901} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

@@ -172,16 +172,10 @@ REMAINING — ordered most-impactful to least
     Regions where StartLine < first and EndLine >= first, sorted
     outermost-first. 20 tests, StickyScrollDemo CLI app.
 
-21  Document outline                                           (~60 lines)
-    OutlineProvider.GetOutline(FoldingModel) returns a tree of
-    OutlineNode(label, startLine, endLine, depth, children[]) built from
-    the existing FoldingModel regions. Zero new parsing — purely a
-    structural projection of fold data.
-    Tests: flat regions = depth-0 nodes, nested regions build parent/
-           child tree, label matches FoldRegion.Label, empty model =
-           empty tree.
-    Demo: integrated into FoldingDemo Scenario 6, or OutlineDemo that
-          prints a tree with indented labels.
+21  ✅  Document outline
+    OutlineProvider.GetOutline(FoldingModel) → IReadOnlyList<OutlineNode>.
+    OutlineNode(Label, StartLine, EndLine, Depth, Children). Stack-based
+    O(n) tree build from sorted regions. 19 tests, OutlineDemo CLI app.
 
 22  Cursor position history (Back / Forward)                   (~60 lines)
     CursorHistory is a bounded ring buffer (default cap 100) of
