@@ -81,6 +81,8 @@ public sealed class TextDocument
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
         _changeTracker?.SetBaseline();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.ClearHints();
         FilePath   = filePath;
         IsModified = false;
     }
@@ -95,6 +97,8 @@ public sealed class TextDocument
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
         _changeTracker?.SetBaseline();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.ClearHints();
         FilePath   = path;
         IsModified = false;
     }
@@ -206,6 +210,8 @@ public sealed class TextDocument
         _highlightCache.OnInsert(offset, text.Length);
         _foldingModel?.OnInsert(offset, text.Count(c => c == '\n'));
         _changeTracker?.Invalidate();
+        _wordWrapModel?.OnInsert(offset, text.Count(c => c == '\n'));
+        _inlayHintModel?.OnInsert(offset, text.Length);
         IsModified = true;
         PostEditHook();
     }
@@ -229,6 +235,8 @@ public sealed class TextDocument
         _highlightCache.OnDelete(offset, length);
         _foldingModel?.OnDelete(offset, deletedNewlines);
         _changeTracker?.Invalidate();
+        _wordWrapModel?.OnDelete(offset, deletedNewlines);
+        _inlayHintModel?.OnDelete(offset, length);
         IsModified = true;
         PostEditHook();
     }
@@ -253,6 +261,9 @@ public sealed class TextDocument
         _foldingModel?.OnDelete(offset, deletedNewlines);
         _foldingModel?.OnInsert(offset, insertText.Count(c => c == '\n'));
         _changeTracker?.Invalidate();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.OnDelete(offset, deleteLength);
+        _inlayHintModel?.OnInsert(offset, insertText.Length);
         IsModified = true;
         PostEditHook();
     }
@@ -264,6 +275,8 @@ public sealed class TextDocument
         _history.Execute(composite);
         _foldingModel?.Invalidate();
         _changeTracker?.Invalidate();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.ClearHints();
         IsModified = true;
         PostEditHook();
     }
@@ -280,6 +293,8 @@ public sealed class TextDocument
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
         _changeTracker?.Invalidate();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.ClearHints();
         IsModified = true;
     }
 
@@ -290,6 +305,8 @@ public sealed class TextDocument
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
         _changeTracker?.Invalidate();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.ClearHints();
         IsModified = true;
     }
 
@@ -415,6 +432,18 @@ public sealed class TextDocument
     public string? GetClosingBraceIndent(int caretOffset, string tabText = "    ")
         => Language.AutoIndent.GetClosingBraceIndent(this, caretOffset, tabText);
 
+    /// <summary>
+    /// Returns all bracket pairs (with nesting-depth color index) whose opening
+    /// bracket falls within [<paramref name="startLine"/>, <paramref name="endLine"/>].
+    /// <list type="bullet">
+    ///   <item><see cref="Language.BracketPair.ColorIndex"/> cycles 0→1→2 with nesting depth.</item>
+    ///   <item><see cref="Language.BracketPair.ColorIndex"/> == -1 for unmatched brackets.</item>
+    /// </list>
+    /// Brackets inside string and comment tokens are excluded.
+    /// </summary>
+    public IReadOnlyList<Language.BracketPair> GetBracketPairs(int startLine, int endLine)
+        => Language.BracketPairColorizer.GetBracketPairs(this, startLine, endLine);
+
     // ── Decorations ───────────────────────────────────────────────────────
 
     public Guid AddDecoration(int start, int end, DecorationType type, string? tag = null, object? data = null)
@@ -428,6 +457,18 @@ public sealed class TextDocument
 
     public IEnumerable<Decoration> GetDecorationsInRange(int start, int end) =>
         _decorations.GetDecorationsInRange(start, end);
+
+    // ── Word wrap ─────────────────────────────────────────────────────────
+
+    private WordWrap.WordWrapModel? _wordWrapModel;
+
+    /// <summary>
+    /// Returns the <see cref="WordWrap.WordWrapModel"/> for this document,
+    /// creating it on first access with the specified viewport width.
+    /// Use <see cref="WordWrap.WordWrapModel.Resize"/> to change the viewport width later.
+    /// </summary>
+    public WordWrap.WordWrapModel GetWordWrapModel(int viewportWidth = 80)
+        => _wordWrapModel ??= new WordWrap.WordWrapModel(this, viewportWidth);
 
     // ── Change tracking ───────────────────────────────────────────────────
 
@@ -445,6 +486,19 @@ public sealed class TextDocument
     /// </summary>
     public ChangeTracking.ChangeTracker GetChangeTracker()
         => _changeTracker ??= new ChangeTracking.ChangeTracker(this);
+
+    // ── Inlay hints ───────────────────────────────────────────────────────
+
+    private InlayHints.InlayHintModel? _inlayHintModel;
+
+    /// <summary>
+    /// Returns the <see cref="InlayHints.InlayHintModel"/> for this document,
+    /// creating it on first access.
+    /// Add hints via <see cref="InlayHints.InlayHintModel.AddHint"/> or
+    /// <see cref="InlayHints.InlayHintModel.SetHints"/>.
+    /// </summary>
+    public InlayHints.InlayHintModel GetInlayHintModel()
+        => _inlayHintModel ??= new InlayHints.InlayHintModel(this);
 
     // ── Code folding ─────────────────────────────────────────────────────
 
@@ -580,6 +634,8 @@ public sealed class TextDocument
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
         _changeTracker?.Invalidate();
+        _wordWrapModel?.Invalidate();
+        _inlayHintModel?.ClearHints();
         _searcher = null;  // invalidate cached searcher (buffer changed)
         IsModified = true;
 
