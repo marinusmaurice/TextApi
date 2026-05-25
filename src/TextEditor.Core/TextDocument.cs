@@ -80,6 +80,7 @@ public sealed class TextDocument
         _history.Clear();
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
+        _changeTracker?.SetBaseline();
         FilePath   = filePath;
         IsModified = false;
     }
@@ -93,6 +94,7 @@ public sealed class TextDocument
         _history.Clear();
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
+        _changeTracker?.SetBaseline();
         FilePath   = path;
         IsModified = false;
     }
@@ -203,6 +205,7 @@ public sealed class TextDocument
         _decorations.OnInsert(offset, text.Length);
         _highlightCache.OnInsert(offset, text.Length);
         _foldingModel?.OnInsert(offset, text.Count(c => c == '\n'));
+        _changeTracker?.Invalidate();
         IsModified = true;
         PostEditHook();
     }
@@ -225,6 +228,7 @@ public sealed class TextDocument
         _decorations.OnDelete(offset, length);
         _highlightCache.OnDelete(offset, length);
         _foldingModel?.OnDelete(offset, deletedNewlines);
+        _changeTracker?.Invalidate();
         IsModified = true;
         PostEditHook();
     }
@@ -248,6 +252,7 @@ public sealed class TextDocument
         _highlightCache.OnInsert(offset, insertText.Length);
         _foldingModel?.OnDelete(offset, deletedNewlines);
         _foldingModel?.OnInsert(offset, insertText.Count(c => c == '\n'));
+        _changeTracker?.Invalidate();
         IsModified = true;
         PostEditHook();
     }
@@ -258,6 +263,7 @@ public sealed class TextDocument
         var composite = new CompositeCommand(description, commands);
         _history.Execute(composite);
         _foldingModel?.Invalidate();
+        _changeTracker?.Invalidate();
         IsModified = true;
         PostEditHook();
     }
@@ -273,6 +279,7 @@ public sealed class TextDocument
         _decorations.Clear();  // simplest safe approach; production = fine-grained decoration undo
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
+        _changeTracker?.Invalidate();
         IsModified = true;
     }
 
@@ -282,6 +289,7 @@ public sealed class TextDocument
         _decorations.Clear();
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
+        _changeTracker?.Invalidate();
         IsModified = true;
     }
 
@@ -421,6 +429,23 @@ public sealed class TextDocument
     public IEnumerable<Decoration> GetDecorationsInRange(int start, int end) =>
         _decorations.GetDecorationsInRange(start, end);
 
+    // ── Change tracking ───────────────────────────────────────────────────
+
+    private ChangeTracking.ChangeTracker? _changeTracker;
+
+    /// <summary>
+    /// Returns the <see cref="ChangeTracking.ChangeTracker"/> for this document,
+    /// creating it on first access.
+    ///
+    /// The tracker compares the current document against the baseline captured at
+    /// the last <c>Load</c>, <c>Save</c>, or explicit
+    /// <see cref="ChangeTracking.ChangeTracker.SetBaseline"/> call, and returns
+    /// per-line <see cref="ChangeTracking.LineStatus"/> values (Clean / Added / Modified)
+    /// plus deletion-above markers.
+    /// </summary>
+    public ChangeTracking.ChangeTracker GetChangeTracker()
+        => _changeTracker ??= new ChangeTracking.ChangeTracker(this);
+
     // ── Code folding ─────────────────────────────────────────────────────
 
     private Folding.FoldingModel? _foldingModel;
@@ -444,6 +469,7 @@ public sealed class TextDocument
     {
         // Explicit parameter beats SaveEncoding property; both beat auto-detected encoding.
         await _buffer.SaveAsync(stream, encoding ?? SaveEncoding);
+        _changeTracker?.SetBaseline();
         IsModified = false;
     }
 
@@ -553,6 +579,7 @@ public sealed class TextDocument
         _decorations.Clear();
         _highlightCache.InvalidateAll();
         _foldingModel?.Invalidate();
+        _changeTracker?.Invalidate();
         _searcher = null;  // invalidate cached searcher (buffer changed)
         IsModified = true;
 

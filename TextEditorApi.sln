@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.UnicodeDemo", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.UndoGroupingDemo", "src\TextEditor.UndoGroupingDemo\TextEditor.UndoGroupingDemo.csproj", "{B3C4D5E6-F7A8-9012-BCDE-F23456789012}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor.ChangeTrackingDemo", "src\TextEditor.ChangeTrackingDemo\TextEditor.ChangeTrackingDemo.csproj", "{C4D5E6F7-A8B9-0123-CDEF-012345678901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,6 +171,18 @@ Global
 		{B3C4D5E6-F7A8-9012-BCDE-F23456789012}.Release|x64.Build.0 = Release|Any CPU
 		{B3C4D5E6-F7A8-9012-BCDE-F23456789012}.Release|x86.ActiveCfg = Release|Any CPU
 		{B3C4D5E6-F7A8-9012-BCDE-F23456789012}.Release|x86.Build.0 = Release|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Release|x64.Build.0 = Release|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,5 +196,6 @@ Global
 		{E7A8B9C0-D1E2-4F3A-B5C6-D7E8F9A0B1C2} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{A2B3C4D5-E6F7-8901-ABCD-EF2345678901} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{B3C4D5E6-F7A8-9012-BCDE-F23456789012} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{C4D5E6F7-A8B9-0123-CDEF-012345678901} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

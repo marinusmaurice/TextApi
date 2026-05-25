@@ -62,20 +62,7 @@ REMAINING — ordered most-impactful to least
     Demo: UndoGroupingDemo — type sentence, undo word-by-word, compare
           with grouping off.
 
-11  Diagnostics model                                          (~140 lines)
-    DiagnosticsModel mirrors FoldingModel: stores
-    Diagnostic(range, severity, message, code) entries, remaps them on
-    OnInsert/OnDelete, fires DiagnosticsChanged.
-    Consumers populate from linter, test runner, or later the LSP client.
-    TextDocument.GetDiagnosticsModel() lazy factory, same pattern as
-    GetFoldingModel().
-    Tests: add diagnostic, insert before/after shifts range, delete
-           removes covered diagnostics, severity filter query,
-           GetDiagnosticsInRange(), event firing.
-    Demo: DiagnosticsDemo — loads a C# snippet, adds synthetic errors,
-          shows gutter error markers, inserts text and shows ranges shift.
-
-12  Change tracking / dirty-line markers                       (~180 lines)
+11  Change tracking / dirty-line markers                       (~180 lines)
     ChangeTracker records which lines are Added / Modified / Deleted
     relative to a saved baseline (captured at Load/Save).
     Incrementally updated on every Insert/Delete (same hook pattern as
@@ -89,7 +76,7 @@ REMAINING — ordered most-impactful to least
     Demo: ChangeTrackingDemo — loads sample, makes edits, prints gutter
           with ✚ / ~ / ✖ per line, saves and shows all-clean.
 
-13  Word wrap layout model                                     (~220 lines)
+12  Word wrap layout model                                     (~220 lines)
     WordWrapModel computes how many display rows each document line
     occupies given a viewport width (columns). Maps document lines ↔
     wrapped display rows. Same structural pattern as FoldingModel.
@@ -104,7 +91,7 @@ REMAINING — ordered most-impactful to least
     Demo: WordWrapDemo — renders a long prose document in a narrow
           (40-col) viewport, shows line numbers vs display rows.
 
-14  Inlay hints model                                          (~150 lines)
+13  Inlay hints model                                          (~150 lines)
     InlayHintModel stores InlayHint(offset, text, kind) annotations
     displayed inline without modifying the document (parameter names,
     inferred types, return values).
@@ -116,7 +103,7 @@ REMAINING — ordered most-impactful to least
     Demo: InlayHintsDemo — loads a C# method call, adds synthetic
           parameter-name hints, inserts text and shows offsets shift.
 
-15  Snippet engine                                             (~250 lines)
+14  Snippet engine                                             (~250 lines)
     SnippetEngine expands tab-stop bodies into a document insertion plus
     a live SnippetSession tracking tab-stop offsets.
     Syntax: $1 $2 … $0 (exit), ${1:placeholder}, $TM_FILENAME,
@@ -131,7 +118,7 @@ REMAINING — ordered most-impactful to least
     Demo: SnippetDemo — expands a "for loop" snippet, shows tab-stop
           navigation.
 
-16  Bracket pair colorization                                  (~80 lines)
+15  Bracket pair colorization                                  (~80 lines)
     BracketPairColorizer walks the document using BracketMatcher logic
     and returns IReadOnlyList<BracketPair(OpenOffset, CloseOffset,
     ColorIndex)>. Color index cycles 0→1→2 with nesting depth.
@@ -143,7 +130,7 @@ REMAINING — ordered most-impactful to least
     Demo: BracketColorDemo — renders source with [ ], { }, ( ) each
           tinted by depth using ANSI color codes.
 
-17  TextMate grammar tokeniser                                 (~400 lines)
+16  TextMate grammar tokeniser                                 (~400 lines)
     TmLanguageTokeniser implements IStatefulSyntaxTokeniser by loading
     a .tmLanguage JSON file and evaluating its scope-stack rule engine.
     Replaces the hand-rolled CSharpTokeniser with a universal solution —
@@ -158,7 +145,7 @@ REMAINING — ordered most-impactful to least
     Demo: TmLanguageDemo — loads the bundled minimal JSON grammar for
           C# and Python, tokenises sample files, prints colored output.
 
-18  Indent guide computation                                   (~90 lines)
+17  Indent guide computation                                   (~90 lines)
     IndentGuideProvider.GetGuides(TextDocument, int startLine, int endLine)
     returns IReadOnlyList<IndentGuide(column, startLine, endLine)>.
     Uses leading-whitespace scan; collapses blank lines into surrounding
@@ -168,7 +155,7 @@ REMAINING — ordered most-impactful to least
     Demo: integrated into WordWrapDemo or a standalone IndentGuideDemo
           that renders vertical │ characters at guide columns.
 
-19  Multi-line paste across multi-cursors                      (~120 lines)
+18  Multi-line paste across multi-cursors                      (~120 lines)
     When the clipboard contains exactly N lines and there are exactly N
     active cursors, MultiCursor.Paste(lines[]) distributes one line per
     cursor (sorted by position). Falls back to normal paste otherwise.
@@ -179,7 +166,7 @@ REMAINING — ordered most-impactful to least
     Demo: MultiPasteDemo — sets up 3 cursors on 3 blank lines, pastes
           3-line clipboard, shows result.
 
-20  Read-only regions                                          (~80 lines)
+19  Read-only regions                                          (~80 lines)
     ReadOnlyRegionModel marks offset ranges as immutable. Insert/Delete/
     Replace on TextDocument checks this model and throws
     ReadOnlyViolationException (or silently ignores, configurable).
@@ -192,7 +179,7 @@ REMAINING — ordered most-impactful to least
     Demo: ReadOnlyDemo — loads a file, protects the first block comment,
           demonstrates that edits outside work and inside are rejected.
 
-21  Sticky scroll context provider                             (~50 lines)
+20  Sticky scroll context provider                             (~50 lines)
     StickyScroll.GetContext(FoldingModel, int firstVisibleLine)
     returns IReadOnlyList<StickyScrollEntry(label, documentLine)> — the
     chain of enclosing scope headers that are scrolled above the viewport.
@@ -205,7 +192,7 @@ REMAINING — ordered most-impactful to least
     Demo: StickyScrollDemo — scrolls a large class through 5 viewport
           positions and prints the context header chain at each.
 
-22  Document outline                                           (~60 lines)
+21  Document outline                                           (~60 lines)
     OutlineProvider.GetOutline(FoldingModel) returns a tree of
     OutlineNode(label, startLine, endLine, depth, children[]) built from
     the existing FoldingModel regions. Zero new parsing — purely a
@@ -216,7 +203,7 @@ REMAINING — ordered most-impactful to least
     Demo: integrated into FoldingDemo Scenario 6, or OutlineDemo that
           prints a tree with indented labels.
 
-23  Cursor position history (Back / Forward)                   (~60 lines)
+22  Cursor position history (Back / Forward)                   (~60 lines)
     CursorHistory is a bounded ring buffer (default cap 100) of
     HistoryEntry(offset, filePath?). TextCursor pushes an entry on every
     Jump-type move (FindNext, GoTo, click). Navigate with Back()/Forward().
@@ -226,25 +213,31 @@ REMAINING — ordered most-impactful to least
     Demo: CursorHistoryDemo — simulates 5 find-next jumps, navigates
           back/forward and prints position at each step.
 
-24  LSP client                                                 (large)
-    Separate process, async JSON-RPC 2.0 (Content-Length framing).
+23  LSP client + Diagnostics model                            (large)
+    DiagnosticsModel: stores Diagnostic(range, severity, message, code)
+    entries, remaps on OnInsert/OnDelete, fires DiagnosticsChanged.
+    TextDocument.GetDiagnosticsModel() lazy factory.
+    LspClient: separate process, async JSON-RPC 2.0 (Content-Length framing).
     Lifecycle: initialize → initialized → shutdown/exit.
     Core capabilities wired to TextDocument:
       textDocument/didOpen, didChange, didClose (keeps server in sync),
       textDocument/completion, hover, definition,
-      textDocument/publishDiagnostics → DiagnosticsModel (item 11).
+      textDocument/publishDiagnostics → DiagnosticsModel.
     API: LspClient.StartAsync(serverPath, args);
          doc.AttachLspClient(client);
          doc.RequestCompletionsAsync(offset),
          doc.RequestHoverAsync(offset),
          doc.RequestDefinitionAsync(offset).
-    Tests: JSON-RPC framing round-trip, initialize handshake mock,
-           didChange batching, completion response parsing,
+    Tests: add diagnostic, insert before/after shifts range, delete removes
+           covered diagnostics, severity filter, GetDiagnosticsInRange(),
+           event firing; JSON-RPC framing round-trip, initialize handshake
+           mock, didChange batching, completion response parsing,
            diagnostics pushed into DiagnosticsModel.
     Demo: LspDemo — starts omnisharp or clangd, opens a file, requests
-          completions at a known position, prints results.
+          completions at a known position, prints results; also shows
+          synthetic diagnostics shifting on edit.
 
-25  Large-file streaming load                                  (specialist)
+24  Large-file streaming load                                  (specialist)
     Paged/lazy load for files >500 MB. Virtualised line cache — only
     pages near the viewport are fully decoded into char[]. Transparent
     to all existing APIs via a new ITextBuffer abstraction that both
