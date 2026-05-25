@@ -489,8 +489,10 @@ public class UndoRedoFuzzTests
         var rng = new Random(seed);
         var doc = MakeDoc("Hello");
 
+        // Use 2-char inserts so each is treated as a multi-cluster "paste" (its own
+        // undo unit), not coalesced into a single group the way single-char typing is.
         for (int i = 0; i < ops; i++)
-            doc.Insert(doc.Length, FuzzHelpers.RandomAscii(rng, 1));
+            doc.Insert(doc.Length, FuzzHelpers.RandomAscii(rng, 2));
 
         doc.UndoDescriptions.Count().Should().Be(ops);
     }

@@ -134,6 +134,13 @@ public sealed class TextDocument
         return new DocumentStats(graphemes, codeUnits, runes, words, lines, dispCols);
     }
 
+    /// <summary>
+    /// Flush any pending coalesced undo group to the undo stack.
+    /// Call this before cursor navigation so that movement breaks the typing group,
+    /// matching VS Code behaviour (Left arrow ends the current undo unit).
+    /// </summary>
+    public void FlushUndoGroup() => _history.FlushGroup();
+
     private static int CountWords(ReadOnlySpan<char> text)
     {
         bool inWord = false;
@@ -185,7 +192,14 @@ public sealed class TextDocument
     public void Insert(int offset, string text)
     {
         var cmd = new InsertCommand(_buffer, offset, text);
-        _history.Execute(cmd);
+        // Single grapheme cluster = user typed one character → coalesce into group.
+        // Multi-cluster = paste or programmatic insert → own undo unit.
+        if (Language.GraphemeHelper.ClusterCount(text.AsSpan()) == 1)
+            _history.ExecuteGrouped(cmd, GroupKind.Insert,
+                insertOffset: offset, insertLength: text.Length);
+        else
+            _history.Execute(cmd);
+
         _decorations.OnInsert(offset, text.Length);
         _highlightCache.OnInsert(offset, text.Length);
         _foldingModel?.OnInsert(offset, text.Count(c => c == '\n'));
@@ -196,11 +210,18 @@ public sealed class TextDocument
     /// <summary>Delete characters in [offset, offset+length).</summary>
     public void Delete(int offset, int length)
     {
-        // Capture newline count BEFORE the delete executes (text is gone afterward).
-        int deletedNewlines = _foldingModel != null
-            ? _buffer.GetText(offset, length).Count(c => c == '\n') : 0;
+        // Capture both newline count and cluster count before the delete executes.
+        string deletedText    = _buffer.GetText(offset, length);
+        int deletedNewlines   = deletedText.Count(c => c == '\n');
+        bool singleCluster    = Language.GraphemeHelper.ClusterCount(deletedText.AsSpan()) == 1;
+
         var cmd = new DeleteCommand(_buffer, offset, length);
-        _history.Execute(cmd);
+        if (singleCluster)
+            _history.ExecuteGrouped(cmd, GroupKind.Delete,
+                deleteOffset: offset, deleteLength: length);
+        else
+            _history.Execute(cmd);
+
         _decorations.OnDelete(offset, length);
         _highlightCache.OnDelete(offset, length);
         _foldingModel?.OnDelete(offset, deletedNewlines);
@@ -211,7 +232,12 @@ public sealed class TextDocument
     /// <summary>Replace characters in [offset, offset+deleteLength) with insertText.</summary>
     public void Replace(int offset, int deleteLength, string insertText)
     {
-        // Capture deleted newlines BEFORE the replace executes.
+        // Optimise: zero-delete replace is just an insert (participates in undo grouping).
+        if (deleteLength == 0) { Insert(offset, insertText); return; }
+        // Optimise: zero-insert replace is just a delete (participates in undo grouping).
+        if (insertText.Length == 0) { Delete(offset, deleteLength); return; }
+
+        // True replace (selection clear + insert): always its own undo unit.
         int deletedNewlines = _foldingModel != null
             ? _buffer.GetText(offset, deleteLength).Count(c => c == '\n') : 0;
         var cmd = new ReplaceCommand(_buffer, offset, deleteLength, insertText);

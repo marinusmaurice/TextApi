@@ -115,9 +115,20 @@ public sealed class CompositeCommand : IEditorCommand
     }
 }
 
+/// <summary>Direction hint for undo grouping.</summary>
+internal enum GroupKind { None, Insert, Delete }
+
 /// <summary>
-/// Undo/redo stack.
-/// All mutations must flow through here to participate in undo history.
+/// Undo/redo stack with smart coalescing.
+///
+/// Single-grapheme-cluster inserts at adjacent positions are coalesced into one
+/// undo unit (so Ctrl+Z undoes a word, not a letter).  Single-cluster backspaces
+/// and single-cluster forward-deletes are coalesced separately.
+///
+/// The pending group is flushed (committed to the undo stack) on:
+///   • Any non-groupable command (paste, composite, replace)
+///   • Explicit <see cref="FlushGroup"/> call (cursor navigation, Undo, Redo)
+///   • Exceeding <see cref="MaxGroupCodeUnits"/>
 /// </summary>
 public sealed class CommandHistory
 {
@@ -125,24 +136,136 @@ public sealed class CommandHistory
     private readonly Stack<IEditorCommand> _redoStack = new();
     private readonly int _maxHistory;
 
+    // ── Grouping state ─────────────────────────────────────────────────────
+    private readonly List<IEditorCommand> _pending = [];
+    private GroupKind _groupKind    = GroupKind.None;
+    private int  _insertTail        = -1;   // expected offset of next grouped insert
+    private int  _deleteFwd         = -1;   // forward-delete stable anchor
+    private int  _deleteBack        = -1;   // backspace left edge (shrinks leftward)
+    private bool _deleteDirSet      = false; // direction locked after 2nd delete
+    private bool _deleteIsForward   = false;
+    private int  _groupUnits        = 0;    // total code units buffered
+    private const int MaxGroupCodeUnits = 200;
+
     public CommandHistory(int maxHistory = 1000) => _maxHistory = maxHistory;
 
-    /// <summary>Execute a command and push it onto the undo stack.</summary>
-    public void Execute(IEditorCommand command)
+    // ── Public grouping API ───────────────────────────────────────────────
+
+    /// <summary>
+    /// Execute a command that may be coalesced with the previous grouped command.
+    /// Called by <see cref="TextDocument"/> for single-cluster insert/delete operations.
+    /// </summary>
+    internal void ExecuteGrouped(IEditorCommand command,
+                                  GroupKind kind,
+                                  int insertOffset  = 0, int insertLength  = 0,
+                                  int deleteOffset  = 0, int deleteLength  = 0)
     {
+        bool canJoin = false;
+
+        if (_groupKind == kind && _pending.Count > 0)
+        {
+            int addedUnits = kind == GroupKind.Insert ? insertLength : deleteLength;
+            if (_groupUnits + addedUnits <= MaxGroupCodeUnits)
+            {
+                if (kind == GroupKind.Insert)
+                {
+                    canJoin = insertOffset == _insertTail;
+                }
+                else // Delete
+                {
+                    bool fwd = deleteOffset == _deleteFwd;
+                    bool bck = deleteOffset + deleteLength == _deleteBack;
+
+                    if (!_deleteDirSet)
+                    {
+                        // Direction established by the second delete
+                        canJoin = fwd || bck;
+                        if (canJoin)
+                        {
+                            _deleteIsForward = fwd;
+                            _deleteDirSet    = true;
+                        }
+                    }
+                    else
+                    {
+                        canJoin = _deleteIsForward ? fwd : bck;
+                    }
+                }
+            }
+        }
+
+        if (!canJoin)
+        {
+            FlushGroup();          // commit previous group
+            _redoStack.Clear();    // new edit branch kills redo
+        }
+
         command.Execute();
-        _undoStack.Push(command);
-        _redoStack.Clear();   // any new edit kills the redo branch
-        if (_undoStack.Count > _maxHistory)
-            TrimUndoStack();
+        _pending.Add(command);
+        _groupKind   = kind;
+        _groupUnits += kind == GroupKind.Insert ? insertLength : deleteLength;
+
+        if (kind == GroupKind.Insert)
+        {
+            _insertTail = insertOffset + insertLength;
+        }
+        else // Delete
+        {
+            if (_pending.Count == 1)
+            {
+                _deleteFwd    = deleteOffset;
+                _deleteBack   = deleteOffset;
+                _deleteDirSet = false;
+            }
+            else if (_deleteDirSet && !_deleteIsForward)
+            {
+                _deleteBack = deleteOffset; // backspace: left edge advances leftward
+            }
+            // forward delete: _deleteFwd stays fixed (offset stays same as doc shrinks)
+        }
     }
 
-    public bool CanUndo => _undoStack.Count > 0;
+    /// <summary>
+    /// Commit any pending coalesced group to the undo stack.
+    /// Call this before cursor navigation, Undo, Redo, or any non-groupable operation.
+    /// </summary>
+    public void FlushGroup()
+    {
+        if (_pending.Count == 0) return;
+
+        IEditorCommand committed = _pending.Count == 1
+            ? _pending[0]
+            : new CompositeCommand("typing", _pending.ToList());
+
+        _undoStack.Push(committed);
+        if (_undoStack.Count > _maxHistory) TrimUndoStack();
+
+        _pending.Clear();
+        _groupKind    = GroupKind.None;
+        _insertTail   = _deleteFwd = _deleteBack = -1;
+        _groupUnits   = 0;
+        _deleteDirSet = false;
+    }
+
+    // ── Stack operations ──────────────────────────────────────────────────
+
+    /// <summary>Execute a command as a standalone undo unit (not grouped).</summary>
+    public void Execute(IEditorCommand command)
+    {
+        FlushGroup();           // commit any pending group first
+        command.Execute();
+        _undoStack.Push(command);
+        _redoStack.Clear();
+        if (_undoStack.Count > _maxHistory) TrimUndoStack();
+    }
+
+    public bool CanUndo => _undoStack.Count > 0 || _pending.Count > 0;
     public bool CanRedo => _redoStack.Count > 0;
 
     public void Undo()
     {
-        if (!CanUndo) return;
+        FlushGroup();
+        if (!_undoStack.Any()) return;
         var cmd = _undoStack.Pop();
         cmd.Undo();
         _redoStack.Push(cmd);
@@ -150,6 +273,7 @@ public sealed class CommandHistory
 
     public void Redo()
     {
+        FlushGroup();
         if (!CanRedo) return;
         var cmd = _redoStack.Pop();
         cmd.Execute();
@@ -159,7 +283,17 @@ public sealed class CommandHistory
     public IEnumerable<string> UndoDescriptions => _undoStack.Select(c => c.Description);
     public IEnumerable<string> RedoDescriptions => _redoStack.Select(c => c.Description);
 
-    public void Clear() { _undoStack.Clear(); _redoStack.Clear(); }
+    public void Clear()
+    {
+        // Discard pending without committing (document is being replaced)
+        _pending.Clear();
+        _groupKind    = GroupKind.None;
+        _insertTail   = _deleteFwd = _deleteBack = -1;
+        _groupUnits   = 0;
+        _deleteDirSet = false;
+        _undoStack.Clear();
+        _redoStack.Clear();
+    }
 
     private void TrimUndoStack()
     {

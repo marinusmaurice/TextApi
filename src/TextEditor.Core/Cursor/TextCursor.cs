@@ -81,6 +81,7 @@ public sealed class TextCursor
     /// <summary>Move the caret to <paramref name="offset"/>, collapsing any selection.</summary>
     public void MoveTo(int offset)
     {
+        _doc.FlushUndoGroup();
         _anchorOffset = _activeOffset = Clamp(offset);
         _preferredColumn = -1;
     }
@@ -91,6 +92,7 @@ public sealed class TextCursor
     /// </summary>
     public void SelectTo(int offset)
     {
+        _doc.FlushUndoGroup();
         _activeOffset    = Clamp(offset);
         _preferredColumn = -1;
     }
@@ -98,6 +100,7 @@ public sealed class TextCursor
     /// <summary>Explicitly set both anchor and active, forming an arbitrary selection.</summary>
     public void SetSelection(int anchor, int active)
     {
+        _doc.FlushUndoGroup();
         _anchorOffset    = Clamp(anchor);
         _activeOffset    = Clamp(active);
         _preferredColumn = -1;
@@ -251,6 +254,7 @@ public sealed class TextCursor
     /// </summary>
     public void MoveUp(int count = 1)
     {
+        _doc.FlushUndoGroup();
         int col        = CapturePreferredColumn();
         int line       = _doc.OffsetToPosition(_activeOffset).Line;
         int targetLine = Math.Max(0, line - count);
@@ -265,6 +269,7 @@ public sealed class TextCursor
     /// </summary>
     public void MoveDown(int count = 1)
     {
+        _doc.FlushUndoGroup();
         int col        = CapturePreferredColumn();
         int line       = _doc.OffsetToPosition(_activeOffset).Line;
         int targetLine = Math.Min(_doc.LineCount - 1, line + count);
@@ -275,6 +280,7 @@ public sealed class TextCursor
     /// <summary>Extend selection up by <paramref name="count"/> lines.</summary>
     public void SelectUp(int count = 1)
     {
+        _doc.FlushUndoGroup();
         int col        = CapturePreferredColumn();
         int line       = _doc.OffsetToPosition(_activeOffset).Line;
         int targetLine = Math.Max(0, line - count);
@@ -285,6 +291,7 @@ public sealed class TextCursor
     /// <summary>Extend selection down by <paramref name="count"/> lines.</summary>
     public void SelectDown(int count = 1)
     {
+        _doc.FlushUndoGroup();
         int col        = CapturePreferredColumn();
         int line       = _doc.OffsetToPosition(_activeOffset).Line;
         int targetLine = Math.Min(_doc.LineCount - 1, line + count);
@@ -315,6 +322,7 @@ public sealed class TextCursor
     {
         if (!HasSelection) return;
         int start = SelectionStart;
+        _doc.FlushUndoGroup(); // deleting a selection is always its own undo unit
         _doc.Delete(start, SelectionEnd - SelectionStart);
         _anchorOffset    = _activeOffset = Clamp(start);
         _preferredColumn = -1;
