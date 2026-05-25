@@ -12,7 +12,8 @@
       "Bash(dotnet run:*)",
       "Bash(dotnet new:*)",
       "Bash(dotnet restore:*)",
-      "Bash(find C:UsersAdministratorDownloadsTextEditorApi_v5 -name *DiffEngine* -o -name *Diff*)"
+      "Bash(find C:UsersAdministratorDownloadsTextEditorApi_v5 -name *DiffEngine* -o -name *Diff*)",
+      "Bash(ls \"C:\\\\Users\\\\Administrator\\\\Downloads\\\\TextEditorApi_v5\\\\src\\\\TextEditor.ChangeTrackingDemo\"\" 2>/dev/null || ls \"C:UsersAdministratorDownloadsTextEditorApi_v5src\"\")"
     ]
   }
 }

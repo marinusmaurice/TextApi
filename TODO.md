@@ -155,42 +155,22 @@ REMAINING — ordered most-impactful to least
     Demo: integrated into WordWrapDemo or a standalone IndentGuideDemo
           that renders vertical │ characters at guide columns.
 
-18  Multi-line paste across multi-cursors                      (~120 lines)
-    When the clipboard contains exactly N lines and there are exactly N
-    active cursors, MultiCursor.Paste(lines[]) distributes one line per
-    cursor (sorted by position). Falls back to normal paste otherwise.
-    API: MultiCursor.Paste(IReadOnlyList<string> lines).
-    Tests: N lines N cursors distributes correctly, N lines 1 cursor
-           pastes all, 1 line N cursors pastes to all, cursor order
-           (top-to-bottom) is correct.
-    Demo: MultiPasteDemo — sets up 3 cursors on 3 blank lines, pastes
-          3-line clipboard, shows result.
+18  ✅  Multi-line paste across multi-cursors
+    MultiCursor.Paste(IReadOnlyList<string> lines) — distributed when
+    lines.Count == cursor count, broadcast otherwise. 16 tests, one
+    undo step. MultiPasteDemo CLI app.
 
-19  Read-only regions                                          (~80 lines)
-    ReadOnlyRegionModel marks offset ranges as immutable. Insert/Delete/
-    Replace on TextDocument checks this model and throws
-    ReadOnlyViolationException (or silently ignores, configurable).
-    TextDocument.GetReadOnlyModel() lazy factory.
-    API: model.Protect(start, end) → Guid; model.Unprotect(id);
-         model.IsReadOnly(offset).
-    Tests: protect region, insert inside throws, delete spanning boundary
-           throws, insert before/after allowed, unprotect re-enables edit,
-           overlapping regions handled.
-    Demo: ReadOnlyDemo — loads a file, protects the first block comment,
-          demonstrates that edits outside work and inside are rejected.
+19  ✅  Read-only regions
+    ReadOnlyRegionModel: Protect/Unprotect/UnprotectAll/IsReadOnly/
+    IsRangeReadOnly/GetRegions. ReadOnlyViolationException with region
+    info. EnforceReadOnly (throw vs silent). OnInsert/OnDelete remap.
+    Load clears all protections. 40 tests, ReadOnlyDemo CLI app.
 
-20  Sticky scroll context provider                             (~50 lines)
-    StickyScroll.GetContext(FoldingModel, int firstVisibleLine)
-    returns IReadOnlyList<StickyScrollEntry(label, documentLine)> — the
-    chain of enclosing scope headers that are scrolled above the viewport.
-    Walks FoldingModel.Regions looking for regions that StartLine <
-    firstVisibleLine and EndLine >= firstVisibleLine, sorted outermost
-    first.
-    Tests: no folds = empty context, single enclosing scope, nested
-           scopes returned outermost-first, line exactly on start = not
-           in context (header is visible), line past last scope = empty.
-    Demo: StickyScrollDemo — scrolls a large class through 5 viewport
-          positions and prints the context header chain at each.
+20  ✅  Sticky scroll context provider
+    StickyScroll.GetContext(FoldingModel, firstVisibleLine) →
+    IReadOnlyList<StickyScrollEntry(Label, DocumentLine)>.
+    Regions where StartLine < first and EndLine >= first, sorted
+    outermost-first. 20 tests, StickyScrollDemo CLI app.
 
 21  Document outline                                           (~60 lines)
     OutlineProvider.GetOutline(FoldingModel) returns a tree of

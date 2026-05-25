@@ -204,6 +204,49 @@ public sealed class MultiCursor
         return new EditDesc(i, c.SelectionStart, c.SelectionEnd - c.SelectionStart, "");
     }, "Multi-cursor delete selection");
 
+    // ── Paste — distributed or broadcast ──────────────────────────────────
+
+    /// <summary>
+    /// Paste clipboard lines into the document.
+    ///
+    /// <para><b>Distributed paste</b> — when <paramref name="lines"/>.Count equals
+    /// the number of active cursors, each cursor receives exactly one line in
+    /// ascending order (top cursor gets <c>lines[0]</c>, etc.).</para>
+    ///
+    /// <para><b>Broadcast paste</b> — any other count (including a single line, or
+    /// a count that does not match the cursor count) joins all lines with '\n' and
+    /// inserts the same text at every cursor, identical to
+    /// <see cref="InsertText"/>.</para>
+    ///
+    /// <para>In both cases the entire operation is a single undo step.</para>
+    /// </summary>
+    public void Paste(IReadOnlyList<string> lines)
+    {
+        if (lines.Count == 0) return;
+
+        if (lines.Count == _cursors.Count)
+        {
+            // Distributed paste: cursor[i] gets lines[i].
+            // Cursors are already sorted ascending; lines[0] → topmost cursor.
+            ApplyBatchEdit(i =>
+            {
+                var c    = _cursors[i];
+                string t = Normalize(lines[i]);
+                return new EditDesc(i, c.SelectionStart, c.SelectionEnd - c.SelectionStart, t);
+            }, "Multi-cursor distributed paste");
+        }
+        else
+        {
+            // Broadcast paste: join and insert the same text at every cursor.
+            string joined = Normalize(string.Join("\n", lines));
+            ApplyBatchEdit(i =>
+            {
+                var c = _cursors[i];
+                return new EditDesc(i, c.SelectionStart, c.SelectionEnd - c.SelectionStart, joined);
+            }, "Multi-cursor broadcast paste");
+        }
+    }
+
     // ── Core batching engine ───────────────────────────────────────────────
 
     /// <summary>

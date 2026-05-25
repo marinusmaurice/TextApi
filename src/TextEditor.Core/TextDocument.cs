@@ -83,6 +83,7 @@ public sealed class TextDocument
         _changeTracker?.SetBaseline();
         _wordWrapModel?.Invalidate();
         _inlayHintModel?.ClearHints();
+        _readOnlyModel?.UnprotectAll();
         FilePath   = filePath;
         IsModified = false;
     }
@@ -99,6 +100,7 @@ public sealed class TextDocument
         _changeTracker?.SetBaseline();
         _wordWrapModel?.Invalidate();
         _inlayHintModel?.ClearHints();
+        _readOnlyModel?.UnprotectAll();
         FilePath   = path;
         IsModified = false;
     }
@@ -197,6 +199,16 @@ public sealed class TextDocument
     /// <summary>Insert text at a zero-based character offset.</summary>
     public void Insert(int offset, string text)
     {
+        if (_readOnlyModel != null)
+        {
+            var (blocked, rs, re) = _readOnlyModel.WouldBlockInsertInfo(offset);
+            if (blocked)
+            {
+                if (EnforceReadOnly) throw new ReadOnly.ReadOnlyViolationException(rs, re, offset);
+                return;
+            }
+        }
+
         var cmd = new InsertCommand(_buffer, offset, text);
         // Single grapheme cluster = user typed one character → coalesce into group.
         // Multi-cluster = paste or programmatic insert → own undo unit.
@@ -212,6 +224,7 @@ public sealed class TextDocument
         _changeTracker?.Invalidate();
         _wordWrapModel?.OnInsert(offset, text.Count(c => c == '\n'));
         _inlayHintModel?.OnInsert(offset, text.Length);
+        _readOnlyModel?.OnInsert(offset, text.Length);
         IsModified = true;
         PostEditHook();
     }
@@ -219,6 +232,16 @@ public sealed class TextDocument
     /// <summary>Delete characters in [offset, offset+length).</summary>
     public void Delete(int offset, int length)
     {
+        if (_readOnlyModel != null)
+        {
+            var (blocked, rs, re) = _readOnlyModel.WouldBlockDelete(offset, length);
+            if (blocked)
+            {
+                if (EnforceReadOnly) throw new ReadOnly.ReadOnlyViolationException(rs, re, offset);
+                return;
+            }
+        }
+
         // Capture both newline count and cluster count before the delete executes.
         string deletedText    = _buffer.GetText(offset, length);
         int deletedNewlines   = deletedText.Count(c => c == '\n');
@@ -237,6 +260,7 @@ public sealed class TextDocument
         _changeTracker?.Invalidate();
         _wordWrapModel?.OnDelete(offset, deletedNewlines);
         _inlayHintModel?.OnDelete(offset, length);
+        _readOnlyModel?.OnDelete(offset, length);
         IsModified = true;
         PostEditHook();
     }
@@ -250,6 +274,23 @@ public sealed class TextDocument
         if (insertText.Length == 0) { Delete(offset, deleteLength); return; }
 
         // True replace (selection clear + insert): always its own undo unit.
+        if (_readOnlyModel != null)
+        {
+            var (blocked, rs, re) = _readOnlyModel.WouldBlockDelete(offset, deleteLength);
+            if (blocked)
+            {
+                if (EnforceReadOnly) throw new ReadOnly.ReadOnlyViolationException(rs, re, offset);
+                return;
+            }
+            // Also check that the replacement insertion point is not strictly inside a region.
+            (blocked, rs, re) = _readOnlyModel.WouldBlockInsertInfo(offset);
+            if (blocked)
+            {
+                if (EnforceReadOnly) throw new ReadOnly.ReadOnlyViolationException(rs, re, offset);
+                return;
+            }
+        }
+
         int deletedNewlines = _foldingModel != null
             ? _buffer.GetText(offset, deleteLength).Count(c => c == '\n') : 0;
         var cmd = new ReplaceCommand(_buffer, offset, deleteLength, insertText);
@@ -264,6 +305,8 @@ public sealed class TextDocument
         _wordWrapModel?.Invalidate();
         _inlayHintModel?.OnDelete(offset, deleteLength);
         _inlayHintModel?.OnInsert(offset, insertText.Length);
+        _readOnlyModel?.OnDelete(offset, deleteLength);
+        _readOnlyModel?.OnInsert(offset, insertText.Length);
         IsModified = true;
         PostEditHook();
     }
@@ -444,6 +487,15 @@ public sealed class TextDocument
     public IReadOnlyList<Language.BracketPair> GetBracketPairs(int startLine, int endLine)
         => Language.BracketPairColorizer.GetBracketPairs(this, startLine, endLine);
 
+    /// <summary>
+    /// Returns indent guides for [<paramref name="startLine"/>, <paramref name="endLine"/>].
+    /// Each <see cref="Language.IndentGuide"/> represents a vertical bar at a given column
+    /// spanning the lines whose indentation exceeds that column.
+    /// </summary>
+    public IReadOnlyList<Language.IndentGuide> GetIndentGuides(
+        int startLine, int endLine, int tabWidth = 4)
+        => Language.IndentGuideProvider.GetGuides(this, startLine, endLine, tabWidth);
+
     // ── Decorations ───────────────────────────────────────────────────────
 
     public Guid AddDecoration(int start, int end, DecorationType type, string? tag = null, object? data = null)
@@ -486,6 +538,29 @@ public sealed class TextDocument
     /// </summary>
     public ChangeTracking.ChangeTracker GetChangeTracker()
         => _changeTracker ??= new ChangeTracking.ChangeTracker(this);
+
+    // ── Read-only regions ─────────────────────────────────────────────────
+
+    private ReadOnly.ReadOnlyRegionModel? _readOnlyModel;
+
+    /// <summary>
+    /// When <see langword="true"/> (the default), editing a protected offset throws
+    /// <see cref="ReadOnly.ReadOnlyViolationException"/>.
+    /// When <see langword="false"/>, the edit is silently ignored instead.
+    /// </summary>
+    public bool EnforceReadOnly { get; set; } = true;
+
+    /// <summary>
+    /// Returns the <see cref="ReadOnly.ReadOnlyRegionModel"/> for this document,
+    /// creating it on first access.
+    ///
+    /// Use <see cref="ReadOnly.ReadOnlyRegionModel.Protect"/> to mark ranges as
+    /// immutable.  Protected ranges are automatically remapped when edits occur
+    /// elsewhere in the document.  All protections are cleared on
+    /// <see cref="Load"/> / <see cref="LoadFileAsync"/>.
+    /// </summary>
+    public ReadOnly.ReadOnlyRegionModel GetReadOnlyModel()
+        => _readOnlyModel ??= new ReadOnly.ReadOnlyRegionModel();
 
     // ── Inlay hints ───────────────────────────────────────────────────────
 
