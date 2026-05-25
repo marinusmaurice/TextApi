@@ -84,6 +84,7 @@ public sealed class TextDocument
         _wordWrapModel?.Invalidate();
         _inlayHintModel?.ClearHints();
         _readOnlyModel?.UnprotectAll();
+        _cursorHistory?.Clear();
         FilePath   = filePath;
         IsModified = false;
     }
@@ -101,6 +102,7 @@ public sealed class TextDocument
         _wordWrapModel?.Invalidate();
         _inlayHintModel?.ClearHints();
         _readOnlyModel?.UnprotectAll();
+        _cursorHistory?.Clear();
         FilePath   = path;
         IsModified = false;
     }
@@ -509,6 +511,23 @@ public sealed class TextDocument
 
     public IEnumerable<Decoration> GetDecorationsInRange(int start, int end) =>
         _decorations.GetDecorationsInRange(start, end);
+
+    // ── Cursor position history ───────────────────────────────────────────
+
+    private Navigation.CursorHistory? _cursorHistory;
+
+    /// <summary>
+    /// Returns the <see cref="Navigation.CursorHistory"/> for this document,
+    /// creating it on first access with the default capacity (100 entries).
+    ///
+    /// Call <see cref="Navigation.CursorHistory.Push"/> whenever the caret
+    /// makes a jump-type move (Find Next, Go to Line, Go to Definition).
+    /// Normal arrow-key movement should NOT push.
+    /// The history is cleared automatically on <see cref="Load"/> /
+    /// <see cref="LoadFileAsync"/>.
+    /// </summary>
+    public Navigation.CursorHistory GetCursorHistory()
+        => _cursorHistory ??= new Navigation.CursorHistory();
 
     // ── Word wrap ─────────────────────────────────────────────────────────
 

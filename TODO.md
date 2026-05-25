@@ -177,15 +177,11 @@ REMAINING — ordered most-impactful to least
     OutlineNode(Label, StartLine, EndLine, Depth, Children). Stack-based
     O(n) tree build from sorted regions. 19 tests, OutlineDemo CLI app.
 
-22  Cursor position history (Back / Forward)                   (~60 lines)
-    CursorHistory is a bounded ring buffer (default cap 100) of
-    HistoryEntry(offset, filePath?). TextCursor pushes an entry on every
-    Jump-type move (FindNext, GoTo, click). Navigate with Back()/Forward().
-    TextDocument.GetCursorHistory() or attach to a TextCursor instance.
-    Tests: push entries, Back returns previous, Forward returns next,
-           Back at start is no-op, cap evicts oldest, clear on load.
-    Demo: CursorHistoryDemo — simulates 5 find-next jumps, navigates
-          back/forward and prints position at each step.
+22  ✅  Cursor position history (Back / Forward)
+    CursorHistory ring buffer (cap 100): Push/Back/Forward/Clear.
+    HistoryEntry(Offset, FilePath?). Truncates forward on new Push.
+    Evicts oldest at capacity. TextDocument.GetCursorHistory() lazy
+    factory; cleared on Load. 36 tests, CursorHistoryDemo CLI app.
 
 23  LSP client + Diagnostics model                            (large)
     DiagnosticsModel: stores Diagnostic(range, severity, message, code)
