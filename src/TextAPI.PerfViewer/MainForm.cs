@@ -153,6 +153,7 @@ public sealed partial class MainForm : Form
         _chartPicture.Dock  = DockStyle.Fill;
         _chartPicture.SizeMode = PictureBoxSizeMode.Zoom;
         _chartPicture.BackColor = Color.White;
+        _chartPicture.Resize += (_, _) => RedrawChart();
         _tabChart.Controls.Add(_chartPicture);
 
         // Grid tab
@@ -300,7 +301,14 @@ public sealed partial class MainForm : Form
     private void RedrawChart()
     {
         if (_tabs.SelectedTab != _tabChart) return;
-        var bmp = DrawChart(_chartPicture.ClientSize);
+        var sz = _chartPicture.ClientSize;
+        if (sz.Width < 10 || sz.Height < 10)
+        {
+            // Layout not complete yet — defer until the message pump settles
+            BeginInvoke(RedrawChart);
+            return;
+        }
+        var bmp = DrawChart(sz);
         var old = _chartPicture.Image;
         _chartPicture.Image = bmp;
         old?.Dispose();
