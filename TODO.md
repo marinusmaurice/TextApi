@@ -183,36 +183,48 @@ REMAINING — ordered most-impactful to least
     Evicts oldest at capacity. TextDocument.GetCursorHistory() lazy
     factory; cleared on Load. 36 tests, CursorHistoryDemo CLI app.
 
-23  LSP client + Diagnostics model                            (large)
-    DiagnosticsModel: stores Diagnostic(range, severity, message, code)
-    entries, remaps on OnInsert/OnDelete, fires DiagnosticsChanged.
-    TextDocument.GetDiagnosticsModel() lazy factory.
-    LspClient: separate process, async JSON-RPC 2.0 (Content-Length framing).
-    Lifecycle: initialize → initialized → shutdown/exit.
-    Core capabilities wired to TextDocument:
-      textDocument/didOpen, didChange, didClose (keeps server in sync),
-      textDocument/completion, hover, definition,
-      textDocument/publishDiagnostics → DiagnosticsModel.
-    API: LspClient.StartAsync(serverPath, args);
-         doc.AttachLspClient(client);
-         doc.RequestCompletionsAsync(offset),
-         doc.RequestHoverAsync(offset),
-         doc.RequestDefinitionAsync(offset).
-    Tests: add diagnostic, insert before/after shifts range, delete removes
-           covered diagnostics, severity filter, GetDiagnosticsInRange(),
-           event firing; JSON-RPC framing round-trip, initialize handshake
-           mock, didChange batching, completion response parsing,
-           diagnostics pushed into DiagnosticsModel.
-    Demo: LspDemo — starts omnisharp or clangd, opens a file, requests
-          completions at a known position, prints results; also shows
-          synthetic diagnostics shifting on edit.
+── Utility API ──────────────────────────────────────────────────────────
+✅  GoTo(line, col) on TextDocument — jumps and pushes CursorHistory; clamps
+✅  BookmarkModel — Toggle/IsBookmarked/NextBookmark/PrevBookmark/GetAll;
+    OnInsert/OnDelete remap; Load clears; integrated into TextDocument; 19 tests
+✅  Regex capture group ReplaceAll — $1/$2 when UseRegex=true + '$' in replacement;
+    Regex.Replace fast path; 8 tests
+✅  IDocumentFormatter — pluggable Format(text) interface; TextDocument.Format(
+    formatter, startLine?, endLine?); no-op when text unchanged; 7 tests
+✅  LineCommentToggle — Toggle(doc, startLine, endLine, prefix="//"); single undo
+    step; handles indentation, empty lines, custom prefix; 10 tests
+✅  DocumentCleanup — TrimTrailingWhitespace (returns modified line count,
+    single undo); NormalizeLineEndings (SaveEolStyle + strips stray \r); 10 tests
+✅  Column selection — MultiCursor.AddColumnSelection(startLine, endLine, col);
+    col clamped per line; replaces existing cursors; 8 tests
+✅  Plugin system — PluginRegistry in TextEditor.Repl; .csx frontmatter
+    (// @plugin / Name / Description / Tags / // @end); Search by name/tag/desc
+    case-insensitive; Execute via isolated CSharpScriptHost; ScanDirectory; 11 tests
+✅  TextEditor.UtilityDemo — CLI demo app showing all 7 utility features
 
-24  Large-file streaming load                                  (specialist)
-    Paged/lazy load for files >500 MB. Virtualised line cache — only
-    pages near the viewport are fully decoded into char[]. Transparent
-    to all existing APIs via a new ITextBuffer abstraction that both
-    PieceTable and the new StreamingBuffer implement.
-    Current full-load strategy is fine for files < 200 MB.
+// 23  LSP client + Diagnostics model                            (large)
+//     DiagnosticsModel: stores Diagnostic(range, severity, message, code)
+//     entries, remaps on OnInsert/OnDelete, fires DiagnosticsChanged.
+//     TextDocument.GetDiagnosticsModel() lazy factory.
+//     LspClient: separate process, async JSON-RPC 2.0 (Content-Length framing).
+//     Lifecycle: initialize → initialized → shutdown/exit.
+//     Core capabilities wired to TextDocument:
+//       textDocument/didOpen, didChange, didClose (keeps server in sync),
+//       textDocument/completion, hover, definition,
+//       textDocument/publishDiagnostics → DiagnosticsModel.
+//     API: LspClient.StartAsync(serverPath, args);
+//          doc.AttachLspClient(client);
+//          doc.RequestCompletionsAsync(offset),
+//          doc.RequestHoverAsync(offset),
+//          doc.RequestDefinitionAsync(offset).
+//     Tests: add diagnostic, insert before/after shifts range, delete removes
+//            covered diagnostics, severity filter, GetDiagnosticsInRange(),
+//            event firing; JSON-RPC framing round-trip, initialize handshake
+//            mock, didChange batching, completion response parsing,
+//            diagnostics pushed into DiagnosticsModel.
+//     Demo: LspDemo — starts omnisharp or clangd, opens a file, requests
+//           completions at a known position, prints results; also shows
+//           synthetic diagnostics shifting on edit.
 
 ────────────────────────────────────────────────────────────────────────
 NOTES

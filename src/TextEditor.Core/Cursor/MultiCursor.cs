@@ -137,6 +137,26 @@ public sealed class MultiCursor
     /// <summary>Each cursor selects the word under its caret.</summary>
     public void SelectWordAtCaret() { foreach (var c in _cursors) c.SelectWordAtCaret(); SortAndMerge(); }
 
+    /// <summary>
+    /// Replace all cursors with one collapsed cursor per line from
+    /// <paramref name="startLine"/> to <paramref name="endLine"/> (both inclusive),
+    /// each placed at <paramref name="column"/> (clamped to line length).
+    /// The bottom cursor becomes Primary.
+    /// </summary>
+    public void AddColumnSelection(int startLine, int endLine, int column)
+    {
+        _cursors.Clear();
+        for (int line = startLine; line <= endLine; line++)
+        {
+            int lineLen = _doc.GetLine(line).Length;
+            int col     = Math.Min(column, lineLen);
+            int offset  = _doc.PositionToOffset(line, col);
+            _cursors.Add(new TextCursor(_doc, offset));
+        }
+        _primaryIndex = Math.Max(0, _cursors.Count - 1);
+        SortAndMerge();
+    }
+
     // ── Vertical movement ──────────────────────────────────────────────────
 
     public void MoveUp(int count = 1)    { foreach (var c in _cursors) c.MoveUp(count);    SortAndMerge(); }

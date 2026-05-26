@@ -85,6 +85,7 @@ public sealed class TextDocument
         _inlayHintModel?.ClearHints();
         _readOnlyModel?.UnprotectAll();
         _cursorHistory?.Clear();
+        _bookmarkModel?.Clear();
         FilePath   = filePath;
         IsModified = false;
     }
@@ -103,6 +104,7 @@ public sealed class TextDocument
         _inlayHintModel?.ClearHints();
         _readOnlyModel?.UnprotectAll();
         _cursorHistory?.Clear();
+        _bookmarkModel?.Clear();
         FilePath   = path;
         IsModified = false;
     }
@@ -227,6 +229,8 @@ public sealed class TextDocument
         _wordWrapModel?.OnInsert(offset, text.Count(c => c == '\n'));
         _inlayHintModel?.OnInsert(offset, text.Length);
         _readOnlyModel?.OnInsert(offset, text.Length);
+        _bookmarkModel?.OnInsert(_buffer.OffsetToPosition(offset).Line,
+            text.Count(c => c == '\n'));
         IsModified = true;
         PostEditHook();
     }
@@ -263,6 +267,7 @@ public sealed class TextDocument
         _wordWrapModel?.OnDelete(offset, deletedNewlines);
         _inlayHintModel?.OnDelete(offset, length);
         _readOnlyModel?.OnDelete(offset, length);
+        _bookmarkModel?.OnDelete(_buffer.OffsetToPosition(offset).Line, deletedNewlines);
         IsModified = true;
         PostEditHook();
     }
@@ -529,6 +534,32 @@ public sealed class TextDocument
     public Navigation.CursorHistory GetCursorHistory()
         => _cursorHistory ??= new Navigation.CursorHistory();
 
+    /// <summary>
+    /// Move the caret to <paramref name="line"/>/<paramref name="column"/> (both zero-based)
+    /// and push the new position into the cursor history.
+    /// Both values are clamped to valid document ranges.
+    /// </summary>
+    public void GoTo(int line, int column = 0, string? filePath = null)
+    {
+        line   = Math.Clamp(line,   0, Math.Max(0, LineCount - 1));
+        column = Math.Clamp(column, 0, GetLine(line).Length);
+        int offset = PositionToOffset(line, column);
+        GetCursorHistory().Push(offset, filePath ?? FilePath);
+    }
+
+    // ── Bookmarks ─────────────────────────────────────────────────────────
+
+    private Navigation.BookmarkModel? _bookmarkModel;
+
+    /// <summary>
+    /// Returns the <see cref="Navigation.BookmarkModel"/> for this document,
+    /// creating it on first access.
+    /// Bookmarked lines are automatically remapped when lines are inserted or deleted.
+    /// All bookmarks are cleared on <see cref="Load"/> / <see cref="LoadFileAsync"/>.
+    /// </summary>
+    public Navigation.BookmarkModel GetBookmarkModel()
+        => _bookmarkModel ??= new Navigation.BookmarkModel();
+
     // ── Word wrap ─────────────────────────────────────────────────────────
 
     private WordWrap.WordWrapModel? _wordWrapModel;
@@ -677,6 +708,32 @@ public sealed class TextDocument
     {
         if (string.IsNullOrEmpty(pattern)) return 0;
 
+        // Fast path: regex replacement with capture-group references ($1, $2, …).
+        // Regex.Replace handles group expansion natively — use it directly.
+        if (opts?.UseRegex == true && replacement.Contains('$'))
+        {
+            var rxOpts2 = System.Text.RegularExpressions.RegexOptions.Compiled;
+            if (opts.CaseSensitive == false)
+                rxOpts2 |= System.Text.RegularExpressions.RegexOptions.IgnoreCase;
+            var rx2        = new System.Text.RegularExpressions.Regex(pattern, rxOpts2);
+            string fullDoc = _buffer.GetText();
+            int count2     = rx2.Matches(fullDoc).Count;
+            if (count2 == 0) return 0;
+            string result2 = rx2.Replace(fullDoc, replacement);
+            var cmd2 = new Commands.BulkReplaceCommand(
+                _buffer, result2.ToCharArray(), result2.Length, count2, pattern, replacement);
+            _history.Execute(cmd2);
+            _decorations.Clear();
+            _highlightCache.InvalidateAll();
+            _foldingModel?.Invalidate();
+            _changeTracker?.Invalidate();
+            _wordWrapModel?.Invalidate();
+            _inlayHintModel?.ClearHints();
+            _searcher  = null;
+            IsModified = true;
+            return count2;
+        }
+
         // ── 1. Collect matches ────────────────────────────────────────────
         var matches = Searcher.FindAll(pattern, opts).ToList();
         if (matches.Count == 0) return 0;
@@ -734,6 +791,29 @@ public sealed class TextDocument
         IsModified = true;
 
         return matches.Count;
+    }
+
+    // ── Formatting ────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Format a range of lines using <paramref name="formatter"/> as a single undo step.
+    /// When <paramref name="endLine"/> is <see langword="null"/> the range extends to the
+    /// end of the document.
+    /// If the formatter returns text equal to the original no edit is made and the undo
+    /// stack is not modified.
+    /// </summary>
+    public void Format(Formatting.IDocumentFormatter formatter,
+        int startLine = 0, int? endLine = null)
+    {
+        int lastLine    = Math.Min(endLine ?? LineCount - 1, LineCount - 1);
+        int startOffset = PositionToOffset(startLine, 0);
+        int endOffset   = lastLine >= LineCount - 1
+            ? Length
+            : PositionToOffset(lastLine + 1, 0);
+        string original  = GetText(startOffset, endOffset - startOffset);
+        string formatted = formatter.Format(original);
+        if (formatted == original) return;
+        Replace(startOffset, endOffset - startOffset, formatted);
     }
 
     // ── Diagnostics ──────────────────────────────────────────────────────
