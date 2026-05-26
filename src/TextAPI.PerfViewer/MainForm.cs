@@ -26,6 +26,7 @@ public sealed partial class MainForm : Form
     private readonly TabPage            _tabChart     = new();
     private readonly TabPage            _tabGrid      = new();
     private readonly TabPage            _tabCompare   = new();
+    private readonly Panel              _chartScroll  = new();
     private readonly PictureBox         _chartPicture = new();
     private readonly DataGridView       _grid         = new();
     private readonly RichTextBox        _compareBox   = new();
@@ -150,11 +151,17 @@ public sealed partial class MainForm : Form
 
         // Chart tab
         _tabChart.Text      = "  Chart  ";
-        _chartPicture.Dock  = DockStyle.Fill;
-        _chartPicture.SizeMode = PictureBoxSizeMode.Zoom;
-        _chartPicture.BackColor = Color.White;
-        _chartPicture.Resize += (_, _) => RedrawChart();
-        _tabChart.Controls.Add(_chartPicture);
+
+        _chartScroll.Dock        = DockStyle.Fill;
+        _chartScroll.AutoScroll  = true;
+        _chartScroll.BackColor   = Color.White;
+
+        _chartPicture.SizeMode   = PictureBoxSizeMode.Normal;
+        _chartPicture.BackColor  = Color.White;
+
+        _chartScroll.Controls.Add(_chartPicture);
+        _chartScroll.Resize += (_, _) => RedrawChart();
+        _tabChart.Controls.Add(_chartScroll);
 
         // Grid tab
         _tabGrid.Text = "  Data table  ";
@@ -298,20 +305,39 @@ public sealed partial class MainForm : Form
 
     // ── Chart tab ─────────────────────────────────────────────────────────
 
+    private bool _isRedrawing;
     private void RedrawChart()
     {
+        if (_isRedrawing) return;
         if (_tabs.SelectedTab != _tabChart) return;
-        var sz = _chartPicture.ClientSize;
-        if (sz.Width < 10 || sz.Height < 10)
+        var scrollSz = _chartScroll.ClientSize;
+        if (scrollSz.Width < 10 || scrollSz.Height < 10)
         {
             // Layout not complete yet — defer until the message pump settles
             BeginInvoke(RedrawChart);
             return;
         }
-        var bmp = DrawChart(sz);
-        var old = _chartPicture.Image;
-        _chartPicture.Image = bmp;
-        old?.Dispose();
+
+        _isRedrawing = true;
+        try
+        {
+            // Compute how many bars we will draw to size the bitmap
+            const int minSlotW = 80;
+            int barCount = _runs.Count == 0 ? 0 : Math.Min(_runs.Count, _lastRunCount);
+            int bmpW = Math.Max(scrollSz.Width,  barCount * minSlotW + 90 /* padL+padR */);
+            int bmpH = scrollSz.Height;
+
+            var bmp = DrawChart(new Size(bmpW, bmpH));
+            // Size the PictureBox to the bitmap so the scroll panel scrolls correctly
+            _chartPicture.Size  = bmp.Size;
+            var old = _chartPicture.Image;
+            _chartPicture.Image = bmp;
+            old?.Dispose();
+        }
+        finally
+        {
+            _isRedrawing = false;
+        }
     }
 
     private Bitmap DrawChart(Size size)
@@ -334,7 +360,7 @@ public sealed partial class MainForm : Form
         var visRuns = _runs.TakeLast(_lastRunCount).ToList();
         var data    = visRuns.Select(r =>
         {
-            var b = r.Results.FirstOrDefault(x => x.FullName == _selectedBenchmark);
+            var b = r.Results.FirstOrDefault(x => $"{x.Suite}|{x.Name}|{x.Label}" == _selectedBenchmark);
             return (Run: r, Ms: b?.Ms ?? -1L);
         }).ToList();
 
@@ -394,13 +420,15 @@ public sealed partial class MainForm : Form
             float cx  = padL + gap * i + gap / 2f;
             float bx  = cx - barW / 2f;
 
-            // X label
+            // X label — drawn at 45° to avoid overlap
             var lbl  = run.RunId.Length >= 8 ? run.RunId[..8] : run.RunId;
             var lbl2 = run.Timestamp.Length >= 11 ? run.Timestamp[5..] : run.Timestamp;
-            var lsz  = g.MeasureString(lbl, labelFont);
-            g.DrawString(lbl, labelFont, labelB, cx - lsz.Width / 2f, padT + h + 6);
-            var lsz2 = g.MeasureString(lbl2, labelFont);
-            g.DrawString(lbl2, labelFont, axisB, cx - lsz2.Width / 2f, padT + h + 20);
+            var state = g.Save();
+            g.TranslateTransform(cx, padT + h + 6);
+            g.RotateTransform(40f);
+            g.DrawString(lbl,  labelFont, labelB, 0, 0);
+            g.DrawString(lbl2, labelFont, axisB,  0, 14);
+            g.Restore(state);
 
             if (ms < 0)
             {
