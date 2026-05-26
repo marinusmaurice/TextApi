@@ -1,4 +1,4 @@
-# TextEditor API
+﻿# TextAPI
 
 A high-performance, feature-complete text-editor engine for .NET 10.
 Everything a code editor needs — from the piece-table buffer to syntax highlighting,
@@ -57,7 +57,7 @@ testability) or implement only a handful of features. This library provides the 
 stack — from the O(log n) piece-table buffer to TextMate grammar tokenisation — in
 pure managed C# with **1 809 tests** and no runtime dependencies beyond the BCL.
 
-| Benchmark | TextEditor API | VS Code (reference) |
+| Benchmark | TextAPI | VS Code (reference) |
 |---|---|---|
 | `GetLine` after 10 000 edits | **25 ms** | ~300 ms |
 | `ReplaceAll` 128 k occurrences | **< 500 ms** O(n) | ~17 s O(n log n) |
@@ -67,12 +67,12 @@ pure managed C# with **1 809 tests** and no runtime dependencies beyond the BCL.
 ## Quick Start
 
 ```bash
-dotnet add reference path/to/TextEditor.Core.csproj
+dotnet add reference path/to/TextAPI.Core.csproj
 ```
 
 ```csharp
-using TextEditor.Core;
-using TextEditor.Core.Cursor;
+using TextAPI.Core;
+using TextAPI.Core.Cursor;
 
 var doc = new TextDocument();
 doc.Load("Hello, World!\nSecond line.");
@@ -104,7 +104,7 @@ doc.GetCursorHistory().Back();       // go back
 ## Architecture
 
 ```
-TextEditor.Core
+TextAPI.Core
 ├── Buffer/          PieceTable + RB-tree  — O(log n) insert/delete/getline
 ├── Commands/        IEditorCommand, CommandHistory (undo/redo + smart grouping)
 ├── Cursor/          TextCursor, MultiCursor, WordBoundary
@@ -128,7 +128,7 @@ TextEditor.Core
 ├── WordWrap/        WordWrapModel
 └── TextDocument.cs  ← single entry point; wires everything together
 
-TextEditor.Repl
+TextAPI.Repl
 ├── CSharpScriptHost    Roslyn-backed stateful C# REPL
 ├── ScriptGlobals       doc / mc / Print() injected into every script
 ├── PluginRegistry      indexes + executes .csx plugin scripts
@@ -169,7 +169,7 @@ int offset      = doc.PositionToOffset(3, 5);
 ### 2. Cursor & Selection
 
 ```csharp
-using TextEditor.Core.Cursor;
+using TextAPI.Core.Cursor;
 
 var cursor = new TextCursor(doc, 0);
 
@@ -231,7 +231,7 @@ IEnumerable<string> history = doc.UndoDescriptions;
 ### 5. Search & Replace
 
 ```csharp
-using TextEditor.Core.Search;
+using TextAPI.Core.Search;
 
 // Literal search (Boyer-Moore-Horspool, O(n), piece-streaming)
 var opts = new SearchOptions { CaseSensitive = false, WholeWord = true };
@@ -260,7 +260,7 @@ doc.ReplaceAll(@"(\w+) (\w+)", "$2, $1",
 Incremental per-line tokenisation — only dirty lines are re-tokenised.
 
 ```csharp
-using TextEditor.Core.Language;
+using TextAPI.Core.Language;
 
 // Built-in C# tokeniser
 doc.SetTokeniser(new CSharpTokeniser());
@@ -279,7 +279,7 @@ doc.InvalidateHighlightCache(fromLine: 10);
 ### 7. Diff Engine
 
 ```csharp
-using TextEditor.Core.Diff;
+using TextAPI.Core.Diff;
 
 // Line-level Myers O(ND) diff
 DiffResult diff = TextDiff.Diff("old text", "new text");
@@ -307,7 +307,7 @@ string? closingIndent = doc.GetClosingBraceIndent(caretOffset);
 ### 9. Code Folding
 
 ```csharp
-using TextEditor.Core.Folding;
+using TextAPI.Core.Folding;
 
 var folding = doc.GetFoldingModel();
 folding.UpdateRegions(new BraceFoldingStrategy());
@@ -373,7 +373,7 @@ wrap.Resize(newViewportWidth: 120);
 ### 13. Inlay Hints
 
 ```csharp
-using TextEditor.Core.InlayHints;
+using TextAPI.Core.InlayHints;
 
 var hints = doc.GetInlayHintModel();
 Guid id = hints.AddHint(offset: 42, text: "count:", kind: InlayHintKind.Parameter);
@@ -388,7 +388,7 @@ hints.HintsChanged += (s, e) => { };
 ### 14. Snippet Engine
 
 ```csharp
-using TextEditor.Core.Snippets;
+using TextAPI.Core.Snippets;
 
 // Syntax: $1 $2 … $0 (exit), ${1:placeholder}, $TM_FILENAME, $CLIPBOARD
 Snippet snippet = SnippetEngine.Parse("for (int $1 = 0; $1 < $2; $1++)\n{\n\t$0\n}");
@@ -462,7 +462,7 @@ Returns the enclosing scope headers visible above the current viewport — ident
 to VS Code's sticky scroll.
 
 ```csharp
-using TextEditor.Core.StickyScroll;
+using TextAPI.Core.StickyScroll;
 
 var folding = doc.GetFoldingModel();
 folding.UpdateRegions(new BraceFoldingStrategy());
@@ -475,7 +475,7 @@ foreach (var entry in context)               // outermost first
 ### 21. Document Outline
 
 ```csharp
-using TextEditor.Core.Outline;
+using TextAPI.Core.Outline;
 
 var folding = doc.GetFoldingModel();
 folding.UpdateRegions(new BraceFoldingStrategy());
@@ -527,7 +527,7 @@ bm.BookmarksChanged += () => { };
 ### 24. Document Formatting
 
 ```csharp
-using TextEditor.Core.Formatting;
+using TextAPI.Core.Formatting;
 
 public sealed class PrettierFormatter : IDocumentFormatter
 {
@@ -545,7 +545,7 @@ Matches VS Code Ctrl+/ semantics: if every non-empty line is already commented,
 uncomment; otherwise comment. Single undo step.
 
 ```csharp
-using TextEditor.Core.Language;
+using TextAPI.Core.Language;
 
 LineCommentToggle.Toggle(doc, startLine: 0, endLine: 4);         // default "//"
 LineCommentToggle.Toggle(doc, startLine: 0, endLine: 4, prefix: "#");   // Python
@@ -555,7 +555,7 @@ LineCommentToggle.Toggle(doc, startLine: 0, endLine: 4, prefix: "--");  // SQL
 ### 26. Document Cleanup
 
 ```csharp
-using TextEditor.Core.Language;
+using TextAPI.Core.Language;
 
 int linesModified = DocumentCleanup.TrimTrailingWhitespace(doc);
 // Returns 0 and does NOT touch the undo stack when already clean
@@ -581,7 +581,7 @@ Tracks which lines are **Added**, **Modified**, or **Deleted** relative to the
 last load or save — the coloured gutter you see in VS Code.
 
 ```csharp
-using TextEditor.Core.ChangeTracking;
+using TextAPI.Core.ChangeTracking;
 
 var tracker = doc.GetChangeTracker();
 tracker.SetBaseline();                   // snapshot current state
@@ -600,7 +600,7 @@ tracker.ChangesUpdated += (s, e) => { };
 A simple line-oriented macro language — useful for headless batch processing.
 
 ```csharp
-using TextEditor.Core.Scripting;
+using TextAPI.Core.Scripting;
 
 var runner = new ScriptRunner(doc);
 runner.Run("""
@@ -622,11 +622,11 @@ runner.Run("""
 
 ## C# REPL
 
-`TextEditor.Repl` provides a Roslyn-backed, stateful C# scripting host.
+`TextAPI.Repl` provides a Roslyn-backed, stateful C# scripting host.
 Variables declared in one submission are available in the next.
 
 ```csharp
-using TextEditor.Repl;
+using TextAPI.Repl;
 
 var host = new CSharpScriptHost(doc, mc);
 
@@ -647,7 +647,7 @@ host.Reset();   // clears variables, keeps doc + mc references
 ### Interactive REPL demo
 
 ```bash
-dotnet run --project src/TextEditor.ReplDemo
+dotnet run --project src/TextAPI.ReplDemo
 ```
 
 Launches an 11-step guided tour then drops into an interactive `>` prompt.
@@ -681,7 +681,7 @@ Print($"Sorted {doc.LineCount} lines.");
 ### Using the registry
 
 ```csharp
-using TextEditor.Repl;
+using TextAPI.Repl;
 
 var reg = new PluginRegistry();
 reg.ScanDirectory("plugins/");          // load all *.csx in a folder
@@ -731,18 +731,18 @@ The library is tuned for the common editor workload on documents up to **100 MB*
 
 ```bash
 # Build everything
-dotnet build TextEditorApi.sln
+dotnet build TextAPI.sln
 
 # Run all 1 809 tests
-dotnet test src/TextEditor.Tests/TextEditor.Tests.csproj
+dotnet test src/TextAPI.Tests/TextAPI.Tests.csproj
 
 # Run a specific feature's tests
 dotnet test --filter "BookmarkTests"
 
 # Run a demo
-dotnet run --project src/TextEditor.UtilityDemo
-dotnet run --project src/TextEditor.ReplDemo
-dotnet run --project src/TextEditor.ReplDemo -- --no-tour
+dotnet run --project src/TextAPI.UtilityDemo
+dotnet run --project src/TextAPI.ReplDemo
+dotnet run --project src/TextAPI.ReplDemo -- --no-tour
 ```
 
 ---
@@ -750,34 +750,34 @@ dotnet run --project src/TextEditor.ReplDemo -- --no-tour
 ## Project Structure
 
 ```
-TextEditorApi.sln
+TextAPI.sln
 ├── src/
-│   ├── TextEditor.Core/            Main library (no dependencies)
-│   ├── TextEditor.Repl/            Roslyn C# scripting host + plugin registry
-│   ├── TextEditor.Tests/           1 809 xUnit tests
+│   ├── TextAPI.Core/            Main library (no dependencies)
+│   ├── TextAPI.Repl/            Roslyn C# scripting host + plugin registry
+│   ├── TextAPI.Tests/           1 809 xUnit tests
 │   │
-│   ├── TextEditor.ReplDemo/        Interactive C# REPL with feature tour
-│   ├── TextEditor.UtilityDemo/     GoTo, bookmarks, formatting, comments, cleanup, column select
-│   ├── TextEditor.SyntaxDemo/      Incremental syntax highlighting
-│   ├── TextEditor.DiffDemo/        Myers diff + inline char diff
-│   ├── TextEditor.BracketDemo/     Bracket matching + auto-indent
-│   ├── TextEditor.FoldingDemo/     Code folding + display/doc line mapping
-│   ├── TextEditor.EncodingDemo/    Encoding detection + BOM round-trip
-│   ├── TextEditor.UnicodeDemo/     Grapheme cluster editing scenarios
-│   ├── TextEditor.UndoGroupingDemo Smart undo coalescing comparison
-│   ├── TextEditor.ChangeTrackingDemo Dirty-line gutter markers
-│   ├── TextEditor.WrappingDemo/    Word wrap layout with line numbers
-│   ├── TextEditor.InlayHintsDemo/  Parameter name hints + offset remapping
-│   ├── TextEditor.SnippetDemo/     Tab-stop snippet expansion
-│   ├── TextEditor.BracketColorDemo Nesting-depth bracket colourisation
-│   ├── TextEditor.TmLanguageDemo/  TextMate grammar tokeniser
-│   ├── TextEditor.IndentGuideDemo/ Vertical indent guide rendering
-│   ├── TextEditor.MultiPasteDemo/  Distributed vs broadcast paste
-│   ├── TextEditor.ReadOnlyDemo/    Protected regions + violation handling
-│   ├── TextEditor.StickyScrollDemo Sticky scope headers
-│   ├── TextEditor.OutlineDemo/     Document outline tree
-│   ├── TextEditor.CursorHistoryDemo Back/Forward navigation
-│   └── TextEditor.PerfViewer/      Throughput benchmarks
+│   ├── TextAPI.ReplDemo/        Interactive C# REPL with feature tour
+│   ├── TextAPI.UtilityDemo/     GoTo, bookmarks, formatting, comments, cleanup, column select
+│   ├── TextAPI.SyntaxDemo/      Incremental syntax highlighting
+│   ├── TextAPI.DiffDemo/        Myers diff + inline char diff
+│   ├── TextAPI.BracketDemo/     Bracket matching + auto-indent
+│   ├── TextAPI.FoldingDemo/     Code folding + display/doc line mapping
+│   ├── TextAPI.EncodingDemo/    Encoding detection + BOM round-trip
+│   ├── TextAPI.UnicodeDemo/     Grapheme cluster editing scenarios
+│   ├── TextAPI.UndoGroupingDemo Smart undo coalescing comparison
+│   ├── TextAPI.ChangeTrackingDemo Dirty-line gutter markers
+│   ├── TextAPI.WrappingDemo/    Word wrap layout with line numbers
+│   ├── TextAPI.InlayHintsDemo/  Parameter name hints + offset remapping
+│   ├── TextAPI.SnippetDemo/     Tab-stop snippet expansion
+│   ├── TextAPI.BracketColorDemo Nesting-depth bracket colourisation
+│   ├── TextAPI.TmLanguageDemo/  TextMate grammar tokeniser
+│   ├── TextAPI.IndentGuideDemo/ Vertical indent guide rendering
+│   ├── TextAPI.MultiPasteDemo/  Distributed vs broadcast paste
+│   ├── TextAPI.ReadOnlyDemo/    Protected regions + violation handling
+│   ├── TextAPI.StickyScrollDemo Sticky scope headers
+│   ├── TextAPI.OutlineDemo/     Document outline tree
+│   ├── TextAPI.CursorHistoryDemo Back/Forward navigation
+│   └── TextAPI.PerfViewer/      Throughput benchmarks
 └── TODO.md
 ```
 

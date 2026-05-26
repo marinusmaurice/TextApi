@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "TextAPI.SyntaxDemo": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Administrator\\Downloads\\TextAPI\\src\\TextAPI.Core\\Buffer\\PieceTable.cs"
+    }
+  }
+}

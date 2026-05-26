@@ -1,4 +1,4 @@
-Outstanding features — priority order
+﻿Outstanding features — priority order
 
 Items 1–9 are COMPLETE.
 
@@ -197,10 +197,10 @@ REMAINING — ordered most-impactful to least
     single undo); NormalizeLineEndings (SaveEolStyle + strips stray \r); 10 tests
 ✅  Column selection — MultiCursor.AddColumnSelection(startLine, endLine, col);
     col clamped per line; replaces existing cursors; 8 tests
-✅  Plugin system — PluginRegistry in TextEditor.Repl; .csx frontmatter
+✅  Plugin system — PluginRegistry in TextAPI.Repl; .csx frontmatter
     (// @plugin / Name / Description / Tags / // @end); Search by name/tag/desc
     case-insensitive; Execute via isolated CSharpScriptHost; ScanDirectory; 11 tests
-✅  TextEditor.UtilityDemo — CLI demo app showing all 7 utility features
+✅  TextAPI.UtilityDemo — CLI demo app showing all 7 utility features
 
 // 23  LSP client + Diagnostics model                            (large)
 //     DiagnosticsModel: stores Diagnostic(range, severity, message, code)
@@ -235,7 +235,7 @@ Where this API beats VS Code today:
   ReplaceAll                73 ms O(n) single-pass vs O(n log n) sequential
 
 Every new feature must:
-  • Include full xUnit test coverage in TextEditor.Tests
+  • Include full xUnit test coverage in TextAPI.Tests
   • Include a CLI demo app (or extend an existing one) in src/
   • Follow the existing lazy-factory pattern (GetXxxModel()) for models
   • Wire OnInsert/OnDelete into TextDocument for live remapping

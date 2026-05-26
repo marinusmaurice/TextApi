@@ -12,8 +12,13 @@
       "Bash(dotnet run:*)",
       "Bash(dotnet new:*)",
       "Bash(dotnet restore:*)",
-      "Bash(find C:UsersAdministratorDownloadsTextEditorApi_v5 -name *DiffEngine* -o -name *Diff*)",
-      "Bash(ls \"C:\\\\Users\\\\Administrator\\\\Downloads\\\\TextEditorApi_v5\\\\src\\\\TextEditor.ChangeTrackingDemo\"\" 2>/dev/null || ls \"C:UsersAdministratorDownloadsTextEditorApi_v5src\"\")"
+      "Bash(find C:UsersAdministratorDownloadsTextAPI -name *DiffEngine* -o -name *Diff*)",
+      "Bash(ls \"C:\\\\Users\\\\Administrator\\\\Downloads\\\\TextAPI\\\\src\\\\TextAPI.ChangeTrackingDemo\"\" 2>/dev/null || ls \"C:UsersAdministratorDownloadsTextAPIsrc\"\")",
+      "Bash(grep -h ^namespace /c/Users/Administrator/Downloads/TextAPI/src/TextAPI.Repl/*.cs)",
+      "Bash(find /c/Users/Administrator/Downloads/TextAPI/src/TextAPI.Repl -name *.cs)",
+      "Bash(powershell -Command \"\n\\\\$root = 'C:\\\\Users\\\\Administrator\\\\Downloads\\\\TextAPI'\n\\\\$files = Get-ChildItem -Path \\\\$root -Recurse -File -Include '*.cs','*.csproj','*.sln','*.md','*.csx','*.json','*.txt','*.xml' |\n    Where-Object { \\\\$_.FullName -notmatch '\\\\\\\\\\\\\\\\\\(obj|bin\\)\\\\\\\\\\\\\\\\' }\n\n\\\\$count = 0\nforeach \\(\\\\$file in \\\\$files\\) {\n    \\\\$content = [System.IO.File]::ReadAllText\\(\\\\$file.FullName, [System.Text.Encoding]::UTF8\\)\n    \\\\$new = \\\\$content\n    \\\\$new = \\\\$new -replace 'TextAPI',   'TextAPI'\n    \\\\$new = \\\\$new -replace 'TextAPI',       'TextAPI'\n    \\\\$new = \\\\$new -replace 'TextAPI\\\\.',        'TextAPI.'\n    \\\\$new = \\\\$new -replace 'TextAPI',      'TextAPI'\n    \\\\$new = \\\\$new -replace '\\\\bTextEditor\\\\b',      'TextAPI'\n    if \\(\\\\$new -ne \\\\$content\\) {\n        [System.IO.File]::WriteAllText\\(\\\\$file.FullName, \\\\$new, [System.Text.Encoding]::UTF8\\)\n        \\\\$count++\n    }\n}\nWrite-Host \\\\\"\\\\$count files updated\\\\\"\n\")",
+      "Bash(cmd.exe /C \"move \\\\\"C:\\\\Users\\\\Administrator\\\\Downloads\\\\TextEditorApi_v5\\\\src\\\\TextEditor.Core\\\\\" \\\\\"C:\\\\Users\\\\Administrator\\\\Downloads\\\\TextEditorApi_v5\\\\src\\\\TextAPI.Core\\\\\"\")",
+      "Bash(grep -r TextEditor C:/Users/Administrator/Downloads/TextEditorApi_v5/src --include=*.cs --include=*.csproj --include=*.sln --include=*.md --include=*.csx -l)"
     ]
   }
 }
