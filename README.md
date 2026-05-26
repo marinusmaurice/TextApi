@@ -1,6 +1,6 @@
 # TextEditor API
 
-A high-performance, feature-complete text-editor engine for .NET 8.
+A high-performance, feature-complete text-editor engine for .NET 10.
 Everything a code editor needs — from the piece-table buffer to syntax highlighting,
 multi-cursor editing, code folding, snippet expansion, and a live C# REPL — packaged
 as a clean, testable library with no UI dependencies.
@@ -727,7 +727,7 @@ The library is tuned for the common editor workload on documents up to **100 MB*
 
 ## Building & Testing
 
-**Prerequisites:** .NET 8 SDK
+**Prerequisites:** .NET 10 SDK
 
 ```bash
 # Build everything
