@@ -9,7 +9,7 @@
 ///     <description>
 ///       <see cref="GetIndent"/> returns the whitespace prefix for the new
 ///       line.  It copies the current line's leading whitespace and adds one
-///       extra <paramref name="tabText"/> level when the line's meaningful
+///       extra <c>tabText</c> level when the line's meaningful
 ///       content (trailing comments stripped) ends with <c>{</c>.
 ///     </description>
 ///   </item>

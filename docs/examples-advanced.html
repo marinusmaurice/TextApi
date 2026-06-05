@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Advanced Features Examples — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Advanced Features — Examples</h1>
+<p class="lead">Detailed examples for every method and property on Folding, Bookmarks, Inlay Hints, Sticky Scroll, Snippets, Outline, Word Wrap, Change Tracking, and Read-Only Regions.</p>
+
+<!-- ══════════════════════════════════════ FOLDING -->
+<h2>Folding</h2>
+
+<h3>Setup and UpdateRegions</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Folding</span>;
+
+<span class="kw">var</span> doc     = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+doc.<span class="fn">Load</span>(<span class="st">"""
+class Foo {
+    void Bar() {
+        int x = 1;
+    }
+    void Baz() {
+        int y = 2;
+    }
+}
+"""</span>);
+
+<span class="kw">var</span> model = doc.<span class="fn">GetFoldingModel</span>();
+model.<span class="fn">UpdateRegions</span>(<span class="kw">new</span> <span class="ty">BraceFoldingStrategy</span>(), doc);
+
+Console.<span class="fn">WriteLine</span>(<span class="st">$"Regions: {model.Regions.Count}"</span>);         <span class="cm">// 3 (class, Bar, Baz)</span>
+Console.<span class="fn">WriteLine</span>(<span class="st">$"Visible: {model.VisibleLineCount}"</span>);       <span class="cm">// 9 (all lines)</span>
+Console.<span class="fn">WriteLine</span>(<span class="st">$"IsStale: {model.IsStale}"</span>);               <span class="cm">// false</span></code></pre>
+
+<h3>Regions — FoldRegion properties</h3>
+<pre><code><span class="kw">foreach</span> (<span class="kw">var</span> region <span class="kw">in</span> model.<span class="pr">Regions</span>)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"[{region.StartLine}–{region.EndLine}] {region.Label}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  LineCount={region.LineCount} HiddenLineCount={region.HiddenLineCount}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  IsFolded={region.IsFolded}"</span>);
+}</code></pre>
+
+<h3>Fold, Unfold, ToggleFold</h3>
+<pre><code><span class="kw">int</span> barStartLine = model.<span class="pr">Regions</span>[<span class="nm">1</span>].<span class="pr">StartLine</span>; <span class="cm">// "void Bar() {"</span>
+
+model.<span class="fn">Fold</span>(barStartLine);
+Console.<span class="fn">WriteLine</span>(model.<span class="pr">VisibleLineCount</span>); <span class="cm">// 7  (Bar's body hidden)
+
+model.Unfold(barStartLine);
+Console.WriteLine(model.VisibleLineCount); // 9  (restored)
+
+model.ToggleFold(barStartLine);            // fold
+Console.WriteLine(model.Regions[1].IsFolded); // true
+
+model.ToggleFold(barStartLine);            // unfold
+Console.WriteLine(model.Regions[1].IsFolded); // false</span></code></pre>
+
+<h3>FoldAll / UnfoldAll</h3>
+<pre><code>model.<span class="fn">FoldAll</span>();
+Console.<span class="fn">WriteLine</span>(model.<span class="pr">VisibleLineCount</span>); <span class="cm">// 1  (only "class Foo {" visible — outer fold hides everything else)
+
+model.UnfoldAll();
+Console.WriteLine(model.VisibleLineCount); // 9</span></code></pre>
+
+<h3>IsLineVisible / IsLineFolded</h3>
+<pre><code>model.<span class="fn">Fold</span>(model.<span class="pr">Regions</span>[<span class="nm">1</span>].<span class="pr">StartLine</span>); <span class="cm">// fold Bar
+
+Console.WriteLine(model.IsLineVisible(0));   // true  (class header)
+Console.WriteLine(model.IsLineFolded(2));    // true  (Bar body line)
+Console.WriteLine(model.IsLineFolded(5));    // false (Baz — not folded)</span></code></pre>
+
+<h3>GetVisibleLines</h3>
+<pre><code>model.<span class="fn">Fold</span>(model.<span class="pr">Regions</span>[<span class="nm">1</span>].<span class="pr">StartLine</span>);
+<span class="kw">int</span>[] visible = model.<span class="fn">GetVisibleLines</span>();
+<span class="kw">foreach</span> (<span class="kw">int</span> line <span class="kw">in</span> visible)
+    Console.<span class="fn">Write</span>(<span class="st">$"{line} "</span>);
+<span class="cm">// 0 1 5 6 7 8  (Bar's lines 2,3,4 are hidden)</span></code></pre>
+
+<h3>ToDisplayLine / ToDocumentLine</h3>
+<pre><code>model.<span class="fn">Fold</span>(model.<span class="pr">Regions</span>[<span class="nm">1</span>].<span class="pr">StartLine</span>);
+
+<span class="cm">// Document line 5 (start of Baz) maps to display row 2 (0-based)</span>
+<span class="kw">int</span> displayRow = model.<span class="fn">ToDisplayLine</span>(docLine: <span class="nm">5</span>);
+Console.<span class="fn">WriteLine</span>(displayRow); <span class="cm">// 2
+
+// Display row 2 maps back to document line 5
+int docLine = model.ToDocumentLine(displayRow: 2);
+Console.WriteLine(docLine); // 5</span></code></pre>
+
+<h3>RegionsChanged and FoldStateChanged events</h3>
+<pre><code>model.<span class="pr">RegionsChanged</span>   += (s, e) => Console.<span class="fn">WriteLine</span>(<span class="st">"Regions re-detected"</span>);
+model.<span class="pr">FoldStateChanged</span> += (s, e) => Console.<span class="fn">WriteLine</span>(<span class="st">"Fold state changed"</span>);
+
+model.<span class="fn">Fold</span>(<span class="nm">0</span>);           <span class="cm">// fires FoldStateChanged</span>
+model.<span class="fn">UpdateRegions</span>(<span class="kw">new</span> <span class="ty">BraceFoldingStrategy</span>(), doc); <span class="cm">// fires RegionsChanged</span></code></pre>
+
+<!-- ══════════════════════════════════════ BOOKMARKS -->
+<h2>Bookmarks</h2>
+
+<h3>Toggle and IsBookmarked</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Navigation</span>;
+
+doc.<span class="fn">Load</span>(<span class="st">"line0\nline1\nline2\nline3"</span>);
+<span class="kw">var</span> bm = doc.<span class="fn">GetBookmarkModel</span>();
+
+<span class="kw">bool</span> added   = bm.<span class="fn">Toggle</span>(<span class="nm">1</span>); Console.<span class="fn">WriteLine</span>(added);             <span class="cm">// true  (bookmarked)</span>
+<span class="kw">bool</span> removed = bm.<span class="fn">Toggle</span>(<span class="nm">1</span>); Console.<span class="fn">WriteLine</span>(removed);           <span class="cm">// false (removed)</span>
+
+bm.<span class="fn">Toggle</span>(<span class="nm">0</span>);
+bm.<span class="fn">Toggle</span>(<span class="nm">2</span>);
+Console.<span class="fn">WriteLine</span>(bm.<span class="fn">IsBookmarked</span>(<span class="nm">0</span>)); <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(bm.<span class="fn">IsBookmarked</span>(<span class="nm">1</span>)); <span class="cm">// false  (removed above)</span>
+Console.<span class="fn">WriteLine</span>(bm.<span class="fn">IsBookmarked</span>(<span class="nm">2</span>)); <span class="cm">// true</span></code></pre>
+
+<h3>GetAll</h3>
+<pre><code>bm.<span class="fn">Toggle</span>(<span class="nm">3</span>);
+<span class="kw">foreach</span> (<span class="kw">int</span> line <span class="kw">in</span> bm.<span class="fn">GetAll</span>())
+    Console.<span class="fn">Write</span>(<span class="st">$"{line} "</span>);
+<span class="cm">// 0 2 3  (ascending order)</span></code></pre>
+
+<h3>NextBookmark / PrevBookmark</h3>
+<pre><code><span class="cm">// From line 1, find the next bookmark</span>
+<span class="kw">int</span>? next = bm.<span class="fn">NextBookmark</span>(fromLine: <span class="nm">1</span>);
+Console.<span class="fn">WriteLine</span>(next); <span class="cm">// 2
+
+// From line 2, find the previous
+int? prev = bm.PrevBookmark(fromLine: 2);
+Console.WriteLine(prev); // 0
+
+// No bookmark found → null
+int? none = bm.NextBookmark(fromLine: 10);
+Console.WriteLine(none.HasValue); // false</span></code></pre>
+
+<h3>Navigation with cursor</h3>
+<pre><code><span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc);
+<span class="kw">int</span>? nextLine = bm.<span class="fn">NextBookmark</span>(cursor.<span class="pr">CaretLine</span>);
+<span class="kw">if</span> (nextLine.HasValue)
+    cursor.<span class="fn">MoveTo</span>(doc.<span class="fn">PositionToOffset</span>(nextLine.Value, <span class="nm">0</span>));</code></pre>
+
+<h3>OnInsert / OnDelete — remap after edits</h3>
+<pre><code><span class="cm">// Bookmarks at lines 0, 2, 3
+// Insert 2 new lines before line 1 → bookmarks at 0, 2, 3 become 0, 4, 5</span>
+bm.<span class="fn">OnInsert</span>(atLine: <span class="nm">1</span>, count: <span class="nm">2</span>);
+Console.<span class="fn">WriteLine</span>(bm.<span class="fn">GetAll</span>().<span class="fn">SequenceEqual</span>(<span class="kw">new</span>[] { <span class="nm">0</span>, <span class="nm">4</span>, <span class="nm">5</span> })); <span class="cm">// true
+
+// Delete line 1 → bookmarks at 0, 4, 5 → after delete become 0, 3, 4
+bm.OnDelete(atLine: 1, count: 1);
+Console.WriteLine(bm.GetAll().SequenceEqual(new[] { 0, 3, 4 })); // true</span></code></pre>
+
+<h3>Clear</h3>
+<pre><code>bm.<span class="fn">Clear</span>();
+Console.<span class="fn">WriteLine</span>(bm.<span class="fn">GetAll</span>().<span class="fn">Any</span>()); <span class="cm">// false</span></code></pre>
+
+<h3>BookmarksChanged event</h3>
+<pre><code>bm.<span class="pr">BookmarksChanged</span> += (s, e) => Console.<span class="fn">WriteLine</span>(<span class="st">"Bookmarks updated — refresh gutter"</span>);
+bm.<span class="fn">Toggle</span>(<span class="nm">5</span>); <span class="cm">// fires the event</span></code></pre>
+
+<!-- ══════════════════════════════════════ INLAY HINTS -->
+<h2>Inlay Hints</h2>
+
+<h3>AddHint</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.InlayHints</span>;
+
+doc.<span class="fn">Load</span>(<span class="st">"Foo(42, true, \"hello\")"</span>);
+<span class="kw">var</span> hints = doc.<span class="fn">GetInlayHintModel</span>();
+
+<span class="ty">Guid</span> id1 = hints.<span class="fn">AddHint</span>(<span class="kw">new</span> <span class="ty">InlayHint</span>(
+    offset:  <span class="nm">4</span>,
+    text:    <span class="st">"value:"</span>,
+    kind:    <span class="ty">InlayHintKind</span>.<span class="pr">Parameter</span>,
+    tooltip: <span class="st">"int value"</span>
+));
+<span class="ty">Guid</span> id2 = hints.<span class="fn">AddHint</span>(<span class="kw">new</span> <span class="ty">InlayHint</span>(
+    offset:  <span class="nm">8</span>,
+    text:    <span class="st">"flag:"</span>,
+    kind:    <span class="ty">InlayHintKind</span>.<span class="pr">Parameter</span>,
+    tooltip: <span class="st">"bool flag"</span>
+));
+
+Console.<span class="fn">WriteLine</span>(hints.<span class="pr">AllHints</span>.<span class="pr">Count</span>); <span class="cm">// 2</span></code></pre>
+
+<h3>InlayHint properties</h3>
+<pre><code><span class="kw">var</span> h = hints.<span class="pr">AllHints</span>[<span class="nm">0</span>];
+Console.<span class="fn">WriteLine</span>(h.<span class="pr">Id</span>);       <span class="cm">// Guid</span>
+Console.<span class="fn">WriteLine</span>(h.<span class="pr">Offset</span>);   <span class="cm">// 4</span>
+Console.<span class="fn">WriteLine</span>(h.<span class="pr">Text</span>);     <span class="cm">// "value:"</span>
+Console.<span class="fn">WriteLine</span>(h.<span class="pr">Kind</span>);     <span class="cm">// Parameter</span>
+Console.<span class="fn">WriteLine</span>(h.<span class="pr">Tooltip</span>);  <span class="cm">// "int value"</span></code></pre>
+
+<h3>GetHintsInRange</h3>
+<pre><code><span class="kw">var</span> visible = hints.<span class="fn">GetHintsInRange</span>(<span class="nm">0</span>, <span class="nm">10</span>).<span class="fn">ToList</span>();
+Console.<span class="fn">WriteLine</span>(visible.<span class="pr">Count</span>); <span class="cm">// 2  (both hints in range)</span></code></pre>
+
+<h3>GetHintsByKind</h3>
+<pre><code>hints.<span class="fn">AddHint</span>(<span class="kw">new</span> <span class="ty">InlayHint</span>(<span class="nm">15</span>, <span class="st">"→ string"</span>, <span class="ty">InlayHintKind</span>.<span class="pr">Type</span>));
+
+<span class="kw">var</span> paramHints = hints.<span class="fn">GetHintsByKind</span>(<span class="ty">InlayHintKind</span>.<span class="pr">Parameter</span>).<span class="fn">ToList</span>();
+<span class="kw">var</span> typeHints  = hints.<span class="fn">GetHintsByKind</span>(<span class="ty">InlayHintKind</span>.<span class="pr">Type</span>).<span class="fn">ToList</span>();
+Console.<span class="fn">WriteLine</span>(paramHints.<span class="pr">Count</span>); <span class="cm">// 2</span>
+Console.<span class="fn">WriteLine</span>(typeHints.<span class="pr">Count</span>);  <span class="cm">// 1</span></code></pre>
+
+<h3>GetHintAt</h3>
+<pre><code><span class="ty">InlayHint</span>? h = hints.<span class="fn">GetHintAt</span>(offset: <span class="nm">4</span>);
+Console.<span class="fn">WriteLine</span>(h?.Text); <span class="cm">// "value:"
+
+InlayHint? none = hints.GetHintAt(offset: 99);
+Console.WriteLine(none.HasValue); // false</span></code></pre>
+
+<h3>SetHints — replace all at once</h3>
+<pre><code><span class="cm">// Typically called when language server provides fresh hints</span>
+hints.<span class="fn">SetHints</span>(<span class="kw">new</span>[]
+{
+    <span class="kw">new</span> <span class="ty">InlayHint</span>(<span class="nm">0</span>, <span class="st">"x:"</span>, <span class="ty">InlayHintKind</span>.<span class="pr">Parameter</span>),
+    <span class="kw">new</span> <span class="ty">InlayHint</span>(<span class="nm">5</span>, <span class="st">"y:"</span>, <span class="ty">InlayHintKind</span>.<span class="pr">Parameter</span>)
+});
+Console.<span class="fn">WriteLine</span>(hints.<span class="pr">AllHints</span>.<span class="pr">Count</span>); <span class="cm">// 2  (previous hints replaced)</span></code></pre>
+
+<h3>RemoveHint and ClearHints</h3>
+<pre><code>hints.<span class="fn">RemoveHint</span>(id1);
+Console.<span class="fn">WriteLine</span>(hints.<span class="pr">AllHints</span>.<span class="pr">Count</span>); <span class="cm">// 1
+
+hints.ClearHints();
+Console.WriteLine(hints.AllHints.Count); // 0</span></code></pre>
+
+<h3>HintsChanged event</h3>
+<pre><code>hints.<span class="pr">HintsChanged</span> += (s, e) => Console.<span class="fn">WriteLine</span>(<span class="st">"Hints updated — invalidate viewport"</span>);
+hints.<span class="fn">AddHint</span>(<span class="kw">new</span> <span class="ty">InlayHint</span>(<span class="nm">0</span>, <span class="st">"test:"</span>, <span class="ty">InlayHintKind</span>.<span class="pr">Other</span>)); <span class="cm">// fires</span></code></pre>
+
+<!-- ══════════════════════════════════════ STICKY SCROLL -->
+<h2>Sticky Scroll</h2>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.StickyScroll</span>;
+
+<span class="cm">// Requires a FoldingModel with regions detected</span>
+<span class="kw">var</span> foldingModel = doc.<span class="fn">GetFoldingModel</span>();
+foldingModel.<span class="fn">UpdateRegions</span>(<span class="kw">new</span> <span class="ty">BraceFoldingStrategy</span>(), doc);
+
+<span class="cm">// Called on every scroll event — firstVisibleLine is the viewport's top line (0-based)</span>
+<span class="kw">var</span> context = <span class="ty">StickyScroll</span>.<span class="fn">GetContext</span>(foldingModel, firstVisibleLine: <span class="nm">3</span>);
+
+Console.<span class="fn">WriteLine</span>(<span class="st">$"Sticky headers: {context.Count}"</span>);
+<span class="kw">foreach</span> (<span class="ty">StickyScrollEntry</span> entry <span class="kw">in</span> context)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  Line {entry.DocumentLine}: {entry.Label}"</span>);
+}
+<span class="cm">// e.g.:
+//   Line 0: class Foo {
+//   Line 1:     void Bar() {</span>
+
+<span class="cm">// StickyScrollEntry is a record struct — destructure if needed</span>
+<span class="kw">var</span> (label, docLine) = context[<span class="nm">0</span>];
+Console.<span class="fn">WriteLine</span>(<span class="st">$"{label} @ {docLine}"</span>);</code></pre>
+
+<!-- ══════════════════════════════════════ SNIPPETS -->
+<h2>Snippets</h2>
+
+<h3>Parse — parse once</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Snippets</span>;
+
+<span class="ty">Snippet</span> template = <span class="ty">SnippetEngine</span>.<span class="fn">Parse</span>(<span class="st">"for (int $1 = 0; $1 &lt; $2; $1++) {\n    $0\n}"</span>);
+
+Console.<span class="fn">WriteLine</span>(template.<span class="pr">TabStopIndices</span>.<span class="fn">SequenceEqual</span>(<span class="kw">new</span>[] { <span class="nm">1</span>, <span class="nm">2</span> })); <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(template.<span class="pr">HasExitStop</span>);  <span class="cm">// true  ($0 is the exit stop)</span></code></pre>
+
+<h3>BeginSnippet</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"    "</span>);  <span class="cm">// 4 spaces cursor position</span>
+<span class="ty">SnippetSession</span> session = <span class="ty">SnippetEngine</span>.<span class="fn">BeginSnippet</span>(doc, template, insertOffset: <span class="nm">4</span>);
+
+Console.<span class="fn">WriteLine</span>(session.<span class="pr">IsActive</span>);            <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(session.<span class="pr">CurrentTabStopIndex</span>); <span class="cm">// -1 (before first NextTabStop call)</span></code></pre>
+
+<h3>NextTabStop — Tab key handler</h3>
+<pre><code><span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc);
+
+<span class="ty">TabStop</span>? stop1 = session.<span class="fn">NextTabStop</span>();  <span class="cm">// move to $1</span>
+<span class="kw">if</span> (stop1 <span class="kw">is not null</span>)
+{
+    cursor.<span class="fn">SetSelection</span>(stop1.Value.<span class="pr">Offset</span>, stop1.Value.<span class="pr">Offset</span> + stop1.Value.<span class="pr">Length</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"TabStop {stop1.Value.Index} at {stop1.Value.Offset}+{stop1.Value.Length}"</span>);
+}</code></pre>
+
+<h3>TabStop properties</h3>
+<pre><code><span class="kw">var</span> stop = session.<span class="fn">NextTabStop</span>()!.Value;
+Console.<span class="fn">WriteLine</span>(stop.<span class="pr">Index</span>);   <span class="cm">// 1, 2, or 0 (exit)</span>
+Console.<span class="fn">WriteLine</span>(stop.<span class="pr">Offset</span>);  <span class="cm">// current offset in document</span>
+Console.<span class="fn">WriteLine</span>(stop.<span class="pr">Length</span>);  <span class="cm">// placeholder length</span></code></pre>
+
+<h3>UpdateTabStop — update mirrors</h3>
+<pre><code><span class="cm">// User typed "i" for the loop variable — update $1 and all mirrors</span>
+session.<span class="fn">UpdateTabStop</span>(tabStopIndex: <span class="nm">1</span>, newText: <span class="st">"i"</span>);
+<span class="cm">// All $1 placeholders in the snippet text are now "i"</span></code></pre>
+
+<h3>PrevTabStop — Shift+Tab</h3>
+<pre><code><span class="ty">TabStop</span>? prev = session.<span class="fn">PrevTabStop</span>();
+<span class="kw">if</span> (prev <span class="kw">is not null</span>)
+    cursor.<span class="fn">SetSelection</span>(prev.Value.<span class="pr">Offset</span>, prev.Value.<span class="pr">Offset</span> + prev.Value.<span class="pr">Length</span>);</code></pre>
+
+<h3>GetTabStops and GetPrimary</h3>
+<pre><code><span class="cm">// Get all tab-stop positions for index 1 (including mirrors)</span>
+<span class="kw">var</span> all1 = session.<span class="fn">GetTabStops</span>(<span class="nm">1</span>);
+Console.<span class="fn">WriteLine</span>(all1.<span class="pr">Count</span>); <span class="cm">// e.g. 3 for "for (int $1 = 0; $1 &lt; $2; $1++)"
+
+// Primary tab stop for index 1
+var primary = session.GetPrimary(1);
+Console.WriteLine(primary.HasValue); // true</span></code></pre>
+
+<h3>Commit and Cancel</h3>
+<pre><code><span class="cm">// After last tab stop → commit (keep inserted text)</span>
+<span class="ty">TabStop</span>? exitStop = session.<span class="fn">NextTabStop</span>(); <span class="cm">// reaches $0</span>
+<span class="kw">if</span> (exitStop == <span class="kw">null</span>)
+    session.<span class="fn">Commit</span>();  <span class="cm">// finalize — IsActive becomes false
+
+Console.WriteLine(session.IsActive);  // false
+
+// Or cancel (undo the entire snippet insertion):
+// session.Cancel();
+// Console.WriteLine(session.IsActive);  // false</span></code></pre>
+
+<h3>BeginSnippet with clipboard text and filename</h3>
+<pre><code><span class="ty">Snippet</span> t2 = <span class="ty">SnippetEngine</span>.<span class="fn">Parse</span>(<span class="st">"// File: $TM_FILENAME\n$CLIPBOARD\n$0"</span>);
+<span class="kw">var</span> s2 = <span class="ty">SnippetEngine</span>.<span class="fn">BeginSnippet</span>(
+    doc, t2, insertOffset: <span class="nm">0</span>,
+    clipboardText: <span class="st">"pasted content"</span>,
+    filename:      <span class="st">"MyFile.cs"</span>
+);</code></pre>
+
+<!-- ══════════════════════════════════════ OUTLINE -->
+<h2>Outline</h2>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Outline</span>;
+
+<span class="kw">var</span> folding = doc.<span class="fn">GetFoldingModel</span>();
+folding.<span class="fn">UpdateRegions</span>(<span class="kw">new</span> <span class="ty">BraceFoldingStrategy</span>(), doc);
+
+<span class="ty">IReadOnlyList</span>&lt;<span class="ty">OutlineNode</span>&gt; outline = <span class="ty">OutlineProvider</span>.<span class="fn">GetOutline</span>(folding);
+
+<span class="cm">// Recursive tree printer</span>
+<span class="kw">void</span> <span class="fn">Print</span>(<span class="ty">IReadOnlyList</span>&lt;<span class="ty">OutlineNode</span>&gt; nodes, <span class="kw">int</span> indent = <span class="nm">0</span>)
+{
+    <span class="kw">foreach</span> (<span class="kw">var</span> n <span class="kw">in</span> nodes)
+    {
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"{new string(' ', indent * 2)}{n.Label}"</span>);
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"{new string(' ', indent * 2)}  lines {n.StartLine}–{n.EndLine}, depth {n.Depth}"</span>);
+        <span class="fn">Print</span>(n.<span class="pr">Children</span>, indent + <span class="nm">1</span>);
+    }
+}
+<span class="fn">Print</span>(outline);
+<span class="cm">// class Foo {
+//   lines 0–8, depth 0
+//   void Bar() {
+//     lines 1–3, depth 1
+//   void Baz() {
+//     lines 4–6, depth 1</span></code></pre>
+
+<h3>OutlineNode — all properties</h3>
+<pre><code><span class="kw">var</span> first = outline[<span class="nm">0</span>];
+Console.<span class="fn">WriteLine</span>(first.<span class="pr">Label</span>);                     <span class="cm">// region header text</span>
+Console.<span class="fn">WriteLine</span>(first.<span class="pr">StartLine</span>);                  <span class="cm">// 0-based doc line</span>
+Console.<span class="fn">WriteLine</span>(first.<span class="pr">EndLine</span>);                    <span class="cm">// 0-based doc line</span>
+Console.<span class="fn">WriteLine</span>(first.<span class="pr">Depth</span>);                      <span class="cm">// 0 (top-level)</span>
+Console.<span class="fn">WriteLine</span>(first.<span class="pr">Children</span>.<span class="pr">Count</span>);             <span class="cm">// 2 (Bar + Baz)</span>
+
+<span class="cm">// Navigate to a node in the editor</span>
+<span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc);
+cursor.<span class="fn">MoveTo</span>(doc.<span class="fn">PositionToOffset</span>(first.<span class="pr">StartLine</span>, <span class="nm">0</span>));</code></pre>
+
+<!-- ══════════════════════════════════════ WORD WRAP -->
+<h2>Word Wrap</h2>
+
+<h3>Setup</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.WordWrap</span>;
+
+doc.<span class="fn">Load</span>(<span class="st">"Short line\nThis is a much longer line that will certainly wrap at 20 columns\nEnd"</span>);
+<span class="kw">var</span> wrap = doc.<span class="fn">GetWordWrapModel</span>(viewportWidth: <span class="nm">20</span>);
+
+Console.<span class="fn">WriteLine</span>(<span class="st">$"ViewportWidth:  {wrap.ViewportWidth}"</span>);  <span class="cm">// 20</span>
+Console.<span class="fn">WriteLine</span>(<span class="st">$"DisplayRowCount: {wrap.DisplayRowCount}"</span>); <span class="cm">// more than 3 (long line wraps)</span></code></pre>
+
+<h3>ToDisplayRow</h3>
+<pre><code><span class="cm">// Line 0 ("Short line") → display row 0</span>
+Console.<span class="fn">WriteLine</span>(wrap.<span class="fn">ToDisplayRow</span>(<span class="nm">0</span>)); <span class="cm">// 0
+
+// Line 1 (long line) → display row 1
+Console.WriteLine(wrap.ToDisplayRow(1)); // 1
+
+// Line 2 ("End") → display row beyond the long line's rows
+Console.WriteLine(wrap.ToDisplayRow(2)); // e.g. 5</span></code></pre>
+
+<h3>ToDocumentLine</h3>
+<pre><code><span class="cm">// Display row 0 → document line 0</span>
+Console.<span class="fn">WriteLine</span>(wrap.<span class="fn">ToDocumentLine</span>(<span class="nm">0</span>)); <span class="cm">// 0
+
+// Display rows inside the long line all map to line 1
+Console.WriteLine(wrap.ToDocumentLine(1)); // 1
+Console.WriteLine(wrap.ToDocumentLine(2)); // 1
+Console.WriteLine(wrap.ToDocumentLine(3)); // 1</span></code></pre>
+
+<h3>WrappedRowCount and IsWrapped</h3>
+<pre><code>Console.<span class="fn">WriteLine</span>(wrap.<span class="fn">WrappedRowCount</span>(<span class="nm">0</span>)); <span class="cm">// 1  (short line — one row)</span>
+Console.<span class="fn">WriteLine</span>(wrap.<span class="fn">WrappedRowCount</span>(<span class="nm">1</span>)); <span class="cm">// e.g. 4 (long line wraps to 4 rows)
+
+Console.WriteLine(wrap.IsWrapped(0)); // false
+Console.WriteLine(wrap.IsWrapped(1)); // true</span></code></pre>
+
+<h3>GetWrappedSegments</h3>
+<pre><code><span class="cm">// Character offset ranges for each visual row of line 1</span>
+<span class="kw">var</span> segs = wrap.<span class="fn">GetWrappedSegments</span>(<span class="nm">1</span>);
+<span class="kw">foreach</span> (<span class="kw">var</span> (start, end) <span class="kw">in</span> segs)
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  row chars [{start},{end}): \"{doc.GetText(start, end - start)}\""</span>);</code></pre>
+
+<h3>Resize</h3>
+<pre><code>wrap.<span class="fn">Resize</span>(newWidth: <span class="nm">80</span>);
+Console.<span class="fn">WriteLine</span>(wrap.<span class="pr">ViewportWidth</span>);  <span class="cm">// 80
+Console.WriteLine(wrap.IsWrapped(1));    // false  (80 cols, line fits)
+
+wrap.WrapChanged += (s, e) => Console.WriteLine("Wrap layout changed — redraw viewport");</span></code></pre>
+
+<!-- ══════════════════════════════════════ CHANGE TRACKING -->
+<h2>Change Tracking</h2>
+
+<h3>Setup and SetBaseline</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.ChangeTracking</span>;
+
+doc.<span class="fn">Load</span>(<span class="st">"line0\nline1\nline2\nline3"</span>);
+<span class="kw">var</span> tracker = doc.<span class="fn">GetChangeTracker</span>();
+tracker.<span class="fn">SetBaseline</span>();
+
+Console.<span class="fn">WriteLine</span>(tracker.<span class="pr">HasAnyChanges</span>); <span class="cm">// false</span></code></pre>
+
+<h3>GetStatus — per-line change marker</h3>
+<pre><code><span class="cm">// Edit line 1</span>
+doc.<span class="fn">Replace</span>(doc.<span class="fn">PositionToOffset</span>(<span class="nm">1</span>, <span class="nm">0</span>), doc.<span class="fn">GetLine</span>(<span class="nm">1</span>).<span class="pr">Length</span>, <span class="st">"MODIFIED"</span>);
+<span class="cm">// Insert a new line after line 2</span>
+doc.<span class="fn">Insert</span>(doc.<span class="fn">PositionToOffset</span>(<span class="nm">3</span>, <span class="nm">0</span>), <span class="st">"new line\n"</span>);
+
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">GetStatus</span>(<span class="nm">0</span>)); <span class="cm">// Clean</span>
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">GetStatus</span>(<span class="nm">1</span>)); <span class="cm">// Modified</span>
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">GetStatus</span>(<span class="nm">2</span>)); <span class="cm">// Clean</span>
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">GetStatus</span>(<span class="nm">3</span>)); <span class="cm">// Added</span>
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">GetStatus</span>(<span class="nm">4</span>)); <span class="cm">// Clean  (old line3)</span></code></pre>
+
+<h3>HasAnyChanges</h3>
+<pre><code>Console.<span class="fn">WriteLine</span>(tracker.<span class="pr">HasAnyChanges</span>); <span class="cm">// true</span></code></pre>
+
+<h3>ChangedLines</h3>
+<pre><code><span class="kw">foreach</span> (<span class="kw">var</span> (lineIndex, status) <span class="kw">in</span> tracker.<span class="fn">ChangedLines</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Line {lineIndex}: {status}"</span>);
+<span class="cm">// Line 1: Modified
+// Line 3: Added</span></code></pre>
+
+<h3>HasDeletionAbove</h3>
+<pre><code><span class="cm">// Delete line 2 from the baseline (from the perspective of the current document)</span>
+doc.<span class="fn">Delete</span>(doc.<span class="fn">PositionToOffset</span>(<span class="nm">2</span>, <span class="nm">0</span>), doc.<span class="fn">GetLine</span>(<span class="nm">2</span>).<span class="pr">Length</span> + <span class="nm">1</span>);
+
+<span class="cm">// HasDeletionAbove: true if baseline had lines deleted above this doc line</span>
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">HasDeletionAbove</span>(<span class="nm">2</span>)); <span class="cm">// true  (a line was removed)</span>
+Console.<span class="fn">WriteLine</span>(tracker.<span class="fn">HasDeletionAbove</span>(<span class="nm">0</span>)); <span class="cm">// false</span></code></pre>
+
+<h3>DeletionPoints</h3>
+<pre><code><span class="kw">foreach</span> (<span class="kw">int</span> point <span class="kw">in</span> tracker.<span class="fn">DeletionPoints</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Deletion marker above line {point}"</span>);</code></pre>
+
+<h3>SetBaseline after save</h3>
+<pre><code><span class="kw">async</span> <span class="ty">Task</span> <span class="fn">SaveAsync</span>()
+{
+    <span class="kw">await</span> doc.<span class="fn">SaveFileAsync</span>();
+    tracker.<span class="fn">SetBaseline</span>();  <span class="cm">// capture saved state as new baseline</span>
+    Console.<span class="fn">WriteLine</span>(tracker.<span class="pr">HasAnyChanges</span>); <span class="cm">// false</span>
+}</code></pre>
+
+<h3>ChangesUpdated event</h3>
+<pre><code>tracker.<span class="pr">ChangesUpdated</span> += (s, e) =>
+{
+    <span class="cm">// Re-render change gutter</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; doc.<span class="pr">LineCount</span>; i++)
+    {
+        <span class="kw">char</span> marker = tracker.<span class="fn">GetStatus</span>(i) <span class="kw">switch</span>
+        {
+            <span class="ty">LineStatus</span>.<span class="pr">Added</span>    => <span class="st">'+'</span>,
+            <span class="ty">LineStatus</span>.<span class="pr">Modified</span> => <span class="st">'~'</span>,
+            _                    => <span class="st">' '</span>
+        };
+        Console.<span class="fn">Write</span>(marker);
+    }
+};</code></pre>
+
+<!-- ══════════════════════════════════════ READ-ONLY -->
+<h2>Read-Only Regions</h2>
+
+<h3>Protect and IsReadOnly</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.ReadOnly</span>;
+
+doc.<span class="fn">Load</span>(<span class="st">"/* PROTECTED */\nEditable content\n/* END */"</span>);
+<span class="kw">var</span> readOnly = doc.<span class="fn">GetReadOnlyModel</span>();
+
+<span class="cm">// Protect the header (chars 0–15)</span>
+<span class="ty">Guid</span> id = readOnly.<span class="fn">Protect</span>(start: <span class="nm">0</span>, end: <span class="nm">15</span>);
+
+Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">IsReadOnly</span>(<span class="nm">0</span>));   <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">IsReadOnly</span>(<span class="nm">5</span>));   <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">IsReadOnly</span>(<span class="nm">16</span>));  <span class="cm">// false  (outside protected range)</span></code></pre>
+
+<h3>IsRangeReadOnly</h3>
+<pre><code>Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">IsRangeReadOnly</span>(<span class="nm">0</span>, <span class="nm">5</span>));   <span class="cm">// true   (overlaps [0,15))</span>
+Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">IsRangeReadOnly</span>(<span class="nm">10</span>, <span class="nm">3</span>)); <span class="cm">// true   (inside [0,15))</span>
+Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">IsRangeReadOnly</span>(<span class="nm">16</span>, <span class="nm">5</span>)); <span class="cm">// false  (no overlap)</span></code></pre>
+
+<h3>ReadOnlyViolationException</h3>
+<pre><code>doc.<span class="pr">EnforceReadOnly</span> = <span class="kw">true</span>; <span class="cm">// default
+
+try
+{
+    doc.Insert(5, "HACK");  // inside protected region
+}
+catch (ReadOnlyViolationException ex)
+{
+    Console.WriteLine(ex.Message); // e.g. "Offset 5 is within a read-only region"
+}</span></code></pre>
+
+<h3>Bypass protection programmatically</h3>
+<pre><code>doc.<span class="pr">EnforceReadOnly</span> = <span class="kw">false</span>;
+doc.<span class="fn">Insert</span>(<span class="nm">0</span>, <span class="st">"ALLOWED"</span>); <span class="cm">// succeeds</span>
+doc.<span class="pr">EnforceReadOnly</span> = <span class="kw">true</span>;</code></pre>
+
+<h3>GetRegions</h3>
+<pre><code>readOnly.<span class="fn">Protect</span>(<span class="nm">20</span>, <span class="nm">30</span>);
+<span class="kw">foreach</span> (<span class="kw">var</span> (rid, start, end) <span class="kw">in</span> readOnly.<span class="fn">GetRegions</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"[{start},{end})"</span>);
+<span class="cm">// [0,15)
+// [20,30)</span></code></pre>
+
+<h3>Unprotect / UnprotectAll</h3>
+<pre><code>readOnly.<span class="fn">Unprotect</span>(id);  <span class="cm">// remove [0,15) protection</span>
+Console.<span class="fn">WriteLine</span>(readOnly.<span class="fn">GetRegions</span>().<span class="fn">Count</span>()); <span class="cm">// 1
+
+readOnly.UnprotectAll();
+Console.WriteLine(readOnly.GetRegions().Count()); // 0</span></code></pre>
+
+<h3>RegionsChanged event</h3>
+<pre><code>readOnly.<span class="pr">RegionsChanged</span> += (s, e) => Console.<span class="fn">WriteLine</span>(<span class="st">"Protected regions changed"</span>);
+readOnly.<span class="fn">Protect</span>(<span class="nm">0</span>, <span class="nm">5</span>); <span class="cm">// fires event</span></code></pre>
+</main></body></html>

@@ -594,9 +594,8 @@ public sealed class PieceTable
     {
         foreach (var node in _tree.InOrder())
         {
-            var arr    = GetBufferArray(node);
-            int start  = node.BufferIndex == 0 ? node.Start : node.Start;
-            yield return new ReadOnlyMemory<char>(arr, start, node.Length);
+            var arr = GetBufferArray(node);
+            yield return new ReadOnlyMemory<char>(arr, node.Start, node.Length);
         }
     }
 
@@ -766,41 +765,12 @@ public sealed class PieceTable
         RebuildPieceLinks();
     }
 
-    private void SplitAndDeleteMiddle(RbTreeNode node, int delStart, int delEnd)
-    {
-        int leftLf  = EolRegistry.CountLf(GetBufferSpan(node, 0, delStart));
-        int rightLf = node.LineFeedCount
-                    - leftLf
-                    - EolRegistry.CountLf(GetBufferSpan(node, delStart, delEnd - delStart));
-
-        // Capture prev BEFORE deleting node (Delete clears the boundary-tag links)
-        var prevNode = node.PrevPiece;
-
-        var left = new RbTreeNode
-        {
-            BufferIndex   = node.BufferIndex,
-            Start         = node.Start,
-            Length        = delStart,
-            LineFeedCount = leftLf
-        };
-        var right = new RbTreeNode
-        {
-            BufferIndex   = node.BufferIndex,
-            Start         = node.Start + delEnd,
-            Length        = node.Length - delEnd,
-            LineFeedCount = rightLf
-        };
-        _tree.Delete(node);
-        _tree.InsertAfter(prevNode, left);
-        _tree.InsertAfter(left, right);
-    }
-
     private void ForceMetadataUpdate(RbTreeNode node)
     {
         var cur = node;
         while (!cur.IsNil)
         {
-            cur.UpdateMetadata(_tree.Nil);
+            cur.UpdateMetadata();
             cur = cur.Parent!;
         }
     }

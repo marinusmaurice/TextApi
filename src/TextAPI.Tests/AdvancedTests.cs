@@ -57,14 +57,14 @@ public class TextDocumentStateTests
         doc.IsModified.Should().BeTrue();
     }
 
-    [Fact] public void IsModified_FalseAfterSave()
+    [Fact] public async Task IsModified_FalseAfterSave()
     {
         var doc = new TextDocument();
         doc.Load("Hello");
         doc.Insert(5, " World");
         doc.IsModified.Should().BeTrue();
         using var ms = new MemoryStream();
-        doc.SaveAsync(ms).GetAwaiter().GetResult();
+        await doc.SaveAsync(ms);
         doc.IsModified.Should().BeFalse();
     }
 

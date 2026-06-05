@@ -1498,9 +1498,9 @@ public class CursorWordMoveFuzzTests
     }
 
     [Theory]
-    [InlineData(7001, 100)]
-    [InlineData(7002, 100)]
-    public void RepeatWordRight_ReachesDocEnd(int seed, int ops)
+    [InlineData(7001)]
+    [InlineData(7002)]
+    public void RepeatWordRight_ReachesDocEnd(int seed)
     {
         var rng  = new Random(seed);
         var text = string.Join(" ", Enumerable.Range(0, 20)
@@ -1515,9 +1515,9 @@ public class CursorWordMoveFuzzTests
     }
 
     [Theory]
-    [InlineData(8001, 100)]
-    [InlineData(8002, 100)]
-    public void RepeatWordLeft_ReachesDocStart(int seed, int ops)
+    [InlineData(8001)]
+    [InlineData(8002)]
+    public void RepeatWordLeft_ReachesDocStart(int seed)
     {
         var rng  = new Random(seed);
         var text = string.Join(" ", Enumerable.Range(0, 20)
@@ -1566,9 +1566,9 @@ public class CursorPreferredColumnFuzzTests
     }
 
     [Theory]
-    [InlineData(9101, 5)]
-    [InlineData(9102, 10)]
-    public void MoveDownThenUp_SameColumn_OnUniformLines(int seed, int count)
+    [InlineData(5)]
+    [InlineData(10)]
+    public void MoveDownThenUp_SameColumn_OnUniformLines(int count)
     {
         // All lines same length — up/down should restore exact column
         var content = string.Join("\n", Enumerable.Repeat("Hello World", count + 2));

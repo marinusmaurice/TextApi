@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>JSON Serialization — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>JSON Serialization</h1>
+<p class="lead"><code>OperationMapper</code> serializes and deserializes operations to and from JSON. This is the bridge between external systems (LLMs, APIs, config files) and the TextAPI execution engine.</p>
+
+<h2>JSON Format Rules</h2>
+<ul>
+  <li>Every operation object must have a <code>"type"</code> field with the operation's type string (e.g. <code>"REPLACE_ALL"</code>).</li>
+  <li>All other property names are <strong>camelCase</strong> (e.g. <code>caseSensitive</code>, not <code>CaseSensitive</code>).</li>
+  <li>Type string matching is <strong>case-sensitive</strong> and must be exact.</li>
+  <li>Unknown fields are silently ignored.</li>
+  <li>Missing optional fields use their defaults.</li>
+</ul>
+
+<h2>Two JSON Formats</h2>
+
+<h3>Bare Array</h3>
+<p>A JSON array of operation objects:</p>
+<pre><code>[
+  { <span class="pr">"type"</span>: <span class="st">"REPLACE_ALL"</span>, <span class="pr">"find"</span>: <span class="st">"foo"</span>, <span class="pr">"replace"</span>: <span class="st">"bar"</span> },
+  { <span class="pr">"type"</span>: <span class="st">"TRIM_TRAILING_WHITESPACE"</span> },
+  { <span class="pr">"type"</span>: <span class="st">"SORT_LINES"</span>, <span class="pr">"descending"</span>: <span class="kw">true</span> }
+]</code></pre>
+
+<h3>Pipeline Object</h3>
+<p>A JSON object with an <code>"operations"</code> array (useful when you want to add pipeline-level metadata later):</p>
+<pre><code>{
+  <span class="pr">"operations"</span>: [
+    { <span class="pr">"type"</span>: <span class="st">"REPLACE_ALL"</span>, <span class="pr">"find"</span>: <span class="st">"foo"</span>, <span class="pr">"replace"</span>: <span class="st">"bar"</span> },
+    { <span class="pr">"type"</span>: <span class="st">"TRIM_TRAILING_WHITESPACE"</span> }
+  ]
+}</code></pre>
+
+<h2>OperationMapper API</h2>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>FromJson(string json)</code></td><td>Parse a bare array. Returns <code>IReadOnlyList&lt;IDocumentOperation&gt;</code>. Throws <code>JsonException</code> if root is not an array or a type is unknown.</td></tr>
+    <tr><td><code>FromPipelineJson(string json)</code></td><td>Parse a pipeline object (<code>{"operations":[...]}</code>). Throws <code>JsonException</code> if the key is missing.</td></tr>
+    <tr><td><code>ToJson(IDocumentOperation op)</code></td><td>Serialize one operation to a JSON object string.</td></tr>
+    <tr><td><code>ToPipelineJson(IEnumerable&lt;IDocumentOperation&gt; ops)</code></td><td>Serialize a list of operations to a pipeline object string.</td></tr>
+  </tbody>
+</table>
+
+<h2>Deserializing</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Operations.Serialization</span>;
+
+<span class="cm">// Bare array</span>
+<span class="kw">var</span> ops = <span class="ty">OperationMapper</span>.<span class="fn">FromJson</span>(<span class="st">"""
+[
+  {"type":"REPLACE_ALL","find":"TODO","replace":"DONE"},
+  {"type":"SORT_LINES"}
+]
+"""</span>);
+
+<span class="cm">// Pipeline object</span>
+<span class="kw">var</span> ops2 = <span class="ty">OperationMapper</span>.<span class="fn">FromPipelineJson</span>(jsonString);
+
+<span class="cm">// Run them</span>
+<span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(ops).<span class="fn">Execute</span>();</code></pre>
+
+<h2>Serializing</h2>
+<pre><code><span class="cm">// Single op</span>
+<span class="kw">var</span> op   = <span class="kw">new</span> <span class="ty">ReplaceAllOperation</span> { <span class="pr">Find</span> = <span class="st">"a"</span>, <span class="pr">Replace</span> = <span class="st">"b"</span>, <span class="pr">CaseSensitive</span> = <span class="kw">false</span> };
+<span class="kw">string</span> json = <span class="ty">OperationMapper</span>.<span class="fn">ToJson</span>(op);
+<span class="cm">// {"type":"REPLACE_ALL","find":"a","replace":"b","caseSensitive":false,"wholeWord":false}</span>
+
+<span class="cm">// List of ops as pipeline JSON</span>
+<span class="ty">IDocumentOperation</span>[] ops = [
+    <span class="kw">new</span> <span class="ty">AppendOperation</span>  { <span class="pr">Text</span> = <span class="st">" World"</span> },
+    <span class="kw">new</span> <span class="ty">PrependOperation</span> { <span class="pr">Text</span> = <span class="st">"Hello"</span> }
+];
+<span class="kw">string</span> pipeline = <span class="ty">OperationMapper</span>.<span class="fn">ToPipelineJson</span>(ops);</code></pre>
+
+<h2>Complete JSON Examples — All Operations</h2>
+
+<h3>Offset-Based</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"INSERT_AT"</span>,  <span class="pr">"offset"</span>: <span class="nm">10</span>, <span class="pr">"text"</span>: <span class="st">"hello"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"DELETE_AT"</span>,  <span class="pr">"offset"</span>: <span class="nm">0</span>,  <span class="pr">"length"</span>: <span class="nm">5</span> }
+{ <span class="pr">"type"</span>: <span class="st">"REPLACE_AT"</span>, <span class="pr">"offset"</span>: <span class="nm">6</span>,  <span class="pr">"deleteLength"</span>: <span class="nm">5</span>, <span class="pr">"text"</span>: <span class="st">"World"</span> }</code></pre>
+
+<h3>Anchor-Based</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"INSERT_AFTER"</span>,   <span class="pr">"anchor"</span>: <span class="st">"Section 1"</span>, <span class="pr">"text"</span>: <span class="st">"\nnew content"</span>, <span class="pr">"occurrence"</span>: <span class="nm">1</span> }
+{ <span class="pr">"type"</span>: <span class="st">"INSERT_BEFORE"</span>,  <span class="pr">"anchor"</span>: <span class="st">"## End"</span>,     <span class="pr">"text"</span>: <span class="st">"footer\n"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"APPEND"</span>,         <span class="pr">"text"</span>: <span class="st">"\n// EOF"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"PREPEND"</span>,        <span class="pr">"text"</span>: <span class="st">"// Copyright\n"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"REPLACE_SECTION"</span>, <span class="pr">"startAnchor"</span>: <span class="st">"/* B */"</span>, <span class="pr">"endAnchor"</span>: <span class="st">"/* E */"</span>, <span class="pr">"text"</span>: <span class="st">"new"</span>, <span class="pr">"includeAnchors"</span>: <span class="kw">false</span> }
+{ <span class="pr">"type"</span>: <span class="st">"DELETE_SECTION"</span>,  <span class="pr">"startAnchor"</span>: <span class="st">"/* B */"</span>, <span class="pr">"endAnchor"</span>: <span class="st">"/* E */"</span>, <span class="pr">"includeAnchors"</span>: <span class="kw">true</span> }</code></pre>
+
+<h3>Pattern-Based</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"REPLACE_ALL"</span>,  <span class="pr">"find"</span>: <span class="st">"foo"</span>, <span class="pr">"replace"</span>: <span class="st">"bar"</span>, <span class="pr">"caseSensitive"</span>: <span class="kw">true</span>, <span class="pr">"wholeWord"</span>: <span class="kw">false</span> }
+{ <span class="pr">"type"</span>: <span class="st">"REGEX_REPLACE"</span>, <span class="pr">"pattern"</span>: <span class="st">"\\d{4}"</span>, <span class="pr">"replacement"</span>: <span class="st">"XXXX"</span> }</code></pre>
+
+<h3>Line-Based</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"INSERT_LINE"</span>,            <span class="pr">"lineIndex"</span>: <span class="nm">3</span>, <span class="pr">"text"</span>: <span class="st">"new line"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"DELETE_LINE"</span>,            <span class="pr">"lineIndex"</span>: <span class="nm">2</span> }
+{ <span class="pr">"type"</span>: <span class="st">"REPLACE_LINE"</span>,           <span class="pr">"lineIndex"</span>: <span class="nm">0</span>, <span class="pr">"text"</span>: <span class="st">"replacement"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"INSERT_AFTER_LINE_MATCH"</span>, <span class="pr">"pattern"</span>: <span class="st">"def main"</span>, <span class="pr">"lineText"</span>: <span class="st">"    pass"</span>, <span class="pr">"occurrence"</span>: <span class="nm">1</span> }</code></pre>
+
+<h3>Transform</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"NORMALISE_WHITESPACE"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"TRIM_TRAILING_WHITESPACE"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"CONVERT_CASE"</span>, <span class="pr">"mode"</span>: <span class="st">"upper"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"CONVERT_CASE"</span>, <span class="pr">"mode"</span>: <span class="st">"titleCase"</span>, <span class="pr">"startAnchor"</span>: <span class="st">"## Name"</span>, <span class="pr">"endAnchor"</span>: <span class="st">"##"</span> }
+{ <span class="pr">"type"</span>: <span class="st">"SORT_LINES"</span>,    <span class="pr">"descending"</span>: <span class="kw">false</span>, <span class="pr">"caseSensitive"</span>: <span class="kw">true</span> }
+{ <span class="pr">"type"</span>: <span class="st">"DEDUPLICATE_LINES"</span>, <span class="pr">"consecutiveOnly"</span>: <span class="kw">false</span> }
+{ <span class="pr">"type"</span>: <span class="st">"INDENT"</span>,         <span class="pr">"startLine"</span>: <span class="nm">2</span>, <span class="pr">"endLine"</span>: <span class="nm">5</span>, <span class="pr">"prefix"</span>: <span class="st">"  "</span>, <span class="pr">"dedent"</span>: <span class="kw">false</span> }
+{ <span class="pr">"type"</span>: <span class="st">"WRAP_LINES"</span>,     <span class="pr">"maxColumns"</span>: <span class="nm">80</span> }</code></pre>
+
+<h3>Query</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"FIND_ALL"</span>,        <span class="pr">"pattern"</span>: <span class="st">"TODO"</span>, <span class="pr">"useRegex"</span>: <span class="kw">false</span>, <span class="pr">"caseSensitive"</span>: <span class="kw">true</span> }
+{ <span class="pr">"type"</span>: <span class="st">"EXTRACT_SECTION"</span>, <span class="pr">"startAnchor"</span>: <span class="st">"&lt;!-- s --&gt;"</span>, <span class="pr">"endAnchor"</span>: <span class="st">"&lt;!-- e --&gt;"</span>, <span class="pr">"includeAnchors"</span>: <span class="kw">false</span> }
+{ <span class="pr">"type"</span>: <span class="st">"CONTAINS"</span>,        <span class="pr">"pattern"</span>: <span class="st">"DRAFT"</span>, <span class="pr">"useRegex"</span>: <span class="kw">false</span> }</code></pre>
+
+<h3>Structural</h3>
+<pre><code>{ <span class="pr">"type"</span>: <span class="st">"MOVE_SECTION"</span>,   <span class="pr">"sourceStartAnchor"</span>: <span class="st">"[S]"</span>, <span class="pr">"sourceEndAnchor"</span>: <span class="st">"[E]"</span>, <span class="pr">"destinationAnchor"</span>: <span class="st">"[DEST]"</span>, <span class="pr">"insertAfterDestination"</span>: <span class="kw">true</span> }
+{ <span class="pr">"type"</span>: <span class="st">"SWAP_SECTIONS"</span>,  <span class="pr">"section1Start"</span>: <span class="st">"[A]"</span>, <span class="pr">"section1End"</span>: <span class="st">"[B]"</span>, <span class="pr">"section2Start"</span>: <span class="st">"[C]"</span>, <span class="pr">"section2End"</span>: <span class="st">"[D]"</span> }</code></pre>
+
+<h2>Error Handling</h2>
+<pre><code><span class="kw">try</span>
+{
+    <span class="kw">var</span> ops = <span class="ty">OperationMapper</span>.<span class="fn">FromJson</span>(json);
+}
+<span class="kw">catch</span> (<span class="ty">JsonException</span> ex)
+{
+    <span class="cm">// Possible causes:</span>
+    <span class="cm">// - Root is not an array</span>
+    <span class="cm">// - "type" field is missing</span>
+    <span class="cm">// - Unknown type string</span>
+    Console.<span class="fn">WriteLine</span>(ex.<span class="pr">Message</span>);
+}</code></pre>
+
+<h2>LLM Integration Pattern</h2>
+<pre><code><span class="cm">// Typical flow when an LLM produces edit instructions:</span>
+<span class="kw">string</span> llmOutput = <span class="kw">await</span> <span class="fn">GetLlmResponseAsync</span>(prompt);
+
+<span class="ty">IReadOnlyList</span>&lt;<span class="ty">IDocumentOperation</span>&gt; ops;
+<span class="kw">try</span>   { ops = <span class="ty">OperationMapper</span>.<span class="fn">FromPipelineJson</span>(llmOutput); }
+<span class="kw">catch</span> { <span class="cm">/* malformed JSON — ask LLM to retry */</span> <span class="kw">return</span>; }
+
+<span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(ops).<span class="fn">Execute</span>();
+<span class="kw">if</span> (!result.<span class="pr">Success</span>)
+{
+    <span class="cm">// Tell the LLM what went wrong and which operation failed</span>
+    <span class="kw">string</span> feedback = <span class="st">$"Operation #{result.FailedOperationIndex} failed: {result.ErrorMessage}"</span>;
+}</code></pre>
+</main></body></html>

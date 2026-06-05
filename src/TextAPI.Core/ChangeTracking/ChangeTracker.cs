@@ -30,7 +30,7 @@ public enum LineStatus
 ///   the last Load, Save, or explicit <see cref="SetBaseline"/> call.
 ///
 ///   Status is computed lazily: <see cref="GetStatus"/> triggers a Myers
-///   line-level diff (<see cref="TextDiff.Diff(string[], string[])"/>)
+///   line-level diff (<see cref="TextDiff.Diff(string[], string[], DiffOptions)"/>)
 ///   between the baseline and the current document only when the document
 ///   has been mutated since the last query.
 ///

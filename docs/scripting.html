@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Script DSL — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Script DSL</h1>
+<p class="lead"><code>ScriptRunner</code> executes a line-oriented command language directly on a <code>TextDocument</code>. No compilation step — paste a block of text, call <code>Run()</code>, get a result. Great for batch processing, macros, and AI-generated edits.</p>
+
+<h2>Basic Usage</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Scripting</span>;
+
+<span class="kw">var</span> runner = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(doc);
+
+<span class="ty">ScriptResult</span> result = runner.<span class="fn">Run</span>(<span class="st">"""
+    REPLACE_ALL "TODO" "DONE"
+    INSERT_AT 0 "// Auto-generated\n"
+    DELETE_LINE 1
+    GOTO 3 0
+    INSERT "Hello"
+"""</span>);
+
+<span class="kw">if</span> (!result.<span class="pr">Success</span>)
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Error at line {result.ErrorLine}: {result.ErrorMessage}"</span>);</code></pre>
+
+<h2>All Commands</h2>
+
+<h3>Cursor Movement</h3>
+<table>
+  <thead><tr><th>Command</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>MOVE &lt;offset&gt;</code></td><td>Move cursor to absolute character offset.</td></tr>
+    <tr><td><code>GOTO &lt;line&gt; [&lt;col&gt;]</code></td><td>Move to 1-based line, optional 0-based column (default 0).</td></tr>
+    <tr><td><code>SELECT &lt;start&gt; &lt;end&gt;</code></td><td>Set cursor selection from <code>start</code> offset to <code>end</code> offset.</td></tr>
+  </tbody>
+</table>
+
+<h3>Insertion &amp; Deletion</h3>
+<table>
+  <thead><tr><th>Command</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>INSERT "&lt;text&gt;"</code></td><td>Insert text at the current cursor position.</td></tr>
+    <tr><td><code>INSERT_AT &lt;offset&gt; "&lt;text&gt;"</code></td><td>Insert text at an explicit offset.</td></tr>
+    <tr><td><code>DELETE &lt;n&gt;</code></td><td>Delete <code>n</code> characters at the cursor.</td></tr>
+    <tr><td><code>DELETE_AT &lt;offset&gt; &lt;n&gt;</code></td><td>Delete <code>n</code> characters at an explicit offset.</td></tr>
+    <tr><td><code>DELETE_LINE [&lt;line&gt;]</code></td><td>Delete 1-based line number. Defaults to the cursor's current line.</td></tr>
+  </tbody>
+</table>
+
+<h3>Find &amp; Replace</h3>
+<table>
+  <thead><tr><th>Command</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>REPLACE_ALL "&lt;pat&gt;" "&lt;rep&gt;" [flags]</code></td><td>Replace all occurrences. Updates <code>LastReplaceCount</code>.</td></tr>
+    <tr><td><code>FIND "&lt;pat&gt;" [flags]</code></td><td>Move cursor to the next match after the current offset.</td></tr>
+    <tr><td><code>FIND_PREV "&lt;pat&gt;" [flags]</code></td><td>Move cursor to the previous match before the current offset.</td></tr>
+    <tr><td><code>FIND_ALL "&lt;pat&gt;" [flags]</code></td><td>Collect all matches into <code>LastFindAll</code>. Cursor does not move.</td></tr>
+  </tbody>
+</table>
+
+<h4>Search Flags</h4>
+<table>
+  <thead><tr><th>Flag</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>/i</code></td><td>Case-insensitive match.</td></tr>
+    <tr><td><code>/w</code></td><td>Whole-word match.</td></tr>
+    <tr><td><code>/r</code></td><td>Pattern is a regular expression.</td></tr>
+  </tbody>
+</table>
+
+<pre><code>FIND "TODO" /i          <span class="cm"># find next, case-insensitive</span>
+FIND_ALL "\bTODO\b" /r  <span class="cm"># find all whole-word TODOs via regex</span>
+REPLACE_ALL "foo" "bar" /i /r</code></pre>
+
+<h3>Undo / Redo</h3>
+<pre><code>UNDO   <span class="cm"># undo one step</span>
+REDO   <span class="cm"># redo one step</span></code></pre>
+
+<h3>Miscellaneous</h3>
+<pre><code>NOP    <span class="cm"># no-operation, useful as a placeholder</span></code></pre>
+
+<h2>String Literals</h2>
+<p>All string arguments are double-quoted. Standard escape sequences are supported:</p>
+<table>
+  <thead><tr><th>Escape</th><th>Character</th></tr></thead>
+  <tbody>
+    <tr><td><code>\n</code></td><td>Newline (LF)</td></tr>
+    <tr><td><code>\r</code></td><td>Carriage return</td></tr>
+    <tr><td><code>\t</code></td><td>Tab</td></tr>
+    <tr><td><code>\\</code></td><td>Backslash</td></tr>
+    <tr><td><code>\"</code></td><td>Double quote</td></tr>
+  </tbody>
+</table>
+
+<pre><code>INSERT "line 1\nline 2\n"
+INSERT_AT 0 "// Header\n"</code></pre>
+
+<h2>ScriptResult</h2>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>Success</code></td><td><code>bool</code></td><td>True if every command executed without error.</td></tr>
+    <tr><td><code>StepsExecuted</code></td><td><code>int</code></td><td>Number of commands executed (including the failing one).</td></tr>
+    <tr><td><code>Steps</code></td><td><code>IReadOnlyList&lt;StepResult&gt;</code></td><td>Per-step results.</td></tr>
+    <tr><td><code>ErrorMessage</code></td><td><code>string?</code></td><td>Non-null when <code>Success</code> is false.</td></tr>
+    <tr><td><code>ErrorLine</code></td><td><code>int?</code></td><td>1-based script line number of the failing command.</td></tr>
+    <tr><td><code>CursorOffset</code></td><td><code>int</code></td><td>Cursor offset at the end of execution.</td></tr>
+    <tr><td><code>LastReplaceCount</code></td><td><code>int</code></td><td>Number of replacements made by the last <code>REPLACE_ALL</code>.</td></tr>
+    <tr><td><code>LastFindAll</code></td><td><code>IReadOnlyList&lt;SearchMatch&gt;</code></td><td>Matches from the last <code>FIND_ALL</code>.</td></tr>
+  </tbody>
+</table>
+
+<h2>StepResult</h2>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>LineNumber</code></td><td><code>int</code></td><td>Script line number (1-based).</td></tr>
+    <tr><td><code>Verb</code></td><td><code>string</code></td><td>Command verb (e.g. <code>"REPLACE_ALL"</code>).</td></tr>
+    <tr><td><code>Success</code></td><td><code>bool</code></td><td>Whether this step succeeded.</td></tr>
+    <tr><td><code>CursorAfter</code></td><td><code>int</code></td><td>Cursor offset after this step.</td></tr>
+    <tr><td><code>ErrorMessage</code></td><td><code>string?</code></td><td>Error detail if failed.</td></tr>
+  </tbody>
+</table>
+
+<h2>Pre-Parsed Execution</h2>
+<p>Parse once, execute many times:</p>
+<pre><code><span class="kw">var</span> commands = <span class="ty">ScriptParser</span>.<span class="fn">Parse</span>(scriptText);  <span class="cm">// IReadOnlyList&lt;ScriptCommand&gt;</span>
+
+<span class="cm">// Re-run on different documents without re-parsing</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> doc <span class="kw">in</span> documents)
+{
+    <span class="kw">var</span> runner = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(doc);
+    <span class="kw">var</span> result  = runner.<span class="fn">Execute</span>(commands);
+}</code></pre>
+
+<h2>Cursor State</h2>
+<p>The runner maintains a single cursor whose position is updated by each command. Read it between runs:</p>
+<pre><code><span class="kw">var</span> runner = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(doc);
+runner.<span class="fn">Run</span>(<span class="st">"GOTO 5 0"</span>);
+Console.<span class="fn">WriteLine</span>(runner.<span class="pr">CursorOffset</span>); <span class="cm">// offset of line 5, col 0</span></code></pre>
+
+<h2>Error Handling</h2>
+<p>Execution stops at the first failing command. The document state at that point is whatever the successful commands produced — there is no automatic rollback. If you need atomic execution, use <a href="pipeline.html">DocumentPipeline</a> instead.</p>
+<pre><code><span class="kw">var</span> result = runner.<span class="fn">Run</span>(script);
+<span class="kw">if</span> (!result.<span class="pr">Success</span>)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Failed on line {result.ErrorLine}: {result.ErrorMessage}"</span>);
+    <span class="cm">// Inspect which steps ran successfully</span>
+    <span class="kw">foreach</span> (<span class="kw">var</span> step <span class="kw">in</span> result.<span class="pr">Steps</span>)
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"  [{step.LineNumber}] {step.Verb}: {(step.Success ? "ok" : step.ErrorMessage)}"</span>);
+}</code></pre>
+
+<h2>vs Pipeline</h2>
+<table>
+  <thead><tr><th></th><th>Script DSL</th><th>DocumentPipeline</th></tr></thead>
+  <tbody>
+    <tr><td>Input</td><td>Text commands</td><td>Typed C# objects / JSON</td></tr>
+    <tr><td>Atomic rollback</td><td>No</td><td>Yes</td></tr>
+    <tr><td>Audit log</td><td>StepResult list</td><td>AuditLog with timestamps</td></tr>
+    <tr><td>Drift correction</td><td>No</td><td>Yes (IOffsetAwareOperation)</td></tr>
+    <tr><td>Best for</td><td>Macros, AI text, quick batch</td><td>Production pipelines</td></tr>
+  </tbody>
+</table>
+
+<h2>Complete Example: Normalize a Source File</h2>
+<pre><code><span class="kw">var</span> runner = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(doc);
+<span class="kw">var</span> result = runner.<span class="fn">Run</span>(<span class="st">"""
+    REPLACE_ALL "  " "    "        # expand 2-space indent to 4
+    REPLACE_ALL "\t" "    "        # expand tabs
+    REPLACE_ALL "\r\n" "\n"        # normalise line endings
+    INSERT_AT 0 "// DO NOT EDIT\n"
+    FIND_ALL "TODO" /i
+"""</span>);
+
+Console.<span class="fn">WriteLine</span>(<span class="st">$"TODOs remaining: {result.LastFindAll.Count}"</span>);</code></pre>
+</main></body></html>

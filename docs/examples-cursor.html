@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Cursor Examples — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Cursors — Examples</h1>
+<p class="lead">Every <code>TextCursor</code> and <code>MultiCursor</code> method demonstrated, including all movement, selection, editing, column selection, and paste variants.</p>
+
+<!-- ══════════════════════════════════════════════ TEXT CURSOR -->
+<h2>TextCursor</h2>
+
+<h3>Construction</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Cursor</span>;
+
+<span class="kw">var</span> doc    = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+doc.<span class="fn">Load</span>(<span class="st">"Hello\nWorld\nFoo"</span>);
+
+<span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc);            <span class="cm">// starts at offset 0</span>
+<span class="kw">var</span> cursor2 = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc, offset: <span class="nm">6</span>); <span class="cm">// starts at "W"</span>
+Console.<span class="fn">WriteLine</span>(cursor2.<span class="pr">CaretLine</span>);   <span class="cm">// 1</span>
+Console.<span class="fn">WriteLine</span>(cursor2.<span class="pr">CaretColumn</span>); <span class="cm">// 0</span></code></pre>
+
+<h3>Position properties</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"abc\nde\nfg"</span>);
+<span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc, offset: <span class="nm">5</span>); <span class="cm">// "e" on line 1</span>
+
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>);   <span class="cm">// 5</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">ActiveOffset</span>);  <span class="cm">// 5  (alias)</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">AnchorOffset</span>);  <span class="cm">// 5  (no selection)</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretLine</span>);     <span class="cm">// 1</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretColumn</span>);   <span class="cm">// 1</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">HasSelection</span>);  <span class="cm">// false</span></code></pre>
+
+<h3>MoveTo — collapse to absolute offset</h3>
+<pre><code>cursor.<span class="fn">MoveTo</span>(<span class="nm">0</span>);
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>);   <span class="cm">// 0</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">HasSelection</span>);  <span class="cm">// false</span></code></pre>
+
+<h3>SelectTo — extend selection</h3>
+<pre><code>cursor.<span class="fn">MoveTo</span>(<span class="nm">0</span>);
+cursor.<span class="fn">SelectTo</span>(<span class="nm">5</span>);
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">AnchorOffset</span>);  <span class="cm">// 0</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">ActiveOffset</span>);  <span class="cm">// 5</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectionStart</span>); <span class="cm">// 0</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectionEnd</span>);   <span class="cm">// 5</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>);   <span class="cm">// "abc\nd"</span></code></pre>
+
+<h3>SetSelection — anchor and active explicitly</h3>
+<pre><code><span class="cm">// Backward selection (active < anchor)</span>
+cursor.<span class="fn">SetSelection</span>(anchor: <span class="nm">5</span>, active: <span class="nm">0</span>);
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectionStart</span>); <span class="cm">// 0</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectionEnd</span>);   <span class="cm">// 5</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">ActiveOffset</span>);  <span class="cm">// 0  (caret at start of selection)</span></code></pre>
+
+<h3>CollapseToStart / CollapseToEnd</h3>
+<pre><code>cursor.<span class="fn">SetSelection</span>(<span class="nm">0</span>, <span class="nm">5</span>);
+
+cursor.<span class="fn">CollapseToStart</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>);  <span class="cm">// 0</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">HasSelection</span>); <span class="cm">// false
+
+cursor.SetSelection(0, 5);
+cursor.CollapseToEnd();
+Console.WriteLine(cursor.CaretOffset);  // 5</span></code></pre>
+
+<!-- horizontal movement -->
+<h3>MoveLeft / MoveRight</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">3</span>);
+
+cursor.<span class="fn">MoveLeft</span>();   <span class="cm">// one grapheme left</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>); <span class="cm">// 2
+
+cursor.MoveRight(2); // two graphemes right
+Console.WriteLine(cursor.CaretOffset); // 4</span></code></pre>
+
+<h3>MoveWordLeft / MoveWordRight</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"hello world foo"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">15</span>); <span class="cm">// end</span>
+
+cursor.<span class="fn">MoveWordLeft</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>); <span class="cm">// 12  (start of "foo")</span>
+
+cursor.<span class="fn">MoveWordLeft</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>); <span class="cm">// 6   (start of "world")</span>
+
+cursor.<span class="fn">MoveWordRight</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>); <span class="cm">// 11  (after "world")</span></code></pre>
+
+<h3>MoveToLineStart / MoveToLineEnd</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"    indented line"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">10</span>);
+
+cursor.<span class="fn">MoveToLineStart</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretColumn</span>); <span class="cm">// 0
+
+cursor.MoveToLineEnd();
+Console.WriteLine(cursor.CaretOffset);  // doc.Length</span></code></pre>
+
+<h3>MoveToDocumentStart / MoveToDocumentEnd</h3>
+<pre><code>cursor.<span class="fn">MoveToDocumentEnd</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">CaretOffset</span>); <span class="cm">// doc.Length
+
+cursor.MoveToDocumentStart();
+Console.WriteLine(cursor.CaretOffset); // 0</span></code></pre>
+
+<!-- selection -->
+<h3>SelectLeft / SelectRight</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">3</span>);
+cursor.<span class="fn">SelectLeft</span>(<span class="nm">2</span>);
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// "el"  (offset 1–3)</span>
+
+cursor.<span class="fn">MoveTo</span>(<span class="nm">0</span>);
+cursor.<span class="fn">SelectRight</span>(<span class="nm">5</span>);
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// "Hello"</span></code></pre>
+
+<h3>SelectWordLeft / SelectWordRight</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"one two three"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">13</span>); <span class="cm">// end of "three"</span>
+
+cursor.<span class="fn">SelectWordLeft</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// "three"</span></code></pre>
+
+<h3>SelectToLineStart / SelectToLineEnd</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">5</span>);
+cursor.<span class="fn">SelectToLineEnd</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// " World"
+
+cursor.MoveTo(5);
+cursor.SelectToLineStart();
+Console.WriteLine(cursor.SelectedText); // "Hello"</span></code></pre>
+
+<h3>SelectToDocumentStart / SelectToDocumentEnd</h3>
+<pre><code>cursor.<span class="fn">MoveTo</span>(<span class="nm">5</span>);
+cursor.<span class="fn">SelectToDocumentEnd</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// everything from offset 5 onward</span>
+
+cursor.<span class="fn">MoveTo</span>(<span class="nm">5</span>);
+cursor.<span class="fn">SelectToDocumentStart</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// everything from 0 to 5</span></code></pre>
+
+<!-- bulk selection -->
+<h3>SelectAll</h3>
+<pre><code>cursor.<span class="fn">SelectAll</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span> == doc.<span class="fn">GetText</span>()); <span class="cm">// true</span></code></pre>
+
+<h3>SelectLine</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"line0\nline1\nline2"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">0</span>);
+cursor.<span class="fn">SelectLine</span>();               <span class="cm">// selects caret's line (0)</span>
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// "line0"
+
+cursor.SelectLine(lineIndex: 2);    // select specific line by index
+Console.WriteLine(cursor.SelectedText); // "line2"</span></code></pre>
+
+<h3>SelectWordAtCaret</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"hello world"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">7</span>); <span class="cm">// inside "world"</span>
+cursor.<span class="fn">SelectWordAtCaret</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// "world"</span></code></pre>
+
+<!-- vertical movement -->
+<h3>MoveUp / MoveDown</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"abc\nde\nfghij"</span>);
+cursor.<span class="fn">MoveTo</span>(doc.<span class="fn">PositionToOffset</span>(<span class="nm">2</span>, <span class="nm">4</span>)); <span class="cm">// line 2, col 4 ("i")</span>
+
+cursor.<span class="fn">MoveUp</span>();
+Console.<span class="fn">WriteLine</span>(<span class="st">$"line={cursor.CaretLine} col={cursor.CaretColumn}"</span>); <span class="cm">// line=1 col=1 (clamped to "e")
+
+cursor.MoveDown();
+Console.WriteLine($"line={cursor.CaretLine} col={cursor.CaretColumn}"); // line=2 col=4 (preferred col restored)</span></code></pre>
+
+<h3>SelectUp / SelectDown</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"aaaa\nbbbb\ncccc"</span>);
+cursor.<span class="fn">MoveTo</span>(doc.<span class="fn">PositionToOffset</span>(<span class="nm">1</span>, <span class="nm">2</span>)); <span class="cm">// line 1, col 2</span>
+cursor.<span class="fn">SelectDown</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>); <span class="cm">// "bb\ncc"  (from line 1 col 2 to line 2 col 2)</span></code></pre>
+
+<!-- editing -->
+<h3>InsertText — replaces selection if any</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+cursor.<span class="fn">SetSelection</span>(<span class="nm">6</span>, <span class="nm">11</span>); <span class="cm">// "World"</span>
+cursor.<span class="fn">InsertText</span>(<span class="st">"TextAPI"</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "Hello TextAPI"</span></code></pre>
+
+<h3>DeleteSelection</h3>
+<pre><code>cursor.<span class="fn">SetSelection</span>(<span class="nm">0</span>, <span class="nm">6</span>); <span class="cm">// "Hello "</span>
+cursor.<span class="fn">DeleteSelection</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "TextAPI"</span></code></pre>
+
+<h3>DeleteLeft / DeleteRight (Backspace / Delete key)</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"abcde"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">3</span>);
+
+cursor.<span class="fn">DeleteLeft</span>();    <span class="cm">// backspace one char</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "abde"
+
+cursor.DeleteRight();    // delete one char
+Console.WriteLine(doc.GetText()); // "abe"
+
+cursor.DeleteLeft(2);    // backspace 2 chars
+Console.WriteLine(doc.GetText()); // "e"</span></code></pre>
+
+<h3>DeleteWordLeft / DeleteWordRight (Ctrl+Backspace / Ctrl+Delete)</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"hello world"</span>);
+cursor.<span class="fn">MoveTo</span>(<span class="nm">11</span>); <span class="cm">// end</span>
+
+cursor.<span class="fn">DeleteWordLeft</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "hello "
+
+cursor.MoveToDocumentEnd();  // still at end
+cursor.DeleteWordLeft();
+Console.WriteLine(doc.GetText()); // ""  — wait, "hello " has trailing space
+// DeleteWordLeft removes the word group to the left including trailing non-word chars</span></code></pre>
+
+<h3>Word boundary helpers</h3>
+<pre><code><span class="cm">// Static IsWordChar</span>
+Console.<span class="fn">WriteLine</span>(<span class="ty">TextCursor</span>.<span class="fn">IsWordChar</span>(<span class="st">'a'</span>));  <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(<span class="ty">TextCursor</span>.<span class="fn">IsWordChar</span>(<span class="st">'_'</span>));  <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(<span class="ty">TextCursor</span>.<span class="fn">IsWordChar</span>(<span class="st">'.'</span>));  <span class="cm">// false
+
+// Instance helpers
+doc.Load("hello world");
+cursor.MoveTo(7);  // inside "world"
+int wl = cursor.WordLeft(cursor.CaretOffset);
+int wr = cursor.WordRight(cursor.CaretOffset);
+Console.WriteLine($"word: [{wl},{wr}) = \"{doc.GetText(wl, wr - wl)}\"");
+// word: [6,11) = "world"</span></code></pre>
+
+<!-- ══════════════════════════════════════════════ MULTI CURSOR -->
+<h2>MultiCursor</h2>
+
+<h3>Construction and Count</h3>
+<pre><code><span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Count</span>);   <span class="cm">// 1  (one cursor at offset 0)</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Primary</span>.<span class="pr">CaretOffset</span>); <span class="cm">// 0</span></code></pre>
+
+<h3>AddCursor — add at offset</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"line0\nline1\nline2"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+
+mc.<span class="fn">AddCursor</span>(<span class="nm">6</span>);   <span class="cm">// cursor at start of "line1"</span>
+mc.<span class="fn">AddCursor</span>(<span class="nm">12</span>);  <span class="cm">// cursor at start of "line2"</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Count</span>);   <span class="cm">// 3</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Primary</span>.<span class="pr">CaretOffset</span>); <span class="cm">// 12  (last added is primary)</span></code></pre>
+
+<h3>AddCursor — with selection</h3>
+<pre><code>mc.<span class="fn">AddCursor</span>(anchor: <span class="nm">0</span>, active: <span class="nm">5</span>); <span class="cm">// add cursor with "line0" selected</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Primary</span>.<span class="pr">SelectedText</span>); <span class="cm">// "line0"</span></code></pre>
+
+<h3>RemoveCursor</h3>
+<pre><code>mc.<span class="fn">RemoveCursor</span>(<span class="nm">0</span>); <span class="cm">// remove cursor at index 0 (sorted by offset)</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Count</span>); <span class="cm">// 2</span>
+
+<span class="cm">// No-op when only one cursor remains</span>
+<span class="kw">while</span> (mc.<span class="pr">Count</span> > <span class="nm">1</span>) mc.<span class="fn">RemoveCursor</span>(<span class="nm">0</span>);
+mc.<span class="fn">RemoveCursor</span>(<span class="nm">0</span>); <span class="cm">// no-op</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Count</span>); <span class="cm">// 1</span></code></pre>
+
+<h3>Clear and SetSingle</h3>
+<pre><code>mc.<span class="fn">Clear</span>();
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Count</span>);                   <span class="cm">// 1, at offset 0</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Primary</span>.<span class="pr">CaretOffset</span>); <span class="cm">// 0
+
+mc.SetSingle(42);
+Console.WriteLine(mc.Primary.CaretOffset); // 42</span></code></pre>
+
+<h3>All — iterate cursors in order</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"a\nb\nc"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">AddCursor</span>(<span class="nm">4</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">2</span>);
+
+<span class="kw">foreach</span> (<span class="kw">var</span> c <span class="kw">in</span> mc.<span class="pr">All</span>)
+    Console.<span class="fn">WriteLine</span>(c.<span class="pr">CaretOffset</span>);
+<span class="cm">// 0, 2, 4  — always ascending</span></code></pre>
+
+<h3>AddColumnSelection</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"    alpha\n    beta\n    gamma\n    delta"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+
+<span class="cm">// One cursor per line (0–3) at column 0 — for block indent</span>
+mc.<span class="fn">AddColumnSelection</span>(startLine: <span class="nm">0</span>, endLine: <span class="nm">3</span>, column: <span class="nm">0</span>);
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">Count</span>); <span class="cm">// 4</span>
+
+mc.<span class="fn">InsertText</span>(<span class="st">"    "</span>); <span class="cm">// add 4 spaces at each cursor — 4 lines indented</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetLine</span>(<span class="nm">0</span>)); <span class="cm">// "        alpha"</span>
+
+doc.<span class="fn">Undo</span>(); <span class="cm">// removes all 4 insertions in one step</span></code></pre>
+
+<h3>InsertText — all cursors, one undo step</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"line1\nline2\nline3"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">AddCursor</span>(<span class="nm">0</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">6</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">12</span>);
+
+mc.<span class="fn">InsertText</span>(<span class="st">"// "</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// // line1
+// // line2
+// // line3</span>
+
+doc.<span class="fn">Undo</span>(); <span class="cm">// single undo removes all three insertions</span></code></pre>
+
+<h3>DeleteLeft / DeleteRight across all cursors</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"// line1\n// line2\n// line3"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+
+<span class="cm">// Place cursors after the "//" on each line</span>
+mc.<span class="fn">SetSingle</span>(<span class="nm">2</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">11</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">20</span>);
+
+mc.<span class="fn">DeleteLeft</span>(<span class="nm">3</span>); <span class="cm">// delete "// " at each cursor position
+Console.WriteLine(doc.GetText());
+// line1
+// line2
+// line3</span></code></pre>
+
+<h3>DeleteSelection — all cursors</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"[DELETE]keep[DELETE]keep[DELETE]keep"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">SetSingle</span>(<span class="nm">0</span>);
+mc.<span class="fn">Primary</span>.<span class="fn">SelectTo</span>(<span class="nm">8</span>);  <span class="cm">// select first "[DELETE]"</span>
+mc.<span class="fn">AddCursor</span>(anchor: <span class="nm">12</span>, active: <span class="nm">20</span>);
+mc.<span class="fn">AddCursor</span>(anchor: <span class="nm">24</span>, active: <span class="nm">32</span>);
+mc.<span class="fn">DeleteSelection</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "keepkeepkeep"</span></code></pre>
+
+<h3>SelectWordAtCaret — all cursors</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"foo bar foo bar"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">SetSingle</span>(<span class="nm">0</span>);  <span class="cm">// inside "foo"</span>
+mc.<span class="fn">AddCursor</span>(<span class="nm">4</span>);  <span class="cm">// inside "bar"</span>
+
+mc.<span class="fn">SelectWordAtCaret</span>();
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">All</span>[<span class="nm">0</span>].<span class="pr">SelectedText</span>); <span class="cm">// "foo"</span>
+Console.<span class="fn">WriteLine</span>(mc.<span class="pr">All</span>[<span class="nm">1</span>].<span class="pr">SelectedText</span>); <span class="cm">// "bar"
+
+mc.InsertText("qux");  // replace both words simultaneously
+Console.WriteLine(doc.GetText()); // "qux qux foo bar"</span></code></pre>
+
+<h3>Paste — distributed vs broadcast</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"_\n_\n_"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">SetSingle</span>(<span class="nm">0</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">2</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">4</span>);
+
+<span class="cm">// 3 cursors, 3 clipboard lines → distributed (each cursor gets one line)</span>
+mc.<span class="fn">Paste</span>(<span class="kw">new</span>[] { <span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span> });
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// alpha_
+// beta_
+// gamma_</span></code></pre>
+
+<pre><code><span class="cm">// Cursor count ≠ line count → broadcast (all cursors get same text)</span>
+doc.<span class="fn">Load</span>(<span class="st">"_\n_\n_"</span>);
+mc.<span class="fn">SetSingle</span>(<span class="nm">0</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">2</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">4</span>);
+mc.<span class="fn">Paste</span>(<span class="kw">new</span>[] { <span class="st">"TEXT"</span> });  <span class="cm">// 1 line, 3 cursors → broadcast</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// TEXT_
+// TEXT_
+// TEXT_</span></code></pre>
+
+<h3>Overlapping cursor merge</h3>
+<pre><code><span class="cm">// After edits, cursors that overlap are automatically merged.
+// This prevents double-applying edits to the same region.</span>
+doc.<span class="fn">Load</span>(<span class="st">"abc"</span>);
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">AddCursor</span>(<span class="nm">0</span>);
+mc.<span class="fn">AddCursor</span>(<span class="nm">1</span>);
+mc.<span class="fn">MoveRight</span>(<span class="nm">2</span>); <span class="cm">// both cursors move to offset 2 and 3
+// they were adjacent/overlapping → merged to one cursor
+Console.WriteLine(mc.Count); // 1</span></code></pre>
+</main></body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Search — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Search</h1>
+<p class="lead">TextAPI's search engine uses Boyer-Moore-Horspool for plain-text patterns (O(n)) and .NET's <code>Regex</code> for regex patterns, both operating directly on the piece table with piece-boundary bridging so no full-text copy is needed.</p>
+
+<h2>Quick Reference</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Search</span>;
+
+<span class="cm">// Case-insensitive regex find-all</span>
+<span class="kw">var</span> opts = <span class="kw">new</span> <span class="ty">SearchOptions</span> { <span class="pr">CaseSensitive</span> = <span class="kw">false</span>, <span class="pr">UseRegex</span> = <span class="kw">true</span> };
+
+<span class="kw">foreach</span> (<span class="kw">var</span> m <span class="kw">in</span> doc.<span class="fn">FindAll</span>(<span class="st">@"\bTODO\b"</span>, opts))
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"offset {m.Offset}, length {m.Length}"</span>);
+
+<span class="cm">// Simple forward scan</span>
+<span class="ty">SearchMatch</span>? next = doc.<span class="fn">FindNext</span>(<span class="st">"hello"</span>, fromOffset: <span class="nm">0</span>);
+
+<span class="cm">// Count occurrences</span>
+<span class="kw">int</span> n = doc.<span class="fn">CountMatches</span>(<span class="st">"TODO"</span>);</code></pre>
+
+<h2>SearchOptions</h2>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>CaseSensitive</code></td><td><code>bool</code></td><td><code>true</code></td><td>When false, performs a case-insensitive match.</td></tr>
+    <tr><td><code>WholeWord</code></td><td><code>bool</code></td><td><code>false</code></td><td>Match only when surrounded by non-word characters.</td></tr>
+    <tr><td><code>UseRegex</code></td><td><code>bool</code></td><td><code>false</code></td><td>Treat the pattern as a .NET regular expression.</td></tr>
+    <tr><td><code>MaxResults</code></td><td><code>int</code></td><td><code>0</code></td><td>Cap the number of results. 0 = unlimited.</td></tr>
+  </tbody>
+</table>
+
+<pre><code><span class="cm">// Plain-text, whole-word, case-insensitive</span>
+<span class="kw">var</span> opts = <span class="kw">new</span> <span class="ty">SearchOptions</span>
+{
+    <span class="pr">CaseSensitive</span> = <span class="kw">false</span>,
+    <span class="pr">WholeWord</span>     = <span class="kw">true</span>
+};
+
+<span class="cm">// Regex, limited to first 50 results</span>
+<span class="kw">var</span> opts2 = <span class="kw">new</span> <span class="ty">SearchOptions</span> { <span class="pr">UseRegex</span> = <span class="kw">true</span>, <span class="pr">MaxResults</span> = <span class="nm">50</span> };</code></pre>
+
+<h2>SearchMatch</h2>
+<table>
+  <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>Offset</code></td><td><code>int</code></td><td>Start offset of the match in the document.</td></tr>
+    <tr><td><code>Length</code></td><td><code>int</code></td><td>Character length of the match.</td></tr>
+  </tbody>
+</table>
+
+<pre><code><span class="ty">SearchMatch</span>? m = doc.<span class="fn">FindNext</span>(<span class="st">"World"</span>, <span class="nm">0</span>);
+<span class="kw">if</span> (m <span class="kw">is not null</span>)
+{
+    <span class="kw">string</span> text = doc.<span class="fn">GetText</span>(m.Value.<span class="pr">Offset</span>, m.Value.<span class="pr">Length</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Found: '{text}' at {m.Value.Offset}"</span>);
+}</code></pre>
+
+<h2>TextDocument Search Methods</h2>
+<table>
+  <thead><tr><th>Method</th><th>Returns</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>FindAll(pattern, opts?)</code></td><td><code>IEnumerable&lt;SearchMatch&gt;</code></td><td>All matches in document order. Lazy enumeration.</td></tr>
+    <tr><td><code>FindNext(pattern, fromOffset, opts?)</code></td><td><code>SearchMatch?</code></td><td>First match at or after <code>fromOffset</code>. Null if none.</td></tr>
+    <tr><td><code>FindPrev(pattern, beforeOffset, opts?)</code></td><td><code>SearchMatch?</code></td><td>Last match before <code>beforeOffset</code>. Null if none.</td></tr>
+    <tr><td><code>CountMatches(pattern, opts?)</code></td><td><code>int</code></td><td>Count without materializing matches. O(n).</td></tr>
+  </tbody>
+</table>
+
+<h2>FindAll — Lazy Enumeration</h2>
+<p><code>FindAll</code> returns an <code>IEnumerable</code> that searches lazily. You can <code>break</code> early or use LINQ without scanning the full document:</p>
+<pre><code><span class="cm">// First 10 matches only</span>
+<span class="kw">var</span> first10 = doc.<span class="fn">FindAll</span>(<span class="st">"TODO"</span>).<span class="fn">Take</span>(<span class="nm">10</span>).<span class="fn">ToList</span>();
+
+<span class="cm">// Only matches on even offsets (contrived, but shows LINQ composability)</span>
+<span class="kw">var</span> even = doc.<span class="fn">FindAll</span>(<span class="st">"x"</span>).<span class="fn">Where</span>(m => m.<span class="pr">Offset</span> % <span class="nm">2</span> == <span class="nm">0</span>);</code></pre>
+
+<h2>FindNext / FindPrev — Wrapping Search</h2>
+<p>Implement wrap-around search (like Ctrl+F "find next" in an editor):</p>
+<pre><code><span class="kw">int</span> caretOffset = cursor.<span class="pr">CaretOffset</span>;
+<span class="kw">string</span> pattern = <span class="st">"hello"</span>;
+
+<span class="cm">// Try forward from current position</span>
+<span class="ty">SearchMatch</span>? m = doc.<span class="fn">FindNext</span>(pattern, caretOffset + <span class="nm">1</span>);
+
+<span class="cm">// Wrap around if not found</span>
+m ??= doc.<span class="fn">FindNext</span>(pattern, <span class="nm">0</span>);
+
+<span class="kw">if</span> (m <span class="kw">is not null</span>)
+    cursor.<span class="fn">SetSelection</span>(m.Value.<span class="pr">Offset</span>, m.Value.<span class="pr">Offset</span> + m.Value.<span class="pr">Length</span>);</code></pre>
+
+<h2>Regex Patterns</h2>
+<p>When <code>UseRegex = true</code>, the pattern is compiled as a .NET <code>Regex</code>. All .NET regex features are supported:</p>
+<pre><code><span class="kw">var</span> opts = <span class="kw">new</span> <span class="ty">SearchOptions</span> { <span class="pr">UseRegex</span> = <span class="kw">true</span>, <span class="pr">CaseSensitive</span> = <span class="kw">false</span> };
+
+<span class="cm">// Match any ISO date</span>
+<span class="kw">var</span> dates = doc.<span class="fn">FindAll</span>(<span class="st">@"\d{4}-\d{2}-\d{2}"</span>, opts);
+
+<span class="cm">// Match function declarations</span>
+<span class="kw">var</span> fns = doc.<span class="fn">FindAll</span>(<span class="st">@"^\s*(public|private|protected)\s+\w+\s+\w+\s*\("</span>, opts);</code></pre>
+
+<h2>Search via TextSearcher (Direct)</h2>
+<p>The lower-level <code>TextSearcher</code> operates directly on the piece table. Use it when building a component that doesn't go through <code>TextDocument</code>:</p>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Search</span>;
+
+<span class="kw">var</span> searcher = <span class="kw">new</span> <span class="ty">TextSearcher</span>(doc.<span class="pr">PieceTable</span>);
+
+<span class="ty">SearchMatch</span>?             first  = searcher.<span class="fn">FindFirst</span>(<span class="st">"TODO"</span>);
+<span class="ty">IEnumerable</span>&lt;<span class="ty">SearchMatch</span>&gt; all    = searcher.<span class="fn">FindAll</span>(<span class="st">"TODO"</span>);
+<span class="ty">SearchMatch</span>?             next   = searcher.<span class="fn">FindNext</span>(<span class="st">"TODO"</span>, fromOffset: <span class="nm">100</span>);
+<span class="ty">SearchMatch</span>?             prev   = searcher.<span class="fn">FindPrev</span>(<span class="st">"TODO"</span>, beforeOffset: <span class="nm">500</span>);
+<span class="kw">int</span>                      count  = searcher.<span class="fn">Count</span>(<span class="st">"TODO"</span>);</code></pre>
+
+<h2>Performance Notes</h2>
+<ul>
+  <li>Plain-text search uses Boyer-Moore-Horspool: O(n) with sub-linear average case.</li>
+  <li>Piece-boundary bridging means the piece table is never materialised to a single string for searching — essential for large files.</li>
+  <li>Regex search materialises only the pieces that cross boundaries; the match itself runs on a <code>Span&lt;char&gt;</code>.</li>
+  <li>Use <code>MaxResults</code> to cap results for UI autocomplete or preview scenarios.</li>
+</ul>
+</main></body></html>

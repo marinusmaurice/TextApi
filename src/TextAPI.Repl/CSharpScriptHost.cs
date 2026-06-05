@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using TextAPI.Core;
 using TextAPI.Core.Cursor;
+using TextAPI.Operations;
+using TextAPI.Operations.Pipeline;
 
 namespace TextAPI.Repl;
 
@@ -113,6 +115,7 @@ public sealed class CSharpScriptHost
             typeof(System.Text.StringBuilder).Assembly,
             typeof(System.Text.RegularExpressions.Regex).Assembly,
             typeof(Console).Assembly,                             // System.Console
+            typeof(DocumentPipeline).Assembly,                   // TextAPI.Operations
         };
 
         return ScriptOptions.Default
@@ -126,7 +129,9 @@ public sealed class CSharpScriptHost
                 "TextAPI.Core",
                 "TextAPI.Core.Cursor",
                 "TextAPI.Core.Search",
-                "TextAPI.Core.Decorations")
+                "TextAPI.Core.Decorations",
+                "TextAPI.Operations",
+                "TextAPI.Operations.Pipeline")
             .WithOptimizationLevel(OptimizationLevel.Debug)
             .WithAllowUnsafe(false);
     }

@@ -33,7 +33,7 @@ internal sealed class LineHighlightCache
 
     private Entry[]                    _entries;
     private int                        _trackedLineCount;
-    private ISyntaxTokeniser           _tokeniser;
+    private ISyntaxTokeniser           _tokeniser = null!;
     private IStatefulSyntaxTokeniser?  _stateful;
     private int                        _initialState;
     private readonly TextDocument      _doc;

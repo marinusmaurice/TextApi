@@ -21,7 +21,7 @@ namespace TextAPI.Core.Cursor;
 /// Performance
 /// ───────────
 ///   Public document methods read a small text window (initial 512 chars) via a
-///   single <see cref="TextDocument.GetText"/> call, then scan the in-memory span.
+///   single <see cref="TextDocument.GetText()"/> call, then scan the in-memory span.
 ///   The window doubles on the rare occasion that a word/group exceeds it.
 ///   The internal span-based overloads are used by <see cref="TextCursor"/> directly
 ///   when it has already materialised the relevant text.

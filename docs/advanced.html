@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Advanced Features — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Advanced Features</h1>
+<p class="lead">TextAPI ships a suite of editor-level feature models: folding, bookmarks, inlay hints, sticky scroll, snippets, outline, word wrap, change tracking, and read-only regions. Each model is independent and connects to the document through explicit calls.</p>
+
+<nav class="toc">
+  <a href="#folding">Folding</a> · <a href="#bookmarks">Bookmarks</a> · <a href="#inlay-hints">Inlay Hints</a> ·
+  <a href="#sticky-scroll">Sticky Scroll</a> · <a href="#snippets">Snippets</a> · <a href="#outline">Outline</a> ·
+  <a href="#word-wrap">Word Wrap</a> · <a href="#change-tracking">Change Tracking</a> · <a href="#read-only">Read-Only Regions</a>
+</nav>
+
+<hr>
+<h2 id="folding">Folding</h2>
+<p><code>FoldingModel</code> detects and manages collapsible regions. Any strategy implementing <code>IFoldingStrategy</code> can supply regions; <code>BraceFoldingStrategy</code> is provided out of the box.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Folding</span>;
+
+<span class="kw">var</span> model = <span class="kw">new</span> <span class="ty">FoldingModel</span>();
+model.<span class="fn">UpdateRegions</span>(<span class="kw">new</span> <span class="ty">BraceFoldingStrategy</span>(), doc);
+
+<span class="cm">// Fold / unfold</span>
+model.<span class="fn">ToggleFold</span>(startLine: <span class="nm">5</span>);
+model.<span class="fn">FoldAll</span>();
+model.<span class="fn">UnfoldAll</span>();
+
+<span class="cm">// Query</span>
+Console.<span class="fn">WriteLine</span>(model.<span class="pr">VisibleLineCount</span>);
+<span class="kw">bool</span> visible = model.<span class="fn">IsLineVisible</span>(<span class="nm">7</span>);
+
+<span class="cm">// Map between display and document lines</span>
+<span class="kw">int</span> docLine     = model.<span class="fn">ToDocumentLine</span>(displayRow: <span class="nm">3</span>);
+<span class="kw">int</span> displayRow  = model.<span class="fn">ToDisplayLine</span>(docLine: <span class="nm">10</span>);
+
+<span class="cm">// Get only the lines that are visible (for rendering)</span>
+<span class="kw">int</span>[] visibleLines = model.<span class="fn">GetVisibleLines</span>();
+
+<span class="cm">// React to changes</span>
+model.<span class="pr">FoldStateChanged</span> += (s, e) => Redraw();
+model.<span class="pr">RegionsChanged</span>   += (s, e) => RefreshGutter();</code></pre>
+
+<h3>FoldRegion Properties</h3>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>StartLine</code></td><td><code>int</code></td><td>First line (always visible; header).</td></tr>
+    <tr><td><code>EndLine</code></td><td><code>int</code></td><td>Last line (hidden when folded).</td></tr>
+    <tr><td><code>Label</code></td><td><code>string</code></td><td>Placeholder shown when folded (e.g. <code>"{ … }"</code>).</td></tr>
+    <tr><td><code>IsFolded</code></td><td><code>bool</code></td><td>Current fold state.</td></tr>
+    <tr><td><code>LineCount</code></td><td><code>int</code></td><td>Total lines including header and footer.</td></tr>
+    <tr><td><code>HiddenLineCount</code></td><td><code>int</code></td><td>Lines hidden when folded.</td></tr>
+  </tbody>
+</table>
+
+<h3>Custom Folding Strategy</h3>
+<pre><code><span class="kw">public class</span> <span class="ty">IndentFoldingStrategy</span> : <span class="ty">IFoldingStrategy</span>
+{
+    <span class="kw">public</span> <span class="ty">IReadOnlyList</span>&lt;(<span class="kw">int</span> StartLine, <span class="kw">int</span> EndLine, <span class="kw">string</span> Label)&gt;
+        <span class="fn">DetectRegions</span>(<span class="ty">TextDocument</span> doc)
+    {
+        <span class="cm">// Return regions based on indentation level</span>
+        <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">string</span>)&gt;();
+        <span class="cm">// ... detection logic ...</span>
+        <span class="kw">return</span> result;
+    }
+}</code></pre>
+
+<hr>
+<h2 id="bookmarks">Bookmarks</h2>
+<p><code>BookmarkModel</code> tracks a set of bookmarked line numbers. Bookmarks automatically remap when lines are inserted or deleted.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Navigation</span>;
+
+<span class="kw">var</span> bookmarks = <span class="kw">new</span> <span class="ty">BookmarkModel</span>();
+
+<span class="cm">// Toggle bookmark on line 5</span>
+<span class="kw">bool</span> added = bookmarks.<span class="fn">Toggle</span>(<span class="nm">5</span>);  <span class="cm">// true = now bookmarked</span>
+
+<span class="cm">// Navigate</span>
+<span class="kw">int</span>? next = bookmarks.<span class="fn">NextBookmark</span>(fromLine: cursor.<span class="pr">CaretLine</span>);
+<span class="kw">int</span>? prev = bookmarks.<span class="fn">PrevBookmark</span>(fromLine: cursor.<span class="pr">CaretLine</span>);
+
+<span class="kw">if</span> (next <span class="kw">is not null</span>)
+    cursor.<span class="fn">MoveTo</span>(doc.<span class="fn">PositionToOffset</span>(next.Value, <span class="nm">0</span>));
+
+<span class="cm">// List all</span>
+<span class="kw">foreach</span> (<span class="kw">int</span> line <span class="kw">in</span> bookmarks.<span class="fn">GetAll</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Bookmark at line {line}"</span>);
+
+<span class="cm">// Hook up offset remapping after document edits</span>
+<span class="cm">// (call these from your document-edit event handlers)</span>
+bookmarks.<span class="fn">OnInsert</span>(atLine: <span class="nm">3</span>, count: <span class="nm">2</span>);
+bookmarks.<span class="fn">OnDelete</span>(atLine: <span class="nm">3</span>, count: <span class="nm">1</span>);
+
+<span class="cm">// Listen for changes</span>
+bookmarks.<span class="pr">BookmarksChanged</span> += (s, e) => UpdateGutter();</code></pre>
+
+<hr>
+<h2 id="inlay-hints">Inlay Hints</h2>
+<p>Inline annotations shown inside the text (parameter names, inferred types). The model tracks offsets and fires <code>HintsChanged</code> when they shift.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.InlayHints</span>;
+
+<span class="kw">var</span> hints = <span class="kw">new</span> <span class="ty">InlayHintModel</span>();
+
+<span class="cm">// Add a parameter name hint</span>
+<span class="ty">Guid</span> id = hints.<span class="fn">AddHint</span>(<span class="kw">new</span> <span class="ty">InlayHint</span>(
+    offset:  <span class="nm">42</span>,
+    text:    <span class="st">"value:"</span>,
+    kind:    <span class="ty">InlayHintKind</span>.<span class="pr">Parameter</span>,
+    tooltip: <span class="st">"int value"</span>
+));
+
+<span class="cm">// Replace all hints at once (from language server response)</span>
+hints.<span class="fn">SetHints</span>(languageServerHints);
+
+<span class="cm">// Query</span>
+<span class="kw">var</span> visible = hints.<span class="fn">GetHintsInRange</span>(viewportStart, viewportEnd);
+<span class="kw">var</span> types   = hints.<span class="fn">GetHintsByKind</span>(<span class="ty">InlayHintKind</span>.<span class="pr">Type</span>);
+<span class="kw">var</span> atCaret = hints.<span class="fn">GetHintAt</span>(cursor.<span class="pr">CaretOffset</span>);
+
+<span class="cm">// React</span>
+hints.<span class="pr">HintsChanged</span> += (s, e) => InvalidateViewport();</code></pre>
+
+<h3>InlayHintKind Enum</h3>
+<table>
+  <thead><tr><th>Value</th><th>Typical Use</th></tr></thead>
+  <tbody>
+    <tr><td><code>Parameter</code></td><td>Parameter name before an argument.</td></tr>
+    <tr><td><code>Type</code></td><td>Inferred type annotation.</td></tr>
+    <tr><td><code>Return</code></td><td>Return-value annotation.</td></tr>
+    <tr><td><code>Other</code></td><td>Any application-defined hint.</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<h2 id="sticky-scroll">Sticky Scroll</h2>
+<p><code>StickyScroll</code> is a static helper that computes which scope headers should be "stuck" at the top of the viewport as the user scrolls down into a fold region.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.StickyScroll</span>;
+
+<span class="cm">// Called on every scroll event</span>
+<span class="kw">var</span> context = <span class="ty">StickyScroll</span>.<span class="fn">GetContext</span>(foldingModel, firstVisibleLine: scrollTop);
+
+<span class="kw">foreach</span> (<span class="ty">StickyScrollEntry</span> entry <span class="kw">in</span> context)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Line {entry.DocumentLine}: {entry.Label}"</span>);
+    <span class="cm">// Render entry.Label at the top of the viewport</span>
+}</code></pre>
+
+<hr>
+<h2 id="snippets">Snippets</h2>
+<p><code>SnippetEngine</code> parses VS Code–compatible snippet bodies (<code>$1</code>, <code>$2</code>, <code>$0</code> exit stop) and manages the interactive tab-stop session.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Snippets</span>;
+
+<span class="cm">// Parse once, reuse many times</span>
+<span class="ty">Snippet</span> template = <span class="ty">SnippetEngine</span>.<span class="fn">Parse</span>(<span class="st">"for (int $1 = 0; $1 &lt; $2; $1++) {\n    $0\n}"</span>);
+
+<span class="cm">// Insert at cursor and begin session</span>
+<span class="ty">SnippetSession</span> session = <span class="ty">SnippetEngine</span>.<span class="fn">BeginSnippet</span>(doc, template, insertOffset: cursor.<span class="pr">CaretOffset</span>);
+
+<span class="cm">// Navigate tab stops (Tab key)</span>
+<span class="ty">TabStop</span>? stop = session.<span class="fn">NextTabStop</span>();
+<span class="kw">if</span> (stop <span class="kw">is not null</span>)
+{
+    cursor.<span class="fn">SetSelection</span>(stop.Value.<span class="pr">Offset</span>, stop.Value.<span class="pr">Offset</span> + stop.Value.<span class="pr">Length</span>);
+}
+<span class="kw">else</span>
+{
+    <span class="cm">// Reached exit stop ($0) — session done</span>
+    session.<span class="fn">Commit</span>();
+}
+
+<span class="cm">// Update mirrors when user types into a tab stop</span>
+session.<span class="fn">UpdateTabStop</span>(tabStopIndex: <span class="nm">1</span>, newText: <span class="st">"i"</span>);  <span class="cm">// all $1 mirrors update
+
+// Shift+Tab</span>
+<span class="ty">TabStop</span>? prev = session.<span class="fn">PrevTabStop</span>();
+
+<span class="cm">// Escape — undo insertion</span>
+session.<span class="fn">Cancel</span>();</code></pre>
+
+<hr>
+<h2 id="outline">Outline</h2>
+<p><code>OutlineProvider</code> builds a hierarchical tree of document structure from the <code>FoldingModel</code>. Useful for breadcrumb navigation or a document outline panel.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Outline</span>;
+
+<span class="cm">// Requires an up-to-date FoldingModel</span>
+<span class="ty">IReadOnlyList</span>&lt;<span class="ty">OutlineNode</span>&gt; nodes = <span class="ty">OutlineProvider</span>.<span class="fn">GetOutline</span>(foldingModel);
+
+<span class="kw">void</span> <span class="fn">PrintTree</span>(<span class="ty">IReadOnlyList</span>&lt;<span class="ty">OutlineNode</span>&gt; items, <span class="kw">int</span> indent = <span class="nm">0</span>)
+{
+    <span class="kw">foreach</span> (<span class="kw">var</span> n <span class="kw">in</span> items)
+    {
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"{new string(' ', indent * 2)}{n.Label} (line {n.StartLine})"</span>);
+        <span class="fn">PrintTree</span>(n.<span class="pr">Children</span>, indent + <span class="nm">1</span>);
+    }
+}
+<span class="fn">PrintTree</span>(nodes);</code></pre>
+
+<h3>OutlineNode Properties</h3>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>Label</code></td><td><code>string</code></td><td>Header text (from <code>FoldRegion.Label</code>).</td></tr>
+    <tr><td><code>StartLine</code></td><td><code>int</code></td><td>Zero-based document line of the header.</td></tr>
+    <tr><td><code>EndLine</code></td><td><code>int</code></td><td>Zero-based document line of the closing boundary.</td></tr>
+    <tr><td><code>Depth</code></td><td><code>int</code></td><td>Nesting depth. 0 = top-level.</td></tr>
+    <tr><td><code>Children</code></td><td><code>IReadOnlyList&lt;OutlineNode&gt;</code></td><td>Direct children in ascending <code>StartLine</code> order.</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<h2 id="word-wrap">Word Wrap</h2>
+<p><code>WordWrapModel</code> maps between document line numbers and wrapped display rows using grapheme-cluster-aware column counting. Set <code>ViewportWidth</code> to the number of visible character columns.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.WordWrap</span>;
+
+<span class="kw">var</span> wrap = <span class="kw">new</span> <span class="ty">WordWrapModel</span>(doc, viewportWidth: <span class="nm">80</span>);
+
+<span class="cm">// Map line → display row (for rendering at correct y position)</span>
+<span class="kw">int</span> row = wrap.<span class="fn">ToDisplayRow</span>(docLine: <span class="nm">10</span>);
+
+<span class="cm">// Map display row → document line (for hit-testing a click)</span>
+<span class="kw">int</span> line = wrap.<span class="fn">ToDocumentLine</span>(displayRow: <span class="nm">15</span>);
+
+<span class="cm">// How many rows does line 3 occupy?</span>
+<span class="kw">int</span> rows = wrap.<span class="fn">WrappedRowCount</span>(<span class="nm">3</span>);
+
+<span class="cm">// Character offset ranges for each visual row of a line</span>
+<span class="kw">var</span> segments = wrap.<span class="fn">GetWrappedSegments</span>(docLine: <span class="nm">3</span>);
+<span class="kw">foreach</span> (<span class="kw">var</span> (start, end) <span class="kw">in</span> segments)
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  row chars [{start}, {end})"</span>);
+
+<span class="cm">// Resize viewport (e.g. window resize)</span>
+wrap.<span class="fn">Resize</span>(newWidth: <span class="nm">120</span>);
+wrap.<span class="pr">WrapChanged</span> += (s, e) => InvalidateViewport();
+
+Console.<span class="fn">WriteLine</span>(<span class="st">$"Total display rows: {wrap.DisplayRowCount}"</span>);</code></pre>
+
+<hr>
+<h2 id="change-tracking">Change Tracking</h2>
+<p><code>ChangeTracker</code> computes per-line diff status relative to a saved baseline — the coloured gutter markers ("added", "modified", "deleted") common in modern editors.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.ChangeTracking</span>;
+
+<span class="kw">var</span> tracker = <span class="kw">new</span> <span class="ty">ChangeTracker</span>(doc);
+
+<span class="cm">// Capture baseline (e.g. on file save or initial load)</span>
+tracker.<span class="fn">SetBaseline</span>();
+
+<span class="cm">// ... user makes edits ...
+
+// Query per-line status (lazy — diff computed on first access)</span>
+<span class="ty">LineStatus</span> status = tracker.<span class="fn">GetStatus</span>(lineIndex: <span class="nm">5</span>);
+<span class="cm">// LineStatus.Clean | LineStatus.Added | LineStatus.Modified</span>
+
+<span class="cm">// Does this line have deleted lines above it?</span>
+<span class="kw">bool</span> deletionAbove = tracker.<span class="fn">HasDeletionAbove</span>(<span class="nm">5</span>);
+
+<span class="cm">// Enumerate all changed lines</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> (line, status2) <span class="kw">in</span> tracker.<span class="fn">ChangedLines</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Line {line}: {status2}"</span>);
+
+<span class="cm">// Where are the deleted-line indicators?</span>
+<span class="kw">foreach</span> (<span class="kw">int</span> point <span class="kw">in</span> tracker.<span class="fn">DeletionPoints</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Deleted lines above line {point}"</span>);
+
+<span class="cm">// React to changes</span>
+tracker.<span class="pr">ChangesUpdated</span> += (s, e) => UpdateGutter();
+
+Console.<span class="fn">WriteLine</span>(tracker.<span class="pr">HasAnyChanges</span>);</code></pre>
+
+<h3>LineStatus Enum</h3>
+<table>
+  <thead><tr><th>Value</th><th>Gutter Colour</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>Clean</code></td><td>None</td><td>Identical to baseline.</td></tr>
+    <tr><td><code>Added</code></td><td>Green</td><td>Line newly inserted since baseline.</td></tr>
+    <tr><td><code>Modified</code></td><td>Yellow/Amber</td><td>Line exists in baseline but content changed.</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<h2 id="read-only">Read-Only Regions</h2>
+<p>Protect offset ranges from mutation. When <code>doc.EnforceReadOnly</code> is true (the default), any edit that overlaps a protected region throws <code>ReadOnlyViolationException</code>.</p>
+
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.ReadOnly</span>;
+
+<span class="kw">var</span> regions = <span class="kw">new</span> <span class="ty">ReadOnlyRegionModel</span>();
+
+<span class="cm">// Protect the header (first 100 chars)</span>
+<span class="ty">Guid</span> id = regions.<span class="fn">Protect</span>(start: <span class="nm">0</span>, end: <span class="nm">100</span>);
+
+<span class="cm">// Check before editing</span>
+<span class="kw">if</span> (!regions.<span class="fn">IsRangeReadOnly</span>(offset, length))
+    doc.<span class="fn">Insert</span>(offset, text);
+
+<span class="cm">// Remove protection</span>
+regions.<span class="fn">Unprotect</span>(id);
+regions.<span class="fn">UnprotectAll</span>();
+
+<span class="cm">// Inspect</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> (rid, start, end) <span class="kw">in</span> regions.<span class="fn">GetRegions</span>())
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Protected [{start}, {end})"</span>);
+
+<span class="cm">// Disable enforcement (allow bypassing protection)</span>
+doc.<span class="pr">EnforceReadOnly</span> = <span class="kw">false</span>;
+
+regions.<span class="pr">RegionsChanged</span> += (s, e) => UpdateGutter();</code></pre>
+
+<div class="callout callout-warn"><p>Read-only enforcement is controlled by <code>doc.EnforceReadOnly</code>. Set it to <code>false</code> if you need to programmatically edit protected ranges (e.g. during a template expansion).</p></div>
+</main></body></html>

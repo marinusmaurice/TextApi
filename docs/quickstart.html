@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Quick Start — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Quick Start</h1>
+<p class="lead">Get from zero to running in five minutes.</p>
+
+<h2>1. Add References</h2>
+<p>Add project references to the assemblies you need:</p>
+<pre><code><span class="cm">&lt;!-- Core document model --&gt;</span>
+&lt;<span class="ty">ProjectReference</span> <span class="pr">Include</span>=<span class="st">"TextAPI.Core/TextAPI.Core.csproj"</span> /&gt;
+
+<span class="cm">&lt;!-- 27 operations + pipeline (requires Core) --&gt;</span>
+&lt;<span class="ty">ProjectReference</span> <span class="pr">Include</span>=<span class="st">"TextAPI.Operations/TextAPI.Operations.csproj"</span> /&gt;
+
+<span class="cm">&lt;!-- C# REPL (requires Core + Operations) --&gt;</span>
+&lt;<span class="ty">ProjectReference</span> <span class="pr">Include</span>=<span class="st">"TextAPI.Repl/TextAPI.Repl.csproj"</span> /&gt;</code></pre>
+
+<h2>2. Load a Document</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core</span>;
+
+<span class="kw">var</span> doc = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+
+<span class="cm">// From a string</span>
+doc.<span class="fn">Load</span>(<span class="st">"Hello, World!\nSecond line."</span>);
+
+<span class="cm">// From a file (auto-detects encoding + EOL style)</span>
+<span class="kw">await</span> doc.<span class="fn">LoadFileAsync</span>(<span class="st">"/path/to/file.txt"</span>);</code></pre>
+
+<h2>3. Read Content</h2>
+<pre><code>Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());          <span class="cm">// full text</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="pr">Length</span>);            <span class="cm">// char count</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="pr">LineCount</span>);         <span class="cm">// line count</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetLine</span>(<span class="nm">0</span>));         <span class="cm">// first line (no newline)</span>
+
+<span class="kw">var</span> (line, col) = doc.<span class="fn">OffsetToPosition</span>(<span class="nm">7</span>); <span class="cm">// offset → (line, column)</span>
+<span class="kw">int</span> offset = doc.<span class="fn">PositionToOffset</span>(<span class="nm">0</span>, <span class="nm">7</span>);   <span class="cm">// (line, col) → offset</span></code></pre>
+
+<h2>4. Direct Mutations (Core)</h2>
+<p>Use <code>Insert</code>, <code>Delete</code>, <code>Replace</code> for precise, undo-tracked edits:</p>
+<pre><code>doc.<span class="fn">Insert</span>(<span class="nm">5</span>, <span class="st">" Beautiful"</span>);         <span class="cm">// insert at offset 5</span>
+doc.<span class="fn">Delete</span>(<span class="nm">0</span>, <span class="nm">5</span>);                    <span class="cm">// delete 5 chars at offset 0</span>
+doc.<span class="fn">Replace</span>(<span class="nm">0</span>, <span class="nm">5</span>, <span class="st">"Hi"</span>);             <span class="cm">// replace 5 chars at offset 0 with "Hi"</span>
+
+doc.<span class="fn">Undo</span>();                            <span class="cm">// undo last edit</span>
+doc.<span class="fn">Redo</span>();                            <span class="cm">// redo</span></code></pre>
+
+<h2>5. Operations Pipeline</h2>
+<p>For structured, auditable, atomic mutations:</p>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Operations</span>;
+<span class="kw">using</span> <span class="ty">TextAPI.Operations.Pipeline</span>;
+
+<span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span>  { <span class="pr">Find</span> = <span class="st">"TODO"</span>, <span class="pr">Replace</span> = <span class="st">"DONE"</span> })
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>())
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">SortLinesOperation</span> { <span class="pr">Descending</span> = <span class="kw">true</span> })
+    .<span class="fn">Execute</span>();
+
+<span class="kw">if</span> (result.<span class="pr">Success</span>)
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Done: {result.AuditLog.Summary}"</span>);
+<span class="kw">else</span>
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"Failed at op {result.FailedOperationIndex}: {result.ErrorMessage}"</span>);</code></pre>
+
+<h2>6. JSON Pipeline (for AI / external systems)</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Operations.Serialization</span>;
+
+<span class="kw">string</span> json = <span class="st">"""
+{
+  "operations": [
+    { "type": "REPLACE_ALL", "find": "foo", "replace": "bar" },
+    { "type": "TRIM_TRAILING_WHITESPACE" },
+    { "type": "SORT_LINES" }
+  ]
+}
+"""</span>;
+
+<span class="kw">var</span> ops    = <span class="ty">OperationMapper</span>.<span class="fn">FromPipelineJson</span>(json);
+<span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(ops).<span class="fn">Execute</span>();</code></pre>
+
+<h2>7. Script DSL</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Scripting</span>;
+
+<span class="kw">var</span> runner = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(doc);
+<span class="kw">var</span> result = runner.<span class="fn">Run</span>(<span class="st">"""
+    REPLACE_ALL "foo" "bar"
+    INSERT_AT 0 "// Auto-generated\n"
+    DELETE_LINE 5
+"""</span>);
+
+Console.<span class="fn">WriteLine</span>(result.<span class="pr">Success</span>);</code></pre>
+
+<h2>8. C# REPL</h2>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Repl</span>;
+<span class="kw">using</span> <span class="ty">TextAPI.Core.Cursor</span>;
+
+<span class="kw">var</span> mc   = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+<span class="kw">var</span> host = <span class="kw">new</span> <span class="ty">CSharpScriptHost</span>(doc, mc);
+
+<span class="kw">var</span> r1 = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"var n = doc.LineCount;"</span>);
+<span class="kw">var</span> r2 = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"Print(n);"</span>);  <span class="cm">// n still in scope</span>
+Console.<span class="fn">WriteLine</span>(r2.<span class="pr">Output</span>);</code></pre>
+
+<h2>Next Steps</h2>
+<ul>
+  <li><a href="textdocument.html">TextDocument API</a> — full reference for the core document model</li>
+  <li><a href="operations.html">All 27 Operations</a> — every operation with properties and examples</li>
+  <li><a href="pipeline.html">Pipeline &amp; Rollback</a> — atomic execution, cancellation, audit logs</li>
+  <li><a href="scripting.html">Script DSL</a> — line-oriented command language</li>
+  <li><a href="repl.html">C# REPL</a> — interactive scripting with Roslyn</li>
+  <li><a href="scenarios.html">Scenarios &amp; Cookbook</a> — real-world worked examples</li>
+</ul>
+</main></body></html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Operations Examples — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>All 27 Operations — Examples</h1>
+<p class="lead">A focused, runnable example for every operation — every property, its default, and edge-case behaviour.</p>
+
+<!-- ══════════════════════════════════════════════ OFFSET OPS -->
+<h2>Offset Operations</h2>
+
+<h3>InsertAtOperation</h3>
+<pre><code><span class="cm">// Insert "START " at the very beginning</span>
+<span class="kw">var</span> doc = <span class="kw">new</span> <span class="ty">TextDocument</span>(); doc.<span class="fn">Load</span>(<span class="st">"World"</span>);
+
+<span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAtOperation</span>(<span class="nm">0</span>, <span class="st">"Hello, "</span>))
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());           <span class="cm">// "Hello, World"</span>
+Console.<span class="fn">WriteLine</span>(result.<span class="pr">Success</span>);          <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(result.<span class="pr">AuditLog</span>.<span class="pr">Summary</span>); <span class="cm">// "1 op(s) succeeded; +7/-0 chars"</span></code></pre>
+
+<pre><code><span class="cm">// Failure: offset out of range</span>
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAtOperation</span>(<span class="nm">9999</span>, <span class="st">"x"</span>))
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);       <span class="cm">// false</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>);  <span class="cm">// offset out of range</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">WasRolledBack</span>); <span class="cm">// true</span></code></pre>
+
+<h3>DeleteAtOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello, World!"</span>);
+
+<span class="cm">// Delete the comma and space (", " = 2 chars at offset 5)</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeleteAtOperation</span>(<span class="nm">5</span>, <span class="nm">2</span>))
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "HelloWorld!"</span></code></pre>
+
+<pre><code><span class="cm">// Delete last character</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeleteAtOperation</span>(doc.<span class="pr">Length</span> - <span class="nm">1</span>, <span class="nm">1</span>))
+    .<span class="fn">Execute</span>();</code></pre>
+
+<h3>ReplaceAtOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+
+<span class="cm">// Replace "World" (offset 6, length 5) with "TextAPI"</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAtOperation</span>(<span class="nm">6</span>, <span class="nm">5</span>, <span class="st">"TextAPI"</span>))
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "Hello TextAPI"</span></code></pre>
+
+<!-- ══════════════════════════════════════════════ ANCHOR OPS -->
+<h2>Anchor Operations</h2>
+
+<h3>InsertAfterOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"namespace Foo { class Bar { } }"</span>);
+
+<span class="cm">// Insert after the opening of class Bar</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAfterOperation</span>
+    {
+        <span class="pr">Anchor</span>        = <span class="st">"class Bar {"</span>,
+        <span class="pr">Text</span>          = <span class="st">" int x = 1;"</span>,
+        <span class="pr">Occurrence</span>    = <span class="nm">1</span>,      <span class="cm">// first (and only) occurrence</span>
+        <span class="pr">CaseSensitive</span> = <span class="kw">true</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "namespace Foo { class Bar { int x = 1; } }"</span></code></pre>
+
+<pre><code><span class="cm">// 2nd occurrence of "end"</span>
+doc.<span class="fn">Load</span>(<span class="st">"end first end second end third"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAfterOperation</span> { <span class="pr">Anchor</span> = <span class="st">"end"</span>, <span class="pr">Text</span> = <span class="st">"[2]"</span>, <span class="pr">Occurrence</span> = <span class="nm">2</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "end first end[2] second end third"</span></code></pre>
+
+<h3>InsertBeforeOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"return result;"</span>);
+
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertBeforeOperation</span>
+    {
+        <span class="pr">Anchor</span> = <span class="st">"return"</span>,
+        <span class="pr">Text</span>   = <span class="st">"Console.WriteLine(result);\n"</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "Console.WriteLine(result);
+// return result;"</span></code></pre>
+
+<h3>AppendOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"line one\nline two"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">AppendOperation</span> { <span class="pr">Text</span> = <span class="st">"\nline three"</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "line one
+// line two
+// line three"</span></code></pre>
+
+<h3>PrependOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"body text"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">PrependOperation</span> { <span class="pr">Text</span> = <span class="st">"// Auto-generated\n"</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "// Auto-generated
+// body text"</span></code></pre>
+
+<h3>ReplaceSectionOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"BEGIN old content END rest"</span>);
+
+<span class="cm">// Replace between anchors (not including them)</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceSectionOperation</span>
+    {
+        <span class="pr">StartAnchor</span>     = <span class="st">"BEGIN"</span>,
+        <span class="pr">EndAnchor</span>       = <span class="st">"END"</span>,
+        <span class="pr">Text</span>            = <span class="st">" NEW CONTENT "</span>,
+        <span class="pr">IncludeAnchors</span>  = <span class="kw">false</span>     <span class="cm">// default: keep the anchors</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "BEGIN NEW CONTENT END rest"</span></code></pre>
+
+<pre><code><span class="cm">// Replace including anchors</span>
+doc.<span class="fn">Load</span>(<span class="st">"[[ old ]] rest"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceSectionOperation</span>
+    {
+        <span class="pr">StartAnchor</span>    = <span class="st">"[["</span>, <span class="pr">EndAnchor</span> = <span class="st">"]]"</span>,
+        <span class="pr">Text</span>           = <span class="st">"{{new}}"</span>,
+        <span class="pr">IncludeAnchors</span> = <span class="kw">true</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "{{new}} rest"</span></code></pre>
+
+<h3>DeleteSectionOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"KEEP /* remove this */ KEEP"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeleteSectionOperation</span>
+    {
+        <span class="pr">StartAnchor</span>    = <span class="st">"/*"</span>,
+        <span class="pr">EndAnchor</span>      = <span class="st">"*/"</span>,
+        <span class="pr">IncludeAnchors</span> = <span class="kw">true</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "KEEP  KEEP"</span></code></pre>
+
+<!-- ══════════════════════════════════════════════ PATTERN OPS -->
+<h2>Pattern Operations</h2>
+
+<h3>ReplaceAllOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"foo bar foo baz FOO"</span>);
+
+<span class="cm">// Case-sensitive (default)</span>
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span> { <span class="pr">Find</span> = <span class="st">"foo"</span>, <span class="pr">Replace</span> = <span class="st">"qux"</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());                       <span class="cm">// "qux bar qux baz FOO"</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">OperationResults</span>[<span class="nm">0</span>].<span class="pr">MatchCount</span>); <span class="cm">// 2</span></code></pre>
+
+<pre><code><span class="cm">// Case-insensitive</span>
+doc.<span class="fn">Load</span>(<span class="st">"foo Foo FOO"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span>
+    {
+        <span class="pr">Find</span>          = <span class="st">"foo"</span>,
+        <span class="pr">Replace</span>       = <span class="st">"bar"</span>,
+        <span class="pr">CaseSensitive</span> = <span class="kw">false</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "bar bar bar"</span></code></pre>
+
+<pre><code><span class="cm">// Whole word only</span>
+doc.<span class="fn">Load</span>(<span class="st">"cat concatenate cats catfish"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span>
+    {
+        <span class="pr">Find</span>      = <span class="st">"cat"</span>,
+        <span class="pr">Replace</span>   = <span class="st">"dog"</span>,
+        <span class="pr">WholeWord</span> = <span class="kw">true</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "dog concatenate cats catfish"</span></code></pre>
+
+<h3>RegexReplaceOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"2024-01-15 and 2025-06-30"</span>);
+
+<span class="cm">// Reformat dates from YYYY-MM-DD to DD/MM/YYYY</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">RegexReplaceOperation</span>
+    {
+        <span class="pr">Pattern</span>     = <span class="st">@"(\d{4})-(\d{2})-(\d{2})"</span>,
+        <span class="pr">Replacement</span> = <span class="st">"$3/$2/$1"</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "15/01/2024 and 30/06/2025"</span></code></pre>
+
+<pre><code><span class="cm">// Remove trailing semicolons</span>
+doc.<span class="fn">Load</span>(<span class="st">"int x = 1;\nstring s = \"hello\";\nvar y = 2"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">RegexReplaceOperation</span> { <span class="pr">Pattern</span> = <span class="st">@";$"</span>, <span class="pr">Replacement</span> = <span class="st">""</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "int x = 1
+// string s = "hello"
+// var y = 2"</span></code></pre>
+
+<pre><code><span class="cm">// Invalid regex → failure (pipeline rolls back)</span>
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">RegexReplaceOperation</span> { <span class="pr">Pattern</span> = <span class="st">"[invalid"</span>, <span class="pr">Replacement</span> = <span class="st">""</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);      <span class="cm">// false</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>); <span class="cm">// invalid regex message</span></code></pre>
+
+<!-- ══════════════════════════════════════════════ LINE OPS -->
+<h2>Line Operations</h2>
+
+<h3>InsertLineOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"line0\nline1\nline2"</span>);
+
+<span class="cm">// Insert before line 1 (0-based) — pushes line1 down</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertLineOperation</span> { <span class="pr">LineIndex</span> = <span class="nm">1</span>, <span class="pr">Text</span> = <span class="st">"inserted"</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// line0
+// inserted
+// line1
+// line2</span></code></pre>
+
+<pre><code><span class="cm">// Insert at beginning (LineIndex = 0)</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertLineOperation</span> { <span class="pr">LineIndex</span> = <span class="nm">0</span>, <span class="pr">Text</span> = <span class="st">"// First line"</span> })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<pre><code><span class="cm">// Insert at end (LineIndex = doc.LineCount)</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertLineOperation</span> { <span class="pr">LineIndex</span> = doc.<span class="pr">LineCount</span>, <span class="pr">Text</span> = <span class="st">"// EOF"</span> })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<h3>DeleteLineOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"a\nb\nc\nd"</span>);
+
+<span class="cm">// Delete line index 1 ("b")</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeleteLineOperation</span> { <span class="pr">LineIndex</span> = <span class="nm">1</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "a\nc\nd"</span></code></pre>
+
+<pre><code><span class="cm">// Delete last line</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeleteLineOperation</span> { <span class="pr">LineIndex</span> = doc.<span class="pr">LineCount</span> - <span class="nm">1</span> })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<h3>ReplaceLineOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"foo\nbar\nbaz"</span>);
+
+<span class="cm">// Replace line 1 ("bar") with new content</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceLineOperation</span> { <span class="pr">LineIndex</span> = <span class="nm">1</span>, <span class="pr">Text</span> = <span class="st">"REPLACED"</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "foo\nREPLACED\nbaz"</span></code></pre>
+
+<h3>InsertAfterLineMatchOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"using System;\nusing TextAPI.Core;\n\nvar doc = new TextDocument();"</span>);
+
+<span class="cm">// Insert a new using after the line containing "TextAPI.Core"</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAfterLineMatchOperation</span>
+    {
+        <span class="pr">Pattern</span>  = <span class="st">"TextAPI.Core"</span>,
+        <span class="pr">LineText</span> = <span class="st">"using TextAPI.Operations;"</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetLine</span>(<span class="nm">2</span>)); <span class="cm">// "using TextAPI.Operations;"</span></code></pre>
+
+<pre><code><span class="cm">// Regex match — insert after 2nd blank line</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAfterLineMatchOperation</span>
+    {
+        <span class="pr">Pattern</span>    = <span class="st">@"^\s*$"</span>,  <span class="cm">// blank line</span>
+        <span class="pr">LineText</span>   = <span class="st">"// inserted after blank"</span>,
+        <span class="pr">UseRegex</span>   = <span class="kw">true</span>,
+        <span class="pr">Occurrence</span> = <span class="nm">2</span>
+    })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<!-- ══════════════════════════════════════════════ TRANSFORM OPS -->
+<h2>Transform Operations</h2>
+
+<h3>TrimTrailingWhitespaceOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"hello   \nworld  \n  \nend"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>())
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>().Replace(<span class="st">" "</span>, <span class="st">"·"</span>));
+<span class="cm">// "hello
+// world
+//
+// end"   (trailing spaces removed)</span></code></pre>
+
+<h3>NormaliseWhitespaceOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"hello   world\nfoo  bar   baz"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">NormaliseWhitespaceOperation</span>())
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "hello world
+// foo bar baz"</span></code></pre>
+
+<h3>ConvertCaseOperation — Upper / Lower / TitleCase</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"hello world"</span>);
+
+<span class="cm">// Uppercase entire document</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ConvertCaseOperation</span> { <span class="pr">Mode</span> = <span class="ty">CaseMode</span>.<span class="pr">Upper</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "HELLO WORLD"</span></code></pre>
+
+<pre><code><span class="cm">// TitleCase a specific range between anchors</span>
+doc.<span class="fn">Load</span>(<span class="st">"prefix [title goes here] suffix"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ConvertCaseOperation</span>
+    {
+        <span class="pr">Mode</span>        = <span class="ty">CaseMode</span>.<span class="pr">TitleCase</span>,
+        <span class="pr">StartAnchor</span> = <span class="st">"["</span>,
+        <span class="pr">EndAnchor</span>   = <span class="st">"]"</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "prefix [Title Goes Here] suffix"</span></code></pre>
+
+<h3>SortLinesOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"banana\napple\ncherry\ndate"</span>);
+
+<span class="cm">// Sort all lines ascending</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">SortLinesOperation</span>())
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// apple
+// banana
+// cherry
+// date</span></code></pre>
+
+<pre><code><span class="cm">// Sort descending, case-insensitive, lines 1–3 only</span>
+doc.<span class="fn">Load</span>(<span class="st">"HEADER\nbanana\napple\ncherry\nFOOTER"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">SortLinesOperation</span>
+    {
+        <span class="pr">StartLine</span>     = <span class="nm">1</span>,
+        <span class="pr">EndLine</span>       = <span class="nm">3</span>,
+        <span class="pr">Descending</span>    = <span class="kw">true</span>,
+        <span class="pr">CaseSensitive</span> = <span class="kw">false</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// HEADER
+// cherry
+// banana
+// apple
+// FOOTER</span></code></pre>
+
+<h3>DeduplicateLinesOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"apple\nbanana\napple\ncherry\nbanana\napple"</span>);
+
+<span class="cm">// Remove all duplicates (keep first occurrence)</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeduplicateLinesOperation</span>())
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// apple
+// banana
+// cherry</span></code></pre>
+
+<pre><code><span class="cm">// ConsecutiveOnly — only remove adjacent duplicates (like Unix uniq)</span>
+doc.<span class="fn">Load</span>(<span class="st">"a\na\nb\na\nb\nb"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeduplicateLinesOperation</span> { <span class="pr">ConsecutiveOnly</span> = <span class="kw">true</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// a
+// b
+// a
+// b</span></code></pre>
+
+<h3>IndentOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"line0\nline1\nline2\nline3"</span>);
+
+<span class="cm">// Indent lines 1–2 with 4 spaces</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">IndentOperation</span>
+    {
+        <span class="pr">StartLine</span> = <span class="nm">1</span>,
+        <span class="pr">EndLine</span>   = <span class="nm">2</span>,
+        <span class="pr">Prefix</span>   = <span class="st">"    "</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// line0
+//     line1
+//     line2
+// line3</span></code></pre>
+
+<pre><code><span class="cm">// Dedent (remove prefix)</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">IndentOperation</span>
+    {
+        <span class="pr">StartLine</span> = <span class="nm">1</span>, <span class="pr">EndLine</span> = <span class="nm">2</span>,
+        <span class="pr">Prefix</span>   = <span class="st">"    "</span>,
+        <span class="pr">Dedent</span>   = <span class="kw">true</span>
+    })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<pre><code><span class="cm">// Tab indent</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">IndentOperation</span> { <span class="pr">StartLine</span> = <span class="nm">0</span>, <span class="pr">Prefix</span> = <span class="st">"\t"</span> })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<h3>WrapLinesOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"This is a very long line that needs to be wrapped at a sensible column width for readability purposes."</span>);
+
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">WrapLinesOperation</span> { <span class="pr">MaxColumns</span> = <span class="nm">40</span> })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// "This is a very long line that needs to
+// be wrapped at a sensible column width
+// for readability purposes."</span></code></pre>
+
+<pre><code><span class="cm">// Wrap only lines 2–5</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">WrapLinesOperation</span>
+    {
+        <span class="pr">MaxColumns</span> = <span class="nm">72</span>,
+        <span class="pr">StartLine</span>  = <span class="nm">2</span>,
+        <span class="pr">EndLine</span>    = <span class="nm">5</span>
+    })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<!-- ══════════════════════════════════════════════ QUERY OPS -->
+<h2>Query Operations</h2>
+
+<h3>FindAllOperation (non-mutating)</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"TODO fix login\nTODO add tests\ndone deploy"</span>);
+
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">FindAllOperation</span> { <span class="pr">Pattern</span> = <span class="st">"TODO"</span> })
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">OperationResults</span>[<span class="nm">0</span>].<span class="pr">MatchCount</span>); <span class="cm">// 2</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());                    <span class="cm">// unchanged!</span></code></pre>
+
+<pre><code><span class="cm">// Regex variant</span>
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">FindAllOperation</span>
+    {
+        <span class="pr">Pattern</span>       = <span class="st">@"\bTODO\b"</span>,
+        <span class="pr">UseRegex</span>      = <span class="kw">true</span>,
+        <span class="pr">CaseSensitive</span> = <span class="kw">false</span>
+    })
+    .<span class="fn">Execute</span>();</code></pre>
+
+<h3>ContainsOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"production deployment"</span>);
+
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ContainsOperation</span> { <span class="pr">Pattern</span> = <span class="st">"prod"</span> })
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">OperationResults</span>[<span class="nm">0</span>].<span class="pr">MatchCount</span>); <span class="cm">// 1 (found)
+// 0 means not found — but Success is still true (Contains never fails the pipeline)</span></code></pre>
+
+<pre><code><span class="cm">// Use it as a guard — fail explicitly if not found</span>
+<span class="kw">var</span> opResult = r.<span class="pr">OperationResults</span>[<span class="nm">0</span>];
+<span class="kw">if</span> (opResult.<span class="pr">MatchCount</span> == <span class="nm">0</span>)
+    Console.<span class="fn">WriteLine</span>(<span class="st">"Pattern not present — skipping pipeline"</span>);</code></pre>
+
+<h3>ExtractSectionOperation (non-mutating)</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"HEADER\n/* config */\nkey=value\n/* /config */\nFOOTER"</span>);
+
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ExtractSectionOperation</span>
+    {
+        <span class="pr">StartAnchor</span>    = <span class="st">"/* config */"</span>,
+        <span class="pr">EndAnchor</span>      = <span class="st">"/* /config */"</span>,
+        <span class="pr">IncludeAnchors</span> = <span class="kw">false</span>
+    })
+    .<span class="fn">Execute</span>();
+
+<span class="kw">string</span> extracted = r.<span class="pr">OperationResults</span>[<span class="nm">0</span>].<span class="pr">ExtractedText</span>!;
+Console.<span class="fn">WriteLine</span>(extracted); <span class="cm">// "\nkey=value\n"</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// unchanged!</span></code></pre>
+
+<!-- ══════════════════════════════════════════════ STRUCTURAL OPS -->
+<h2>Structural Operations</h2>
+
+<h3>MoveSectionOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"AAA\n-- SECTION --\ncontent\n-- END --\nBBB\n-- TARGET --\nCCC"</span>);
+
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">MoveSectionOperation</span>
+    {
+        <span class="pr">SourceStartAnchor</span>      = <span class="st">"-- SECTION --"</span>,
+        <span class="pr">SourceEndAnchor</span>        = <span class="st">"-- END --"</span>,
+        <span class="pr">DestinationAnchor</span>      = <span class="st">"-- TARGET --"</span>,
+        <span class="pr">InsertAfterDestination</span> = <span class="kw">true</span>   <span class="cm">// default</span>
+    })
+    .<span class="fn">Execute</span>();
+<span class="cm">// section (minus anchors) is cut from original position and inserted after "-- TARGET --"</span></code></pre>
+
+<h3>SwapSectionsOperation</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"[A]Hello[/A] ... [B]World[/B]"</span>);
+
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">SwapSectionsOperation</span>
+    {
+        <span class="pr">Section1Start</span> = <span class="st">"[A]"</span>, <span class="pr">Section1End</span> = <span class="st">"[/A]"</span>,
+        <span class="pr">Section2Start</span> = <span class="st">"[B]"</span>, <span class="pr">Section2End</span> = <span class="st">"[/B]"</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "[A]World[/A] ... [B]Hello[/B]"</span></code></pre>
+
+<pre><code><span class="cm">// Failure: sections overlap</span>
+doc.<span class="fn">Load</span>(<span class="st">"[A] [B] [/A] [/B]"</span>);
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">SwapSectionsOperation</span>
+    {
+        <span class="pr">Section1Start</span> = <span class="st">"[A]"</span>, <span class="pr">Section1End</span> = <span class="st">"[/A]"</span>,
+        <span class="pr">Section2Start</span> = <span class="st">"[B]"</span>, <span class="pr">Section2End</span> = <span class="st">"[/B]"</span>
+    })
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);      <span class="cm">// false</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">WasRolledBack</span>); <span class="cm">// true</span></code></pre>
+
+<!-- ══════════════════════════════════════════════ ENSURE TRAILING NEWLINE -->
+<h2>EnsureTrailingNewlineOperation</h2>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"last line with no newline"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">EnsureTrailingNewlineOperation</span>())
+    .<span class="fn">Execute</span>();
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>().<span class="fn">EndsWith</span>(<span class="st">"\n"</span>)); <span class="cm">// true
+
+// If already ends with \n, no-op
+doc.Load("already ends\n");
+new DocumentPipeline(doc).Add(new EnsureTrailingNewlineOperation()).Execute();
+Console.WriteLine(doc.GetText() == "already ends\n"); // true (unchanged)</span></code></pre>
+</main></body></html>

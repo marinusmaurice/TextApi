@@ -9,7 +9,7 @@
 ///     on every call. At 100 MB with thousands of pieces that's constant GC pressure.
 ///   • char[] lets us call AsSpan(start, length) → ReadOnlySpan → ZERO alloc.
 ///   • The original buffer is sealed once on load; the add buffer doubles in capacity
-///     like List<T> so appends are amortised O(1) with no copying on the hot path.
+///     like List&lt;T&gt; so appends are amortised O(1) with no copying on the hot path.
 /// </summary>
 internal sealed class CharBuffer
 {

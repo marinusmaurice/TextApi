@@ -38,7 +38,7 @@ internal sealed class PieceRbTree
         var node = _root;
         while (!node.IsNil)
         {
-            int leftCount = node.Left.IsNil ? 0 : node.Left.SubtreeCharCount;
+            int leftCount = node.Left!.IsNil ? 0 : node.Left.SubtreeCharCount;
             if (charOffset < leftCount)
             {
                 node = node.Left!;
@@ -53,39 +53,6 @@ internal sealed class PieceRbTree
             }
         }
         // Offset is at or past end of document — return last node
-        return (GetMaxNode(), 0);
-    }
-
-    /// <summary>
-    /// Find the node that contains the start of the given zero-based line number.
-    /// Returns the node and the character offset of line start within that node.
-    /// </summary>
-    internal (RbTreeNode Node, int LineStartOffsetInPiece) FindNodeByLine(int lineIndex)
-    {
-        if (lineIndex <= 0) return (GetMinNode(), 0);
-
-        var node = _root;
-        int remaining = lineIndex;
-
-        while (!node.IsNil)
-        {
-            int leftLines = node.Left.IsNil ? 0 : node.Left.SubtreeLineFeedCount;
-            if (remaining <= leftLines)
-            {
-                node = node.Left!;
-            }
-            else
-            {
-                remaining -= leftLines;
-                if (remaining <= node.LineFeedCount)
-                {
-                    // The line start is inside this node — find the char offset
-                    return (node, FindLineStartInPiece(node, remaining));
-                }
-                remaining -= node.LineFeedCount;
-                node = node.Right!;
-            }
-        }
         return (GetMaxNode(), 0);
     }
 
@@ -183,7 +150,7 @@ internal sealed class PieceRbTree
             if (successor.Left != null && !successor.Left.IsNil)
                 successor.Left.Parent = successor;
             successor.Colour = node.Colour;
-            successor.UpdateMetadata(_nil);
+            successor.UpdateMetadata();
         }
 
         if (fixupNode.IsNil) fixupNode.Parent = fixupParent;
@@ -222,14 +189,14 @@ internal sealed class PieceRbTree
     private RbTreeNode GetMinNode() => GetMinNode(_root);
     private RbTreeNode GetMinNode(RbTreeNode node)
     {
-        while (!node.Left.IsNil) node = node.Left!;
+        while (!node.Left!.IsNil) node = node.Left;
         return node;
     }
 
     private RbTreeNode GetMaxNode()
     {
         var node = _root;
-        while (!node.Right.IsNil) node = node.Right!;
+        while (!node.Right!.IsNil) node = node.Right;
         return node;
     }
 
@@ -245,17 +212,9 @@ internal sealed class PieceRbTree
     {
         while (!node.IsNil)
         {
-            node.UpdateMetadata(_nil);
+            node.UpdateMetadata();
             node = node.Parent!;
         }
-    }
-
-    private static int FindLineStartInPiece(RbTreeNode node, int nthFeed)
-    {
-        // Not used for actual buffer reads here; returns the piece-internal
-        // char offset just after the nth \n — the caller maps to buffer position.
-        // Actual text read happens in PieceTable via buffer access.
-        return nthFeed; // placeholder — PieceTable resolves against buffer
     }
 
     // ── RB fixups ─────────────────────────────────────────────────────────
@@ -404,8 +363,8 @@ internal sealed class PieceRbTree
         else                         x.Parent.Right = y;
         y.Left   = x;
         x.Parent = y;
-        x.UpdateMetadata(_nil);
-        y.UpdateMetadata(_nil);
+        x.UpdateMetadata();
+        y.UpdateMetadata();
     }
 
     private void RotateRight(RbTreeNode y)
@@ -420,7 +379,7 @@ internal sealed class PieceRbTree
         else                         y.Parent.Right = x;
         x.Right  = y;
         y.Parent = x;
-        y.UpdateMetadata(_nil);
-        x.UpdateMetadata(_nil);
+        y.UpdateMetadata();
+        x.UpdateMetadata();
     }
 }

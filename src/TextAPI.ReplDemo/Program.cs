@@ -79,6 +79,10 @@ while (true)
                 await RunTourAsync(host, document, cursor);
                 break;
 
+            case ".ops":
+                PrintOpsHelp();
+                break;
+
             default:
                 Warn($"Unknown command: {trimmed}");
                 break;
@@ -208,6 +212,64 @@ static async Task RunTourAsync(CSharpScriptHost host, TextDocument doc, MultiCur
          foreach (var t in tokens)
              Print($"  [{t.Start,2}–{t.End,2}] {t.Type,-12} \"{doc.GetText(t.Start, t.End - t.Start)}\"");
          """),
+
+        ("Operation pipelines — structured mutations",
+         """
+         doc.Load("Work Experience\nSoftware Engineer at Acme Corp 2020-2023\nEducation\nBSc Computer Science");
+         var result = NewPipeline()
+             .Add(new InsertAfterOperation { Anchor = "Work Experience\n", Text = "Senior Engineer at Microsoft 2023-Present\n" })
+             .Add(new ReplaceAllOperation { Find = "Acme Corp", Replace = "GlobalTech", CaseSensitive = true })
+             .Execute();
+         Print("Pipeline success: " + result.Success);
+         Print("Audit: " + result.AuditLog.Summary);
+         Print(doc.GetLine(1));
+         """),
+
+        ("AI-style JSON pipeline",
+         """"
+         var result = RunJson("""
+         { "operations": [
+             { "type": "REPLACE_ALL", "find": "GlobalTech", "replace": "Nexus Corp" },
+             { "type": "TRIM_TRAILING_WHITESPACE" },
+             { "type": "APPEND", "text": "\nReferences available on request." }
+         ]}
+         """);
+         Print("JSON pipeline success: " + result.Success);
+         Print(result.AuditLog.Summary);
+         Print("Last line: " + doc.GetLine(doc.LineCount - 1));
+         """"),
+
+        ("Atomic rollback on failure",
+         """
+         var original = doc.GetText();
+         var result = NewPipeline()
+             .Add(new ReplaceAllOperation { Find = "Nexus Corp", Replace = "REDACTED" })
+             .Add(new InsertAfterOperation { Anchor = "THIS ANCHOR DOES NOT EXIST", Text = "x" })
+             .Execute();
+         Print("Pipeline succeeded: " + result.Success);
+         Print("Was rolled back: " + result.WasRolledBack);
+         Print("Doc unchanged: " + (doc.GetText() == original));
+         """),
+
+        ("Query operations (non-mutating)",
+         """
+         var findResult = new FindAllOperation { Pattern = "Engineer", CaseSensitive = false }.Execute(doc);
+         Print($"Found '{findResult.FoundMatches.Count}' occurrences of 'Engineer':");
+         foreach (var m in findResult.FoundMatches)
+             Print("  → " + m);
+         """),
+
+        ("Transform operations",
+         """
+         doc.Load("cherry\napple\nbanana\napple\ncherry");
+         NewPipeline()
+             .Add(new SortLinesOperation())
+             .Add(new DeduplicateLinesOperation())
+             .Execute();
+         Print("Sorted + deduplicated:");
+         for (int i = 0; i < doc.LineCount; i++)
+             Print("  " + doc.GetLine(i));
+         """),
     };
 
     Console.WriteLine("┌─────────────────────────────────────────────────────┐");
@@ -322,12 +384,62 @@ static void Banner()
     Console.WriteLine("""
         ╔═══════════════════════════════════════════════════╗
         ║          TextAPI  C#  REPL                     ║
-        ║  Globals:  doc (TextDocument)  mc (MultiCursor)   ║
+        ║  Globals:  doc  mc  NewPipeline()  RunJson()  ParseOps()  ║
         ║  Output:   Print(x) / print(x)                    ║
-        ║  Commands: .help  .reset  .doc  .tour  .exit      ║
+        ║  Commands: .help  .reset  .doc  .tour  .ops  .exit ║
         ╚═══════════════════════════════════════════════════╝
         """);
     Console.ResetColor();
+}
+
+static void PrintOpsHelp()
+{
+    Console.WriteLine("""
+
+      Operations reference (27 total) — JSON "type" string shown in brackets:
+
+      Offset-based:
+        InsertAtOperation          [INSERT_AT]           insert text at byte offset
+        DeleteAtOperation          [DELETE_AT]           delete N chars at offset
+        ReplaceAtOperation         [REPLACE_AT]          replace N chars at offset
+
+      Anchor-based:
+        InsertAfterOperation       [INSERT_AFTER]        insert after an anchor string
+        InsertBeforeOperation      [INSERT_BEFORE]       insert before an anchor string
+        AppendOperation            [APPEND]              append text at end of document
+        PrependOperation           [PREPEND]             prepend text at start of document
+        ReplaceSectionOperation    [REPLACE_SECTION]     replace text between two anchors
+        DeleteSectionOperation     [DELETE_SECTION]      delete text between two anchors
+
+      Pattern-based:
+        ReplaceAllOperation        [REPLACE_ALL]         replace every occurrence of a string
+        RegexReplaceOperation      [REGEX_REPLACE]       replace via .NET regex pattern
+
+      Line-based:
+        InsertLineOperation        [INSERT_LINE]         insert a line at a given line index
+        DeleteLineOperation        [DELETE_LINE]         delete the line at a given index
+        ReplaceLineOperation       [REPLACE_LINE]        replace the line at a given index
+        InsertAfterLineMatchOperation [INSERT_AFTER_LINE_MATCH] insert after first matching line
+
+      Transform:
+        NormaliseWhitespaceOperation  [NORMALISE_WHITESPACE]   collapse runs of whitespace
+        TrimTrailingWhitespaceOperation [TRIM_TRAILING_WHITESPACE] trim line-end spaces/tabs
+        ConvertCaseOperation       [CONVERT_CASE]        Upper / Lower / TitleCase
+        SortLinesOperation         [SORT_LINES]          sort all lines alphabetically
+        DeduplicateLinesOperation  [DEDUPLICATE_LINES]   remove duplicate lines
+        IndentOperation            [INDENT]              add/remove indentation
+        WrapLinesOperation         [WRAP_LINES]          hard-wrap lines at a column width
+
+      Query (non-mutating):
+        FindAllOperation           [FIND_ALL]            find all occurrences of a pattern
+        ExtractSectionOperation    [EXTRACT_SECTION]     extract text between two anchors
+        ContainsOperation          [CONTAINS]            test whether a pattern is present
+
+      Structural:
+        MoveSectionOperation       [MOVE_SECTION]        move a section to another anchor
+        SwapSectionsOperation      [SWAP_SECTIONS]       swap two named sections
+
+    """);
 }
 
 static void PrintHelp()
@@ -344,7 +456,38 @@ static void PrintHelp()
         .reset       clear session state (variables / types from earlier subs)
         .doc         print the current document content with line numbers
         .tour        rerun the scripted feature tour (resets session first)
+        .ops         list all 27 operation types grouped by category
         .exit        quit
+
+      Operation pipeline (TextAPI.Operations):
+        NewPipeline()              create a DocumentPipeline bound to doc
+                                   → .Add(op).Execute() returns PipelineResult
+        RunJson(json)              parse + execute a JSON operation pipeline
+        ParseOps(json)             parse JSON → IReadOnlyList<IDocumentOperation>
+
+      Example pipeline:
+        NewPipeline()
+            .Add(new ReplaceAllOperation { Find = "foo", Replace = "bar" })
+            .Add(new TrimTrailingWhitespaceOperation())
+            .Execute()
+
+      Example RunJson:
+        RunJson(@"{ ""operations"": [
+            { ""type"": ""REPLACE_ALL"", ""find"": ""old"", ""replace"": ""new"" }
+        ]}")
+
+      Available operations (27 total):
+        Offset:    InsertAtOperation, DeleteAtOperation, ReplaceAtOperation
+        Anchor:    InsertAfterOperation, InsertBeforeOperation, AppendOperation,
+                   PrependOperation, ReplaceSectionOperation, DeleteSectionOperation
+        Pattern:   ReplaceAllOperation, RegexReplaceOperation
+        Line:      InsertLineOperation, DeleteLineOperation, ReplaceLineOperation,
+                   InsertAfterLineMatchOperation
+        Transform: NormaliseWhitespaceOperation, TrimTrailingWhitespaceOperation,
+                   ConvertCaseOperation, SortLinesOperation, DeduplicateLinesOperation,
+                   IndentOperation, WrapLinesOperation
+        Query:     FindAllOperation, ExtractSectionOperation, ContainsOperation
+        Structural:MoveSectionOperation, SwapSectionsOperation
 
       Tips:
         • Variables declared in one submission are available in the next.

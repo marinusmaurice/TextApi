@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Pipeline Examples — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Pipeline &amp; Serialization — Examples</h1>
+<p class="lead">Every pipeline feature: building, executing, reading results, audit logs, offset drift, cancellation, rollback, and all JSON formats.</p>
+
+<!-- ═══════════════════════════ BUILDING A PIPELINE -->
+<h2>Building a Pipeline</h2>
+
+<h3>Fluent chaining</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Operations</span>;
+<span class="kw">using</span> <span class="ty">TextAPI.Operations.Pipeline</span>;
+
+<span class="kw">var</span> doc = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+doc.<span class="fn">Load</span>(<span class="st">"TODO fix\nTODO test\ndone deploy"</span>);
+
+<span class="ty">PipelineResult</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span>  { <span class="pr">Find</span> = <span class="st">"TODO"</span>, <span class="pr">Replace</span> = <span class="st">"DONE"</span> })
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>())
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">SortLinesOperation</span>())
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(result.<span class="pr">Success</span>);           <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());
+<span class="cm">// DONE deploy
+// DONE fix
+// DONE test</span></code></pre>
+
+<h3>Add IEnumerable of operations</h3>
+<pre><code><span class="kw">var</span> ops = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IDocumentOperation</span>&gt;
+{
+    <span class="kw">new</span> <span class="ty">PrependOperation</span>            { <span class="pr">Text</span> = <span class="st">"// generated\n"</span> },
+    <span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>(),
+    <span class="kw">new</span> <span class="ty">EnsureTrailingNewlineOperation</span>()
+};
+
+<span class="kw">var</span> pipeline = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc);
+pipeline.<span class="fn">Add</span>(ops);  <span class="cm">// add IEnumerable in one call</span>
+pipeline.<span class="fn">Execute</span>();</code></pre>
+
+<h3>Re-run the same pipeline on multiple documents</h3>
+<pre><code><span class="kw">var</span> ops = <span class="kw">new</span> <span class="ty">IDocumentOperation</span>[]
+{
+    <span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>(),
+    <span class="kw">new</span> <span class="ty">EnsureTrailingNewlineOperation</span>()
+};
+
+<span class="kw">foreach</span> (<span class="kw">var</span> path <span class="kw">in</span> files)
+{
+    <span class="kw">var</span> doc = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+    <span class="kw">await</span> doc.<span class="fn">LoadFileAsync</span>(path);
+    <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(ops).<span class="fn">Execute</span>();
+    <span class="kw">if</span> (doc.<span class="pr">IsModified</span>) <span class="kw">await</span> doc.<span class="fn">SaveFileAsync</span>();
+}</code></pre>
+
+<!-- ═══════════════════════════ PIPELINE RESULT -->
+<h2>PipelineResult — Every Property</h2>
+
+<h3>Success, TextBefore, TextAfter</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"before"</span>);
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">AppendOperation</span> { <span class="pr">Text</span> = <span class="st">" after"</span> })
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);    <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">TextBefore</span>); <span class="cm">// "before"</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">TextAfter</span>);  <span class="cm">// "before after"</span></code></pre>
+
+<h3>FailedOperationIndex and ErrorMessage</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"text"</span>);
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>())         <span class="cm">// op 0 — succeeds</span>
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAtOperation</span>(<span class="nm">9999</span>, <span class="st">"x"</span>))               <span class="cm">// op 1 — fails</span>
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">EnsureTrailingNewlineOperation</span>())          <span class="cm">// op 2 — never runs</span>
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);                <span class="cm">// false</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">FailedOperationIndex</span>);   <span class="cm">// 1</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>);           <span class="cm">// "offset out of range"</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">WasRolledBack</span>);          <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>());            <span class="cm">// "text" — pre-pipeline state</span></code></pre>
+
+<h3>OperationResults — per-op results</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"TODO one\nTODO two\nDONE three"</span>);
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span> { <span class="pr">Find</span> = <span class="st">"TODO"</span>, <span class="pr">Replace</span> = <span class="st">"DONE"</span> })
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>())
+    .<span class="fn">Execute</span>();
+
+<span class="kw">foreach</span> (<span class="kw">var</span> op <span class="kw">in</span> r.<span class="pr">OperationResults</span>)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"[{op.OperationType}]"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  success={op.Success}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  +{op.CharsInserted}/-{op.CharsDeleted}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  matches={op.MatchCount}"</span>);
+}</code></pre>
+
+<!-- ═══════════════════════════ AUDIT LOG -->
+<h2>AuditLog — Every Property</h2>
+
+<h3>Summary, AllSucceeded, totals</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"foo foo foo"</span>);
+<span class="kw">var</span> r = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">ReplaceAllOperation</span> { <span class="pr">Find</span> = <span class="st">"foo"</span>, <span class="pr">Replace</span> = <span class="st">"qux"</span> })
+    .<span class="fn">Execute</span>();
+
+<span class="ty">AuditLog</span> log = r.<span class="pr">AuditLog</span>;
+Console.<span class="fn">WriteLine</span>(log.<span class="pr">Summary</span>);             <span class="cm">// "1 op(s) succeeded; +9/-9 chars"</span>
+Console.<span class="fn">WriteLine</span>(log.<span class="pr">AllSucceeded</span>);        <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(log.<span class="pr">TotalCharsInserted</span>);  <span class="cm">// 9  (3 × "qux")</span>
+Console.<span class="fn">WriteLine</span>(log.<span class="pr">TotalCharsDeleted</span>);   <span class="cm">// 9  (3 × "foo")</span></code></pre>
+
+<h3>AuditEntry — per-operation entry</h3>
+<pre><code><span class="kw">foreach</span> (<span class="ty">AuditEntry</span> entry <span class="kw">in</span> log.<span class="pr">Entries</span>)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"[{entry.TimestampUtc:HH:mm:ss.fff}] {entry.OperationType}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  success={entry.Success}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  +{entry.CharsInserted}/-{entry.CharsDeleted}"</span>);
+    <span class="kw">if</span> (entry.<span class="pr">MatchCount</span> &gt; <span class="nm">0</span>)
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"  matches={entry.MatchCount}"</span>);
+    <span class="kw">if</span> (entry.<span class="pr">ErrorMessage</span> != <span class="kw">null</span>)
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"  error: {entry.ErrorMessage}"</span>);
+}</code></pre>
+
+<h3>Using AuditLog for reporting</h3>
+<pre><code><span class="kw">if</span> (!r.<span class="pr">AuditLog</span>.<span class="pr">AllSucceeded</span>)
+{
+    <span class="kw">var</span> failed = r.<span class="pr">AuditLog</span>.<span class="pr">Entries</span>.<span class="fn">First</span>(e => !e.<span class="pr">Success</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"First failure: {failed.OperationType} — {failed.ErrorMessage}"</span>);
+}
+
+<span class="kw">int</span> totalChanged = r.<span class="pr">AuditLog</span>.<span class="pr">TotalCharsInserted</span> + r.<span class="pr">AuditLog</span>.<span class="pr">TotalCharsDeleted</span>;
+Console.<span class="fn">WriteLine</span>(<span class="st">$"Total chars changed: {totalChanged}"</span>);</code></pre>
+
+<!-- ═══════════════════════════ ROLLBACK -->
+<h2>Rollback</h2>
+
+<h3>Automatic rollback on failure</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"original text"</span>);
+<span class="kw">string</span> snapshot = doc.<span class="fn">GetText</span>(); <span class="cm">// capture before pipeline
+
+var r = new DocumentPipeline(doc)
+    .Add(new ReplaceAllOperation { Find = "original", Replace = "modified" })
+    .Add(new InsertAtOperation(99999, "x"))  // will fail → rollback
+    .Execute();
+
+Console.WriteLine(r.WasRolledBack);  // true
+Console.WriteLine(doc.GetText());    // "original text" — restored
+Console.WriteLine(doc.GetText() == snapshot);  // true</span></code></pre>
+
+<h3>WasRolledBack and TextBefore on failure</h3>
+<pre><code>Console.<span class="fn">WriteLine</span>(r.<span class="pr">WasRolledBack</span>); <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">TextBefore</span>);  <span class="cm">// pre-pipeline text (same as snapshot)</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">TextAfter</span>);   <span class="cm">// equals TextBefore after rollback</span></code></pre>
+
+<div class="callout callout-warn"><p>Rollback calls <code>doc.Load(snapshot)</code> internally, which resets the undo stack. You cannot undo the failed pipeline's partial changes after a rollback.</p></div>
+
+<!-- ═══════════════════════════ OFFSET DRIFT -->
+<h2>Offset Drift Correction</h2>
+
+<h3>Two InsertAt operations — drift auto-corrected</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+<span class="cm">// Insert "FOO " at offset 0 (+4 chars), then "BAR " at original offset 6
+// Without drift correction, "BAR " would land at "W" of World (offset 6).
+// With drift correction, offset 6 is adjusted to 10 (6 + 4 drift).</span>
+
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAtOperation</span>(<span class="nm">0</span>,  <span class="st">"FOO "</span>))   <span class="cm">// +4 drift</span>
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAtOperation</span>(<span class="nm">6</span>,  <span class="st">"BAR "</span>))   <span class="cm">// auto-adjusted to offset 10</span>
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "FOO Hello BAR World"</span></code></pre>
+
+<h3>DeleteAt followed by InsertAt — negative drift</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"##Hello World"</span>);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc)
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">DeleteAtOperation</span>(<span class="nm">0</span>, <span class="nm">2</span>))      <span class="cm">// delete "##" → -2 drift</span>
+    .<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">InsertAtOperation</span>(<span class="nm">7</span>, <span class="st">"!"</span>))    <span class="cm">// original offset 7 → adjusted to 5</span>
+    .<span class="fn">Execute</span>();
+
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "Hello! World"</span></code></pre>
+
+<div class="callout callout-info"><p>Drift correction only applies to operations implementing <code>IOffsetAwareOperation</code> — the three offset-based ops (<code>InsertAt</code>, <code>DeleteAt</code>, <code>ReplaceAt</code>). Anchor-based operations re-resolve their anchors at execution time.</p></div>
+
+<!-- ═══════════════════════════ CANCELLATION -->
+<h2>Cancellation</h2>
+
+<h3>Cancel via CancellationToken</h3>
+<pre><code><span class="kw">using var</span> cts = <span class="kw">new</span> <span class="ty">CancellationTokenSource</span>();
+cts.<span class="fn">CancelAfter</span>(<span class="ty">TimeSpan</span>.<span class="fn">FromSeconds</span>(<span class="nm">5</span>));
+
+<span class="kw">var</span> r = pipeline.<span class="fn">Execute</span>(cts.<span class="pr">Token</span>);
+
+<span class="kw">if</span> (!r.<span class="pr">Success</span>)
+{
+    Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>);  <span class="cm">// "Pipeline cancelled"</span>
+    Console.<span class="fn">WriteLine</span>(r.<span class="pr">WasRolledBack</span>); <span class="cm">// true — document restored</span>
+}</code></pre>
+
+<h3>Pre-cancelled token</h3>
+<pre><code><span class="kw">var</span> cts = <span class="kw">new</span> <span class="ty">CancellationTokenSource</span>();
+cts.<span class="fn">Cancel</span>();  <span class="cm">// cancel immediately</span>
+
+<span class="kw">var</span> r = pipeline.<span class="fn">Execute</span>(cts.<span class="pr">Token</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">FailedOperationIndex</span>); <span class="cm">// -1 (no op ran)</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">WasRolledBack</span>);        <span class="cm">// true</span></code></pre>
+
+<!-- ═══════════════════════════ JSON — PIPELINE FORMAT -->
+<h2>JSON Serialization</h2>
+
+<h3>FromPipelineJson — pipeline wrapper format</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Operations.Serialization</span>;
+
+<span class="kw">string</span> json = <span class="st">"""
+{
+  "operations": [
+    { "type": "REPLACE_ALL", "find": "TODO", "replace": "DONE" },
+    { "type": "TRIM_TRAILING_WHITESPACE" },
+    { "type": "SORT_LINES", "descending": true }
+  ]
+}
+"""</span>;
+
+<span class="kw">var</span> ops    = <span class="ty">OperationMapper</span>.<span class="fn">FromPipelineJson</span>(json);
+<span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(ops).<span class="fn">Execute</span>();</code></pre>
+
+<h3>FromOperationJson — single operation</h3>
+<pre><code><span class="kw">string</span> opJson = <span class="st">"""{"type":"REPLACE_ALL","find":"foo","replace":"bar"}"""</span>;
+<span class="ty">IDocumentOperation</span> op = <span class="ty">OperationMapper</span>.<span class="fn">FromOperationJson</span>(opJson);
+<span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(op).<span class="fn">Execute</span>();</code></pre>
+
+<h3>ToJson — serialize operation to JSON</h3>
+<pre><code><span class="kw">var</span> op   = <span class="kw">new</span> <span class="ty">ReplaceAllOperation</span> { <span class="pr">Find</span> = <span class="st">"old"</span>, <span class="pr">Replace</span> = <span class="st">"new"</span>, <span class="pr">CaseSensitive</span> = <span class="kw">false</span> };
+<span class="kw">string</span> j = <span class="ty">OperationMapper</span>.<span class="fn">ToJson</span>(op);
+Console.<span class="fn">WriteLine</span>(j);
+<span class="cm">// {"type":"REPLACE_ALL","find":"old","replace":"new","caseSensitive":false}</span></code></pre>
+
+<h3>ToPipelineJson — serialize multiple operations</h3>
+<pre><code><span class="kw">var</span> ops = <span class="kw">new</span> <span class="ty">IDocumentOperation</span>[]
+{
+    <span class="kw">new</span> <span class="ty">PrependOperation</span>            { <span class="pr">Text</span> = <span class="st">"// header\n"</span> },
+    <span class="kw">new</span> <span class="ty">TrimTrailingWhitespaceOperation</span>()
+};
+<span class="kw">string</span> json = <span class="ty">OperationMapper</span>.<span class="fn">ToPipelineJson</span>(ops);
+Console.<span class="fn">WriteLine</span>(json);
+<span class="cm">// {
+//   "operations": [
+//     {"type":"PREPEND","text":"// header\n"},
+//     {"type":"TRIM_TRAILING_WHITESPACE"}
+//   ]
+// }</span></code></pre>
+
+<h3>Deserialize unknown type — graceful failure</h3>
+<pre><code><span class="kw">try</span>
+{
+    <span class="ty">OperationMapper</span>.<span class="fn">FromOperationJson</span>(<span class="st">"""{"type":"UNKNOWN_OP"}"""</span>);
+}
+<span class="kw">catch</span> (<span class="ty">JsonException</span> ex)
+{
+    Console.<span class="fn">WriteLine</span>(ex.<span class="pr">Message</span>); <span class="cm">// "Unknown operation type: UNKNOWN_OP"</span>
+}</code></pre>
+
+<h3>Full JSON examples for key operations</h3>
+<pre><code><span class="cm">// Offset operations
+{ "type": "INSERT_AT",  "offset": 0,  "text": "// header\n" }
+{ "type": "DELETE_AT",  "offset": 10, "length": 5 }
+{ "type": "REPLACE_AT", "offset": 0,  "deleteLength": 3, "text": "new" }
+
+// Anchor operations
+{ "type": "INSERT_AFTER",  "anchor": "class Foo {", "text": "\n  // injected" }
+{ "type": "INSERT_BEFORE", "anchor": "return;",    "text": "log();\n" }
+{ "type": "APPEND",   "text": "\n// EOF" }
+{ "type": "PREPEND",  "text": "// header\n" }
+{ "type": "REPLACE_SECTION", "startAnchor": "/*", "endAnchor": "*/",
+                              "text": "/* replaced */", "includeAnchors": true }
+{ "type": "DELETE_SECTION",  "startAnchor": "BEGIN", "endAnchor": "END",
+                              "includeAnchors": false }
+
+// Pattern operations
+{ "type": "REPLACE_ALL",    "find": "foo", "replace": "bar", "caseSensitive": false }
+{ "type": "REGEX_REPLACE",  "pattern": "(\\d+)", "replacement": "[$1]" }
+
+// Line operations
+{ "type": "INSERT_LINE",  "lineIndex": 0, "text": "// top" }
+{ "type": "DELETE_LINE",  "lineIndex": 3 }
+{ "type": "REPLACE_LINE", "lineIndex": 1, "text": "new content" }
+{ "type": "INSERT_AFTER_LINE_MATCH", "pattern": "import", "lineText": "// added" }
+
+// Transform operations
+{ "type": "TRIM_TRAILING_WHITESPACE" }
+{ "type": "NORMALISE_WHITESPACE" }
+{ "type": "ENSURE_TRAILING_NEWLINE" }
+{ "type": "CONVERT_CASE", "mode": "upper" }
+{ "type": "SORT_LINES",   "descending": false, "caseSensitive": true }
+{ "type": "DEDUPLICATE_LINES", "consecutiveOnly": false }
+{ "type": "INDENT",  "startLine": 0, "endLine": 5, "prefix": "    ", "dedent": false }
+{ "type": "WRAP_LINES", "maxColumns": 80 }
+
+// Query operations (non-mutating)
+{ "type": "FIND_ALL",         "pattern": "TODO", "useRegex": false }
+{ "type": "CONTAINS",         "pattern": "DRAFT" }
+{ "type": "EXTRACT_SECTION",  "startAnchor": "<!-- start -->", "endAnchor": "<!-- end -->" }
+
+// Structural operations
+{ "type": "MOVE_SECTION",  "sourceStartAnchor": "S1", "sourceEndAnchor": "E1",
+                            "destinationAnchor": "D", "insertAfterDestination": true }
+{ "type": "SWAP_SECTIONS", "section1Start": "[A]", "section1End": "[/A]",
+                            "section2Start": "[B]", "section2End": "[/B]" }</span></code></pre>
+
+<!-- ═══════════════════════════ LLM INTEGRATION -->
+<h2>LLM Integration Pattern</h2>
+<pre><code><span class="cm">// System prompt excerpt for an LLM tool definition:
+// "Respond with JSON of the form { \"operations\": [...] }
+//  using operation types: REPLACE_ALL, INSERT_AT, DELETE_AT, INSERT_LINE, ..."
+//
+// LLM response:</span>
+<span class="kw">string</span> llmResponse = <span class="st">"""
+{
+  "operations": [
+    { "type": "REPLACE_ALL", "find": "var ", "replace": "const " },
+    { "type": "REGEX_REPLACE", "pattern": "console\\.log\\((.*?)\\)", "replacement": "logger.info($1)" },
+    { "type": "ENSURE_TRAILING_NEWLINE" }
+  ]
+}
+"""</span>;
+
+<span class="kw">try</span>
+{
+    <span class="kw">var</span> ops    = <span class="ty">OperationMapper</span>.<span class="fn">FromPipelineJson</span>(llmResponse);
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">DocumentPipeline</span>(doc).<span class="fn">Add</span>(ops).<span class="fn">Execute</span>();
+
+    <span class="kw">if</span> (result.<span class="pr">Success</span>)
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"Applied: {result.AuditLog.Summary}"</span>);
+    <span class="kw">else</span>
+        <span class="cm">// return error to LLM for retry</span>
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"Op #{result.FailedOperationIndex} failed: {result.ErrorMessage}"</span>);
+}
+<span class="kw">catch</span> (<span class="ty">JsonException</span> ex)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"LLM produced invalid JSON: {ex.Message}"</span>);
+}</code></pre>
+</main></body></html>

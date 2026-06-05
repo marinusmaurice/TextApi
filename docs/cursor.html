@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Cursors — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Cursors</h1>
+<p class="lead">TextAPI provides two cursor types: <code>TextCursor</code> (single caret with optional selection) and <code>MultiCursor</code> (N synchronized cursors, all editing in one undo step). Both operate on character offsets and support grapheme-cluster-aware movement.</p>
+
+<h2>TextCursor</h2>
+
+<h3>Construction</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Cursor</span>;
+
+<span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc);           <span class="cm">// starts at offset 0</span>
+<span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc, offset: <span class="nm">42</span>); <span class="cm">// starts at offset 42</span></code></pre>
+
+<h3>Position Properties</h3>
+<table>
+  <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>Document</code></td><td><code>TextDocument</code></td><td>The document this cursor operates on.</td></tr>
+    <tr><td><code>ActiveOffset</code></td><td><code>int</code></td><td>The moving end of the selection (where the caret is).</td></tr>
+    <tr><td><code>CaretOffset</code></td><td><code>int</code></td><td>Alias for <code>ActiveOffset</code>.</td></tr>
+    <tr><td><code>AnchorOffset</code></td><td><code>int</code></td><td>The fixed (anchor) end of the selection.</td></tr>
+    <tr><td><code>CaretLine</code></td><td><code>int</code></td><td>Zero-based line index of the caret.</td></tr>
+    <tr><td><code>CaretColumn</code></td><td><code>int</code></td><td>Zero-based column index of the caret.</td></tr>
+    <tr><td><code>HasSelection</code></td><td><code>bool</code></td><td>True when anchor and active offsets differ.</td></tr>
+    <tr><td><code>SelectionStart</code></td><td><code>int</code></td><td>Left edge of selection (≤ <code>SelectionEnd</code>).</td></tr>
+    <tr><td><code>SelectionEnd</code></td><td><code>int</code></td><td>Right edge of selection (≥ <code>SelectionStart</code>).</td></tr>
+    <tr><td><code>SelectedText</code></td><td><code>string</code></td><td>The selected text, or empty when no selection.</td></tr>
+  </tbody>
+</table>
+
+<h3>Direct Positioning</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>MoveTo(offset)</code></td><td>Move caret, collapse any selection.</td></tr>
+    <tr><td><code>SelectTo(offset)</code></td><td>Extend selection by moving the active end.</td></tr>
+    <tr><td><code>SetSelection(anchor, active)</code></td><td>Set both anchor and active explicitly.</td></tr>
+    <tr><td><code>CollapseToStart()</code></td><td>Collapse selection to its left edge.</td></tr>
+    <tr><td><code>CollapseToEnd()</code></td><td>Collapse selection to its right edge.</td></tr>
+  </tbody>
+</table>
+
+<h3>Horizontal Movement</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>MoveLeft(count = 1)</code></td><td>Move left by count grapheme clusters.</td></tr>
+    <tr><td><code>MoveRight(count = 1)</code></td><td>Move right by count grapheme clusters.</td></tr>
+    <tr><td><code>MoveWordLeft()</code></td><td>Move to the start of the previous (or current) word.</td></tr>
+    <tr><td><code>MoveWordRight()</code></td><td>Move past the current word and trailing non-word chars.</td></tr>
+    <tr><td><code>MoveToLineStart()</code></td><td>Move to column 0 of the current line.</td></tr>
+    <tr><td><code>MoveToLineEnd()</code></td><td>Move to just after the last character on the line.</td></tr>
+    <tr><td><code>MoveToDocumentStart()</code></td><td>Move to offset 0.</td></tr>
+    <tr><td><code>MoveToDocumentEnd()</code></td><td>Move to the end of the document.</td></tr>
+  </tbody>
+</table>
+
+<h3>Horizontal Selection</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>SelectLeft(count = 1)</code></td><td>Extend selection left by count grapheme clusters.</td></tr>
+    <tr><td><code>SelectRight(count = 1)</code></td><td>Extend selection right by count grapheme clusters.</td></tr>
+    <tr><td><code>SelectWordLeft()</code></td><td>Extend selection left by one word.</td></tr>
+    <tr><td><code>SelectWordRight()</code></td><td>Extend selection right by one word.</td></tr>
+    <tr><td><code>SelectToLineStart()</code></td><td>Extend selection to column 0 of the current line.</td></tr>
+    <tr><td><code>SelectToLineEnd()</code></td><td>Extend selection to the end of the current line.</td></tr>
+    <tr><td><code>SelectToDocumentStart()</code></td><td>Extend selection to the start of the document.</td></tr>
+    <tr><td><code>SelectToDocumentEnd()</code></td><td>Extend selection to the end of the document.</td></tr>
+  </tbody>
+</table>
+
+<h3>Bulk Selection</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>SelectAll()</code></td><td>Select the entire document.</td></tr>
+    <tr><td><code>SelectLine(lineIndex?)</code></td><td>Select the specified line (or the caret's current line).</td></tr>
+    <tr><td><code>SelectWordAtCaret()</code></td><td>Select the word under the caret.</td></tr>
+  </tbody>
+</table>
+
+<h3>Vertical Movement</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>MoveUp(count = 1)</code></td><td>Move up by count lines, preserving preferred visual column.</td></tr>
+    <tr><td><code>MoveDown(count = 1)</code></td><td>Move down by count lines, preserving preferred visual column.</td></tr>
+    <tr><td><code>SelectUp(count = 1)</code></td><td>Extend selection up by count lines.</td></tr>
+    <tr><td><code>SelectDown(count = 1)</code></td><td>Extend selection down by count lines.</td></tr>
+  </tbody>
+</table>
+
+<h3>Editing</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>InsertText(text)</code></td><td>Insert text at caret, replacing any selection first.</td></tr>
+    <tr><td><code>DeleteSelection()</code></td><td>Delete the current selection.</td></tr>
+    <tr><td><code>DeleteLeft(count = 1)</code></td><td>Delete left (Backspace). Deletes grapheme clusters.</td></tr>
+    <tr><td><code>DeleteRight(count = 1)</code></td><td>Delete right (Delete key).</td></tr>
+    <tr><td><code>DeleteWordLeft()</code></td><td>Delete the word immediately to the left (Ctrl+Backspace).</td></tr>
+    <tr><td><code>DeleteWordRight()</code></td><td>Delete the word immediately to the right (Ctrl+Delete).</td></tr>
+  </tbody>
+</table>
+
+<h3>Word Boundary Helpers</h3>
+<pre><code><span class="cm">// Static helpers for custom word navigation</span>
+<span class="kw">bool</span> isWord = <span class="ty">TextCursor</span>.<span class="fn">IsWordChar</span>(<span class="st">'a'</span>);      <span class="cm">// true</span>
+<span class="kw">int</span>  left   = cursor.<span class="fn">WordLeft</span>(cursor.<span class="pr">CaretOffset</span>);
+<span class="kw">int</span>  right  = cursor.<span class="fn">WordRight</span>(cursor.<span class="pr">CaretOffset</span>);</code></pre>
+
+<h3>TextCursor Example</h3>
+<pre><code><span class="kw">var</span> cursor = <span class="kw">new</span> <span class="ty">TextCursor</span>(doc);
+
+<span class="cm">// Simulate Ctrl+A → delete → type replacement</span>
+cursor.<span class="fn">SelectAll</span>();
+cursor.<span class="fn">DeleteSelection</span>();
+cursor.<span class="fn">InsertText</span>(<span class="st">"Fresh content\n"</span>);
+
+<span class="cm">// Jump to line 3, select to end of line</span>
+<span class="kw">int</span> off = doc.<span class="fn">PositionToOffset</span>(<span class="nm">2</span>, <span class="nm">0</span>);  <span class="cm">// line 3 (0-based), col 0</span>
+cursor.<span class="fn">MoveTo</span>(off);
+cursor.<span class="fn">SelectToLineEnd</span>();
+Console.<span class="fn">WriteLine</span>(cursor.<span class="pr">SelectedText</span>);</code></pre>
+
+<hr>
+
+<h2>MultiCursor</h2>
+<p>Manages N independent <code>TextCursor</code> instances. All edit operations run as a single named undo step so the user can undo them all at once.</p>
+
+<h3>Construction</h3>
+<pre><code><span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);  <span class="cm">// starts with one cursor at offset 0</span></code></pre>
+
+<h3>Collection Properties</h3>
+<table>
+  <thead><tr><th>Member</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>Count</code></td><td><code>int</code></td><td>Number of active cursors.</td></tr>
+    <tr><td><code>Primary</code></td><td><code>TextCursor</code></td><td>The primary cursor (last added, or index 0 after merge).</td></tr>
+    <tr><td><code>All</code></td><td><code>IReadOnlyList&lt;TextCursor&gt;</code></td><td>All cursors in ascending offset order.</td></tr>
+  </tbody>
+</table>
+
+<h3>Collection Management</h3>
+<table>
+  <thead><tr><th>Method</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>AddCursor(offset)</code></td><td>Add a collapsed cursor at offset (becomes Primary).</td></tr>
+    <tr><td><code>AddCursor(anchor, active)</code></td><td>Add a cursor with explicit selection (becomes Primary).</td></tr>
+    <tr><td><code>RemoveCursor(index)</code></td><td>Remove cursor at list index. No-op when only one cursor.</td></tr>
+    <tr><td><code>Clear()</code></td><td>Replace all cursors with a single cursor at offset 0.</td></tr>
+    <tr><td><code>SetSingle(offset)</code></td><td>Replace all cursors with a single collapsed cursor at offset.</td></tr>
+  </tbody>
+</table>
+
+<h3>Column Selection</h3>
+<pre><code><span class="cm">// Add one cursor per line from line 2 to line 8, all at column 4</span>
+mc.<span class="fn">AddColumnSelection</span>(startLine: <span class="nm">2</span>, endLine: <span class="nm">8</span>, column: <span class="nm">4</span>);
+mc.<span class="fn">InsertText</span>(<span class="st">"    "</span>);  <span class="cm">// indent all 7 lines in one undo step</span></code></pre>
+
+<h3>Movement &amp; Selection</h3>
+<p>All <code>TextCursor</code> movement and selection methods are mirrored on <code>MultiCursor</code> and apply to every cursor simultaneously:</p>
+<pre><code>mc.<span class="fn">MoveToLineEnd</span>();        <span class="cm">// every cursor jumps to its line's end</span>
+mc.<span class="fn">SelectWordAtCaret</span>();    <span class="cm">// every cursor selects its word</span>
+mc.<span class="fn">MoveWordRight</span>();        <span class="cm">// every cursor jumps one word right</span></code></pre>
+
+<h3>Editing (Single Undo Step)</h3>
+<pre><code>mc.<span class="fn">InsertText</span>(<span class="st">"// "</span>);    <span class="cm">// insert at all cursors</span>
+mc.<span class="fn">DeleteLeft</span>(<span class="nm">3</span>);        <span class="cm">// backspace 3 at all cursors</span>
+mc.<span class="fn">DeleteSelection</span>();   <span class="cm">// delete all cursors' selections</span>
+
+doc.<span class="fn">Undo</span>();  <span class="cm">// single undo — reverts ALL cursor edits together</span></code></pre>
+
+<h3>Paste (Distributed)</h3>
+<pre><code><span class="cm">// If clipboard has exactly N lines and there are N cursors, each cursor gets its line.
+// Otherwise all cursors get the full clipboard text (broadcast).</span>
+mc.<span class="fn">Paste</span>(<span class="kw">new</span>[] { <span class="st">"line A"</span>, <span class="st">"line B"</span>, <span class="st">"line C"</span> });  <span class="cm">// 3 cursors → one line each</span>
+mc.<span class="fn">Paste</span>(<span class="kw">new</span>[] { <span class="st">"text"</span> });                         <span class="cm">// broadcast to all cursors</span></code></pre>
+
+<h3>MultiCursor Example: Comment Toggle</h3>
+<pre><code><span class="cm">// Comment out lines 4–8 using a column selection</span>
+<span class="kw">var</span> mc = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+mc.<span class="fn">AddColumnSelection</span>(<span class="nm">4</span>, <span class="nm">8</span>, <span class="nm">0</span>);  <span class="cm">// one cursor per line at col 0</span>
+mc.<span class="fn">InsertText</span>(<span class="st">"// "</span>);             <span class="cm">// prepend comment marker</span>
+
+<span class="cm">// Undo removes all markers in one step</span>
+doc.<span class="fn">Undo</span>();</code></pre>
+
+<div class="callout callout-info"><p>After every multi-cursor edit, overlapping or touching cursors are automatically merged to prevent duplicate edits.</p></div>
+</main></body></html>

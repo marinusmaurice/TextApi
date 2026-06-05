@@ -15,7 +15,7 @@ namespace TextAPI.Core.Language;
 /// Fast paths
 /// ──────────
 ///   ASCII (U+0000–U+007F) is always a single-character, single-column grapheme cluster.
-///   No combining marks exist in the ASCII range (they start at U+0300), so a byte < 0x80
+///   No combining marks exist in the ASCII range (they start at U+0300), so a byte &lt; 0x80
 ///   is always both a cluster start AND a cluster end.
 ///
 ///   All other characters go through <see cref="StringInfo.GetNextTextElementLength(ReadOnlySpan{char})"/>

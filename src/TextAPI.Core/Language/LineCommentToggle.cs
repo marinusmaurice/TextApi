@@ -6,7 +6,7 @@
 /// <para><b>Toggle semantics:</b>
 /// <list type="bullet">
 ///   <item>If <em>every</em> non-empty line in the range already starts with
-///   <paramref name="prefix"/> (after optional leading whitespace) →
+///   the comment prefix (after optional leading whitespace) →
 ///   <em>remove</em> the prefix from all of them.</item>
 ///   <item>Otherwise → <em>add</em> <c>prefix + " "</c> at the column of the
 ///   least-indented non-empty line.  Empty lines are skipped.</item>

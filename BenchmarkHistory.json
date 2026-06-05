@@ -1,2525 +1,5 @@
 [
   {
-    "RunId": "a27fc712",
-    "Timestamp": "2026-05-25 14:05",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 57,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 18,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 137,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 22,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 13,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 68,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 58,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 358,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 108,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 45,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 23,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 23,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 113,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 327,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 38,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 130,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 1,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 5,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 81,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 27,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 39,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 44,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 16,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      }
-    ]
-  },
-  {
-    "RunId": "ac14a060",
-    "Timestamp": "2026-05-25 14:05",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 43,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 126,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 59,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 6,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 72,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 85,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 87,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 356,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 36,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 20,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 37,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 30,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 266,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 37,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 109,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 1,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 5,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 81,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 36,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 15,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      }
-    ]
-  },
-  {
-    "RunId": "94a2d31b",
-    "Timestamp": "2026-05-25 14:23",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 101,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 31,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 143,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 7,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 29,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 45,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 94,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 349,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 98,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 34,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 23,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 41,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 300,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 49,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 120,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 12,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 4,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 83,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 22,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 37,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 21,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      }
-    ]
-  },
-  {
-    "RunId": "d67f04af",
-    "Timestamp": "2026-05-25 14:23",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 47,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 131,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 44,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 28,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 15,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 51,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 74,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 113,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 359,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 29,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 27,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 21,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 59,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 236,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 76,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 105,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 5,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 82,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 59,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 38,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 15,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      }
-    ]
-  },
-  {
-    "RunId": "5516af4c",
-    "Timestamp": "2026-05-25 14:23",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 158,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 76,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 6,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 20,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 69,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 106,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 331,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 98,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 33,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 21,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 57,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 39,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 292,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 55,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 119,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 4,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 82,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 24,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 40,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 20,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 48,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "ff2907b3",
-    "Timestamp": "2026-05-26 05:02",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 116,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 36,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 18,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 57,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 39,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 88,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 388,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 36,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 21,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 35,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 181,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 28,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 37,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 125,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 1,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 5,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 118,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 32,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 51,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 71,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 21,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      }
-    ]
-  },
-  {
-    "RunId": "2be586ec",
-    "Timestamp": "2026-05-26 05:04",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 27,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 65,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 85,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 52,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 28,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 8,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 105,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 348,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 56,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 17,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 71,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 33,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 263,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 115,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 1,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 38,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 36,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 81,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 19,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 26,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 47,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "012e13e4",
-    "Timestamp": "2026-05-26 05:05",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 39,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 137,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 59,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 38,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 10,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 23,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 80,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 341,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 115,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 35,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 23,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 22,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 31,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 278,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 81,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 112,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 2,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 5,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 80,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 25,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 37,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 18,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 50,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      }
-    ]
-  },
-  {
-    "RunId": "35c1c4cb",
-    "Timestamp": "2026-05-26 10:48",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 22,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 62,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 66,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 40,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 72,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 72,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 86,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 81,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 92,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 69,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 215,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 64,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 58,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 132,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 11,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 36,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 73,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 56,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 35,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 541,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 7,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 1,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 27,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      }
-    ]
-  },
-  {
-    "RunId": "52fae647",
-    "Timestamp": "2026-05-26 10:54",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Buffer",
-        "Name": "OffsetToPosition \u00D71000",
-        "Ms": 44,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "1000 random edits",
-        "Ms": 68,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 75,
-        "Label": "10MB edited",
-        "Extra": "lines=128\u00A0676"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Search literal",
-        "Ms": 10,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 39,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "GetLine sequential",
-        "Ms": 59,
-        "Label": "10MB edited (v2)",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 85,
-        "Label": "100MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "10k keystrokes (coalesce)",
-        "Ms": 1,
-        "Label": "end-of-doc",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Regression",
-        "Name": "Load",
-        "Ms": 113,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindFirst early-exit",
-        "Ms": 160,
-        "Label": "100MB",
-        "Extra": "offset="
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine sequential",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search case-insensitive",
-        "Ms": 58,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 127,
-        "Label": "100MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 114,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search literal",
-        "Ms": 10,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "1000 random edits",
-        "Ms": 46,
-        "Label": "10MB",
-        "Extra": "pieces=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 49,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search single-char",
-        "Ms": 31,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetLine random \u00D71000",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n) grow",
-        "Ms": 73,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search regex \\bint\\b",
-        "Ms": 44,
-        "Label": "10MB",
-        "Extra": "hits=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll O(n)",
-        "Ms": 51,
-        "Label": "10MB",
-        "Extra": "replacements=0"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Load",
-        "Ms": 521,
-        "Label": "100MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "GetText full",
-        "Ms": 6,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Buffer",
-        "Name": "Delete 5MB block",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "remaining=9\u00A0999\u00A0990"
-      },
-      {
-        "Suite": "Search",
-        "Name": "Search absent pattern",
-        "Ms": 28,
-        "Label": "100MB",
-        "Extra": "hits=0"
-      }
-    ]
-  },
-  {
-    "RunId": "d1d158d2",
-    "Timestamp": "2026-05-26 11:33",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Undo",
-        "Name": "Undo 500 replaces",
-        "Ms": 1,
-        "Label": "500 ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Undo",
-        "Name": "Undo 1000 char inserts",
-        "Ms": 0,
-        "Label": "1k ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste then Undo",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste single Insert",
-        "Ms": 106,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Paste",
-        "Name": "GetText after paste",
-        "Ms": 3,
-        "Label": "10MB",
-        "Extra": "len="
-      },
-      {
-        "Suite": "ChangeTracking",
-        "Name": "GetStatus all 10k lines",
-        "Ms": 2370,
-        "Label": "10k lines",
-        "Extra": ""
-      }
-    ]
-  },
-  {
-    "RunId": "ff880ea0",
-    "Timestamp": "2026-05-26 11:33",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "ChangeTracking",
-        "Name": "GetStatus all 10k lines",
-        "Ms": 1897,
-        "Label": "10k lines",
-        "Extra": ""
-      }
-    ]
-  },
-  {
-    "RunId": "6c35f3a8",
-    "Timestamp": "2026-05-26 11:34",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Undo",
-        "Name": "Undo 500 replaces",
-        "Ms": 1,
-        "Label": "500 ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste 1000 lines loop",
-        "Ms": 51,
-        "Label": "1k inserts",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Undo",
-        "Name": "Undo 1000 char inserts",
-        "Ms": 0,
-        "Label": "1k ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste then Undo",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste single Insert",
-        "Ms": 112,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Paste",
-        "Name": "GetText after paste",
-        "Ms": 3,
-        "Label": "10MB",
-        "Extra": "len="
-      },
-      {
-        "Suite": "ChangeTracking",
-        "Name": "GetStatus all 10k lines",
-        "Ms": 1940,
-        "Label": "10k lines",
-        "Extra": ""
-      }
-    ]
-  },
-  {
-    "RunId": "a56c7d7b",
-    "Timestamp": "2026-05-26 11:34",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "InlayHints",
-        "Name": "GetHintsInRange 10k hints",
-        "Ms": 0,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "Undo",
-        "Name": "Undo 500 replaces",
-        "Ms": 2,
-        "Label": "500 ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Diff",
-        "Name": "TextDiff.Diff 5000 lines",
-        "Ms": 13,
-        "Label": "100 changes",
-        "Extra": "hunks="
-      },
-      {
-        "Suite": "MultiCursor",
-        "Name": "InsertText 100 cursors",
-        "Ms": 1,
-        "Label": "10k line doc",
-        "Extra": ""
-      },
-      {
-        "Suite": "InlayHints",
-        "Name": "Insert shifts 10k hints",
-        "Ms": 0,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste 1000 lines loop",
-        "Ms": 57,
-        "Label": "1k inserts",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindAll plain",
-        "Ms": 14,
-        "Label": "10MB",
-        "Extra": "count="
-      },
-      {
-        "Suite": "MultiCursor",
-        "Name": "AddColumnSelection 10k lines",
-        "Ms": 16,
-        "Label": "10k lines",
-        "Extra": "cursors=1"
-      },
-      {
-        "Suite": "Undo",
-        "Name": "Undo 1000 char inserts",
-        "Ms": 3,
-        "Label": "1k ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "SearchReplaceAll",
-        "Name": "FindAll\u002BReplaceAll combined",
-        "Ms": 69,
-        "Label": "10MB",
-        "Extra": "found= replaced=0"
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindAll regex",
-        "Ms": 60,
-        "Label": "10MB",
-        "Extra": "count="
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste then Undo",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "WordWrap",
-        "Name": "WrappedRowCount all lines",
-        "Ms": 404,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll plain",
-        "Ms": 40,
-        "Label": "10MB",
-        "Extra": "replaced=0"
-      },
-      {
-        "Suite": "WordWrap",
-        "Name": "GetWordWrapModel build",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste single Insert",
-        "Ms": 161,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll regex capture",
-        "Ms": 141,
-        "Label": "10MB",
-        "Extra": "replaced=0"
-      },
-      {
-        "Suite": "Paste",
-        "Name": "GetText after paste",
-        "Ms": 4,
-        "Label": "10MB",
-        "Extra": "len="
-      },
-      {
-        "Suite": "Folding",
-        "Name": "GetVisibleLines after FoldAll",
-        "Ms": 7,
-        "Label": "10MB C#",
-        "Extra": "regions=1"
-      },
-      {
-        "Suite": "SyntaxHighlighting",
-        "Name": "TokeniseLines full",
-        "Ms": 3605,
-        "Label": "10MB C#",
-        "Extra": "lines=149\u00A0257"
-      },
-      {
-        "Suite": "Folding",
-        "Name": "UpdateRegions BraceStrategy",
-        "Ms": 2431,
-        "Label": "10MB C#",
-        "Extra": "regions=0"
-      },
-      {
-        "Suite": "SyntaxHighlighting",
-        "Name": "TokeniseLines incremental 100 lines",
-        "Ms": 2057,
-        "Label": "100 lines",
-        "Extra": ""
-      },
-      {
-        "Suite": "ChangeTracking",
-        "Name": "GetStatus all 10k lines",
-        "Ms": 3248,
-        "Label": "10k lines",
-        "Extra": ""
-      },
-      {
-        "Suite": "DocumentCleanup",
-        "Name": "TrimTrailingWhitespace",
-        "Ms": 191965,
-        "Label": "10MB dirty",
-        "Extra": "trimmed=0"
-      }
-    ]
-  },
-  {
-    "RunId": "c0a71012",
-    "Timestamp": "2026-05-26 11:37",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Undo",
-        "Name": "Undo 500 replaces",
-        "Ms": 1,
-        "Label": "500 ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste 1000 lines loop",
-        "Ms": 53,
-        "Label": "1k inserts",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Undo",
-        "Name": "Undo 1000 char inserts",
-        "Ms": 17,
-        "Label": "1k ops",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindAll plain",
-        "Ms": 20,
-        "Label": "10MB",
-        "Extra": "count="
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste then Undo",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": ""
-      },
-      {
-        "Suite": "Search",
-        "Name": "FindAll regex",
-        "Ms": 73,
-        "Label": "10MB",
-        "Extra": "count="
-      },
-      {
-        "Suite": "Paste",
-        "Name": "Paste single Insert",
-        "Ms": 170,
-        "Label": "10MB",
-        "Extra": "lines=1"
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll plain",
-        "Ms": 35,
-        "Label": "10MB",
-        "Extra": "replaced=0"
-      },
-      {
-        "Suite": "Paste",
-        "Name": "GetText after paste",
-        "Ms": 7,
-        "Label": "10MB",
-        "Extra": "len="
-      },
-      {
-        "Suite": "Search",
-        "Name": "ReplaceAll regex capture",
-        "Ms": 124,
-        "Label": "10MB",
-        "Extra": "replaced=0"
-      },
-      {
-        "Suite": "SyntaxHighlighting",
-        "Name": "TokeniseLines full",
-        "Ms": 2590,
-        "Label": "10MB C#",
-        "Extra": "lines=149\u00A0257"
-      },
-      {
-        "Suite": "SyntaxHighlighting",
-        "Name": "TokeniseLines incremental 100 lines",
-        "Ms": 1096,
-        "Label": "100 lines",
-        "Extra": ""
-      },
-      {
-        "Suite": "ChangeTracking",
-        "Name": "GetStatus all 10k lines",
-        "Ms": 2028,
-        "Label": "10k lines",
-        "Extra": ""
-      }
-    ]
-  },
-  {
-    "RunId": "a895e72f",
-    "Timestamp": "2026-05-26 11:38",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "SyntaxHighlighting",
-        "Name": "TokeniseLines incremental 100 lines",
-        "Ms": 1218,
-        "Label": "100 lines",
-        "Extra": ""
-      }
-    ]
-  },
-  {
-    "RunId": "73c9b390",
-    "Timestamp": "2026-05-26 11:38",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "InlayHints",
-        "Name": "GetHintsInRange 10k hints",
-        "Ms": 1,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "Diff",
-        "Name": "TextDiff.Diff 5000 lines",
-        "Ms": 17,
-        "Label": "100 changes",
-        "Extra": "hunks="
-      },
-      {
-        "Suite": "MultiCursor",
-        "Name": "InsertText 100 cursors",
-        "Ms": 6,
-        "Label": "10k line doc",
-        "Extra": ""
-      },
-      {
-        "Suite": "InlayHints",
-        "Name": "Insert shifts 10k hints",
-        "Ms": 2,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "MultiCursor",
-        "Name": "AddColumnSelection 10k lines",
-        "Ms": 3,
-        "Label": "10k lines",
-        "Extra": "cursors=1"
-      },
-      {
-        "Suite": "SearchReplaceAll",
-        "Name": "FindAll\u002BReplaceAll combined",
-        "Ms": 76,
-        "Label": "10MB",
-        "Extra": "found= replaced=0"
-      },
-      {
-        "Suite": "WordWrap",
-        "Name": "WrappedRowCount all lines",
-        "Ms": 304,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "WordWrap",
-        "Name": "GetWordWrapModel build",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "Folding",
-        "Name": "GetVisibleLines after FoldAll",
-        "Ms": 2,
-        "Label": "10MB C#",
-        "Extra": "regions=1"
-      },
-      {
-        "Suite": "Folding",
-        "Name": "UpdateRegions BraceStrategy",
-        "Ms": 1457,
-        "Label": "10MB C#",
-        "Extra": "regions=0"
-      },
-      {
-        "Suite": "DocumentCleanup",
-        "Name": "TrimTrailingWhitespace",
-        "Ms": 182201,
-        "Label": "10MB dirty",
-        "Extra": "trimmed=0"
-      }
-    ]
-  },
-  {
-    "RunId": "f7a76f94",
-    "Timestamp": "2026-05-26 11:41",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Folding",
-        "Name": "GetVisibleLines after FoldAll",
-        "Ms": 3,
-        "Label": "10MB C#",
-        "Extra": "regions=1"
-      },
-      {
-        "Suite": "Folding",
-        "Name": "UpdateRegions BraceStrategy",
-        "Ms": 1310,
-        "Label": "10MB C#",
-        "Extra": "regions=0"
-      }
-    ]
-  },
-  {
-    "RunId": "efb1aa99",
-    "Timestamp": "2026-05-26 11:41",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "MultiCursor",
-        "Name": "InsertText 100 cursors",
-        "Ms": 4,
-        "Label": "10k line doc",
-        "Extra": ""
-      },
-      {
-        "Suite": "MultiCursor",
-        "Name": "AddColumnSelection 10k lines",
-        "Ms": 2,
-        "Label": "10k lines",
-        "Extra": "cursors=1"
-      },
-      {
-        "Suite": "WordWrap",
-        "Name": "WrappedRowCount all lines",
-        "Ms": 199,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      },
-      {
-        "Suite": "WordWrap",
-        "Name": "GetWordWrapModel build",
-        "Ms": 0,
-        "Label": "10MB",
-        "Extra": "lines=128\u00A0206"
-      }
-    ]
-  },
-  {
-    "RunId": "0cfa0896",
-    "Timestamp": "2026-05-26 11:41",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Diff",
-        "Name": "TextDiff.Diff 5000 lines",
-        "Ms": 12,
-        "Label": "100 changes",
-        "Extra": "hunks="
-      },
-      {
-        "Suite": "InlayHints",
-        "Name": "GetHintsInRange 10k hints",
-        "Ms": 0,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "InlayHints",
-        "Name": "Insert shifts 10k hints",
-        "Ms": 2,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "SearchReplaceAll",
-        "Name": "FindAll\u002BReplaceAll combined",
-        "Ms": 78,
-        "Label": "10MB",
-        "Extra": "found= replaced=0"
-      },
-      {
-        "Suite": "DocumentCleanup",
-        "Name": "TrimTrailingWhitespace",
-        "Ms": 179432,
-        "Label": "10MB dirty",
-        "Extra": "trimmed=0"
-      }
-    ]
-  },
-  {
-    "RunId": "7c941159",
-    "Timestamp": "2026-05-26 11:43",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "Diff",
-        "Name": "TextDiff.Diff 5000 lines",
-        "Ms": 6,
-        "Label": "100 changes",
-        "Extra": "hunks="
-      }
-    ]
-  },
-  {
-    "RunId": "dca3bbd5",
-    "Timestamp": "2026-05-26 11:43",
-    "Machine": "EON-ACER",
-    "Results": [
-      {
-        "Suite": "InlayHints",
-        "Name": "GetHintsInRange 10k hints",
-        "Ms": 0,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "InlayHints",
-        "Name": "Insert shifts 10k hints",
-        "Ms": 2,
-        "Label": "10k hints",
-        "Extra": ""
-      },
-      {
-        "Suite": "DocumentCleanup",
-        "Name": "TrimTrailingWhitespace",
-        "Ms": 183244,
-        "Label": "10MB dirty",
-        "Extra": "trimmed=0"
-      }
-    ]
-  },
-  {
     "RunId": "df2b5a43",
     "Timestamp": "2026-05-26 11:45",
     "Machine": "EON-ACER",
@@ -7822,6 +5302,5851 @@
         "Ms": 1889,
         "Label": "10k lines",
         "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "ab7a05b5",
+    "Timestamp": "2026-05-26 13:14",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "CursorHistory",
+        "Name": "Push \u00D710000",
+        "Ms": 1,
+        "Label": "cap=200",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "CursorHistory",
+        "Name": "Back\u002BForward \u00D710000",
+        "Ms": 0,
+        "Label": "cap=200",
+        "Extra": ""
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "BeginSnippet\u002BCommit \u00D71000",
+        "Ms": 88,
+        "Label": "1k sessions",
+        "Extra": ""
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "SnippetEngine.Parse \u00D71000",
+        "Ms": 1,
+        "Label": "1k parses",
+        "Extra": ""
+      },
+      {
+        "Suite": "IndentGuide",
+        "Name": "GetIndentGuides full",
+        "Ms": 60,
+        "Label": "10MB C#",
+        "Extra": "guides="
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "NextBookmark \u00D710000",
+        "Ms": 297,
+        "Label": "5k bookmarks",
+        "Extra": ""
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "Toggle \u00D710000",
+        "Ms": 18,
+        "Label": "10k lines",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "BracketMatching",
+        "Name": "FindMatch \u00D71000",
+        "Ms": 3279,
+        "Label": "10MB C#",
+        "Extra": ""
+      },
+      {
+        "Suite": "StickyScroll",
+        "Name": "GetContext \u00D71000",
+        "Ms": 1,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "Outline",
+        "Name": "GetOutline BraceStrategy",
+        "Ms": 0,
+        "Label": "10MB C#",
+        "Extra": "nodes="
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "500 groups \u00D7 10 edits",
+        "Ms": 3781,
+        "Label": "500 groups",
+        "Extra": ""
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "Undo 500 grouped ops",
+        "Ms": 0,
+        "Label": "500 groups",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "d5012281",
+    "Timestamp": "2026-05-26 13:16",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "CursorHistory",
+        "Name": "Push \u00D710000",
+        "Ms": 1,
+        "Label": "cap=200",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "CursorHistory",
+        "Name": "Back\u002BForward \u00D710000",
+        "Ms": 0,
+        "Label": "cap=200",
+        "Extra": ""
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "BeginSnippet\u002BCommit \u00D71000",
+        "Ms": 104,
+        "Label": "1k sessions",
+        "Extra": ""
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "SnippetEngine.Parse \u00D71000",
+        "Ms": 2,
+        "Label": "1k parses",
+        "Extra": ""
+      },
+      {
+        "Suite": "IndentGuide",
+        "Name": "GetIndentGuides full",
+        "Ms": 51,
+        "Label": "10MB C#",
+        "Extra": "guides="
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "NextBookmark \u00D710000",
+        "Ms": 307,
+        "Label": "5k bookmarks",
+        "Extra": ""
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "Toggle \u00D710000",
+        "Ms": 16,
+        "Label": "10k lines",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "BracketMatching",
+        "Name": "FindMatch \u00D71000",
+        "Ms": 3271,
+        "Label": "10MB C#",
+        "Extra": ""
+      },
+      {
+        "Suite": "Outline",
+        "Name": "GetOutline BraceStrategy",
+        "Ms": 0,
+        "Label": "10MB C#",
+        "Extra": "nodes="
+      },
+      {
+        "Suite": "StickyScroll",
+        "Name": "GetContext \u00D71000",
+        "Ms": 1,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "500 groups \u00D7 10 edits",
+        "Ms": 3895,
+        "Label": "500 groups",
+        "Extra": ""
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "Undo 500 grouped ops",
+        "Ms": 0,
+        "Label": "500 groups",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "d3604a0d",
+    "Timestamp": "2026-05-26 13:16",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "BracketMatching",
+        "Name": "FindMatch \u00D71000",
+        "Ms": 1484,
+        "Label": "10MB C#",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "7f612b3a",
+    "Timestamp": "2026-05-26 13:29",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 4,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "CursorHistory",
+        "Name": "Push \u00D710000",
+        "Ms": 2,
+        "Label": "cap=200",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 2,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "CursorHistory",
+        "Name": "Back\u002BForward \u00D710000",
+        "Ms": 0,
+        "Label": "cap=200",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 27,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 7,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 93,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 155,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 25,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 145,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 24,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "IndentGuide",
+        "Name": "GetIndentGuides full",
+        "Ms": 219,
+        "Label": "10MB C#",
+        "Extra": "guides="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 119,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "NextBookmark \u00D710000",
+        "Ms": 725,
+        "Label": "5k bookmarks",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 84,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 337,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 24,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "Toggle \u00D710000",
+        "Ms": 40,
+        "Label": "10k lines",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 207,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 149,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 84,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 164,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 633,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 151,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "BeginSnippet\u002BCommit \u00D71000",
+        "Ms": 308,
+        "Label": "1k sessions",
+        "Extra": ""
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "SnippetEngine.Parse \u00D71000",
+        "Ms": 1,
+        "Label": "1k parses",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 537,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 173,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 92,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 324,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 296,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 30,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 96,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 89,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 307,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 5894,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 90,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 167,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 155,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "500 groups \u00D7 10 edits",
+        "Ms": 7426,
+        "Label": "500 groups",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 32,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 1087,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "BracketMatching",
+        "Name": "FindMatch \u00D71000",
+        "Ms": 8180,
+        "Label": "10MB C#",
+        "Extra": ""
+      },
+      {
+        "Suite": "StickyScroll",
+        "Name": "GetContext \u00D71000",
+        "Ms": 0,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 8307,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Outline",
+        "Name": "GetOutline BraceStrategy",
+        "Ms": 0,
+        "Label": "10MB C#",
+        "Extra": "nodes="
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "Undo 500 grouped ops",
+        "Ms": 0,
+        "Label": "500 groups",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2293,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1792,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 1951,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "56fb63c2",
+    "Timestamp": "2026-05-26 13:30",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 4,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "CursorHistory",
+        "Name": "Push \u00D710000",
+        "Ms": 1,
+        "Label": "cap=200",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 5,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "CursorHistory",
+        "Name": "Back\u002BForward \u00D710000",
+        "Ms": 0,
+        "Label": "cap=200",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 35,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 4,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 88,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 136,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 2,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 134,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 7,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "IndentGuide",
+        "Name": "GetIndentGuides full",
+        "Ms": 202,
+        "Label": "10MB C#",
+        "Extra": "guides="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 136,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "NextBookmark \u00D710000",
+        "Ms": 752,
+        "Label": "5k bookmarks",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 308,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Bookmark",
+        "Name": "Toggle \u00D710000",
+        "Ms": 23,
+        "Label": "10k lines",
+        "Extra": "count=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 13,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 251,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 132,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 269,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 632,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 117,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "BeginSnippet\u002BCommit \u00D71000",
+        "Ms": 54,
+        "Label": "1k sessions",
+        "Extra": ""
+      },
+      {
+        "Suite": "Snippet",
+        "Name": "SnippetEngine.Parse \u00D71000",
+        "Ms": 261,
+        "Label": "1k parses",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 514,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 205,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 92,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 92,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 278,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 84,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 336,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 153,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 164,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 5801,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 272,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 62,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 969,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 9,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 4,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 77,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "500 groups \u00D7 10 edits",
+        "Ms": 7237,
+        "Label": "500 groups",
+        "Extra": ""
+      },
+      {
+        "Suite": "BracketMatching",
+        "Name": "FindMatch \u00D71000",
+        "Ms": 8529,
+        "Label": "10MB C#",
+        "Extra": ""
+      },
+      {
+        "Suite": "StickyScroll",
+        "Name": "GetContext \u00D71000",
+        "Ms": 0,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "Outline",
+        "Name": "GetOutline BraceStrategy",
+        "Ms": 0,
+        "Label": "10MB C#",
+        "Extra": "nodes="
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 8757,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "UndoGrouping",
+        "Name": "Undo 500 grouped ops",
+        "Ms": 0,
+        "Label": "500 groups",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 1889,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1776,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 1960,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "2a1a3b4f",
+    "Timestamp": "2026-05-26 13:30",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 14,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 2,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 0,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 28,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 102,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 1,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 55,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 106,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 140,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 134,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 3,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 547,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 42,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 217,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 187,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 210,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 16,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 44,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 121,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 84,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 69,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 190,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 93,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 221,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 101,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 117,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 220,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3842,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 18,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 137,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 911,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 35,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4338,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 46,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2146,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1854,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 1957,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "3cf983a2",
+    "Timestamp": "2026-05-27 05:19",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 149,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 1,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 80,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 0,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 15,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 17,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 86,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 499,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 235,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 133,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 103,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 102,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 112,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 145,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 145,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 100,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 223,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 87,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 179,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 75,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 15,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 119,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3793,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 870,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 33,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4848,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2355,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1929,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 2001,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "5b39fa3c",
+    "Timestamp": "2026-05-27 05:19",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 63,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 13,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 121,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 41,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 98,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 80,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 128,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 13,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 39,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 28,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      }
+    ]
+  },
+  {
+    "RunId": "40d4cc15",
+    "Timestamp": "2026-05-27 05:19",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 3,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 18,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 4,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 2,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 52,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 34,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 0,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 16,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 65,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 344,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 188,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 159,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 84,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 4,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 76,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 189,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 151,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 103,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 220,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 28,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 78,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 3048,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3282,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 87,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 83,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 57,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 718,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 3,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 57,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2001,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1843,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 2058,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "e9cbb4bd",
+    "Timestamp": "2026-05-27 05:22",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 10,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 37,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 1,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 104,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 40,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 59,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 108,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 127,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 525,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 41,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 188,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 269,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 100,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 4,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 190,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 184,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 243,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 104,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 74,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 222,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 204,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 200,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 100,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 186,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 4027,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 26,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 61,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 131,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 82,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 829,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 33,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4610,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 28,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 3,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 1861,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1855,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 2012,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "84f3d419",
+    "Timestamp": "2026-05-27 06:23",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 2,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 15,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 127,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 122,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 98,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 38,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 8,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 127,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 88,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 602,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 258,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 62,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 130,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 44,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 137,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 50,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 87,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 84,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 181,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 159,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 140,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 256,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 67,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 81,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 180,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 25,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 110,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3822,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 62,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 789,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 31,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 5067,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 1989,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1761,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 2054,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "9924a4fc",
+    "Timestamp": "2026-05-27 06:55",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 1,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 57,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 1,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 1,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 8,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 98,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 122,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 4,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 252,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 477,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 110,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 31,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 16,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 52,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 136,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 54,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 86,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 79,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 109,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 149,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 85,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 166,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 119,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 193,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 101,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 91,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 196,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 137,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3758,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 104,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 833,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 71,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4647,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 28,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 1905,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 2439,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 3913,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "5c0e1c96",
+    "Timestamp": "2026-05-27 06:56",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 19,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 2,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 96,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 1,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 21,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 1,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 71,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 121,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 152,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 28,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 498,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 96,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 273,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 203,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 190,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 64,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 139,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 75,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 73,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 237,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 241,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 417,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 189,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 95,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 98,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 108,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3929,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 53,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 902,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 60,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4748,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2386,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 2197,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 3184,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "082aaa74",
+    "Timestamp": "2026-05-27 06:56",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 3,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 18,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 0,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 11,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 112,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 131,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 48,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 109,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 19,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 116,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 541,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 271,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 122,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 80,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 100,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 216,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 81,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 80,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 56,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 201,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 103,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 222,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 109,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 133,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 87,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 140,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 4125,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 50,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 817,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4574,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 29,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 5,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2133,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 2383,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 3169,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "70c84b8d",
+    "Timestamp": "2026-05-27 06:57",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 2,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 99,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 9,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 5,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 2,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 1,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 66,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 121,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 130,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 500,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 244,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 134,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 102,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 45,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 20,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 120,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 38,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 71,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 269,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 67,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 92,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 195,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 94,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 199,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 98,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 76,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 166,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 14,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 3946,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 64,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 111,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 762,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 13,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 59,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4982,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 5,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2095,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 2120,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 3084,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "eb156a90",
+    "Timestamp": "2026-05-27 06:57",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 1,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 3,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 10,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 58,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 1,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 113,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 97,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 156,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 83,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 2,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 246,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 63,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 580,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 139,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 41,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 136,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 42,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 70,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 79,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 68,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 250,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 287,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 132,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 403,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 102,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 191,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 90,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 22,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 44,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 139,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 69,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 913,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 4013,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 4829,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 54,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 3,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2117,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 2096,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 3550,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "6c1f208e",
+    "Timestamp": "2026-05-27 07:17",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 14,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 47,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 3,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 11,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 124,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 118,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 6,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 10,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 2,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 35,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 118,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 479,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 249,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 111,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 97,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 49,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 21,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 73,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 177,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 97,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 60,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 90,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 79,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 167,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 125,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 324,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 93,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 97,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 194,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 35,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 114,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 65,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 4028,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 734,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 55,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 8,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 1,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 60,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 5135,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 6,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2216,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1773,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 1987,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "ea0fcce0",
+    "Timestamp": "2026-05-27 10:04",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 14,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 46,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 23,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 135,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 16,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 133,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 567,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 164,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 1,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 120,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 0,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 87,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 296,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 152,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 12,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 218,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 17,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 88,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 36,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 77,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 349,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 92,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 86,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 95,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 453,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 178,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 87,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 29,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 69,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 70,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 134,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 107,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 4162,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 862,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 6,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 74,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 5140,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 5,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 1777,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1846,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 2003,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "feafbfec",
+    "Timestamp": "2026-05-29 12:27",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Diff",
+        "Name": "TextDiff.Diff 5000 lines",
+        "Ms": 20,
+        "Label": "100 changes",
+        "Extra": "hunks="
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "OffsetToPosition \u00D71000",
+        "Ms": 52,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "InsertText 100 cursors",
+        "Ms": 1,
+        "Label": "10k line doc",
+        "Extra": ""
+      },
+      {
+        "Suite": "MultiCursor",
+        "Name": "AddColumnSelection 10k lines",
+        "Ms": 3,
+        "Label": "10k lines",
+        "Extra": "cursors=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll plain",
+        "Ms": 30,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste 1000 lines loop",
+        "Ms": 147,
+        "Label": "1k inserts",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindAll regex",
+        "Ms": 89,
+        "Label": "10MB",
+        "Extra": "count="
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "WrappedRowCount all lines",
+        "Ms": 569,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "GetHintsInRange 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste then Undo",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "InlayHints",
+        "Name": "Insert shifts 10k hints",
+        "Ms": 0,
+        "Label": "10k hints",
+        "Extra": ""
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 500 replaces",
+        "Ms": 1,
+        "Label": "500 ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "Regression",
+        "Name": "1000 random edits",
+        "Ms": 165,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "WordWrap",
+        "Name": "GetWordWrapModel build",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Undo",
+        "Name": "Undo 1000 char inserts",
+        "Ms": 0,
+        "Label": "1k ops",
+        "Extra": ""
+      },
+      {
+        "Suite": "SearchReplaceAll",
+        "Name": "FindAll\u002BReplaceAll combined",
+        "Ms": 107,
+        "Label": "10MB",
+        "Extra": "found= replaced=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll plain",
+        "Ms": 74,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "Paste single Insert",
+        "Ms": 309,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Paste",
+        "Name": "GetText after paste",
+        "Ms": 5,
+        "Label": "10MB",
+        "Extra": "len="
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll regex capture",
+        "Ms": 188,
+        "Label": "10MB",
+        "Extra": "replaced=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 87,
+        "Label": "10MB edited",
+        "Extra": "lines=128\u00A0676"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Search literal",
+        "Ms": 11,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 43,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 77,
+        "Label": "100MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 1,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine sequential",
+        "Ms": 84,
+        "Label": "10MB",
+        "Extra": "lines=128\u00A0206"
+      },
+      {
+        "Suite": "Regression",
+        "Name": "GetLine sequential",
+        "Ms": 88,
+        "Label": "10MB edited (v2)",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "FindFirst early-exit",
+        "Ms": 330,
+        "Label": "100MB",
+        "Extra": "offset="
+      },
+      {
+        "Suite": "Regression",
+        "Name": "Load",
+        "Ms": 99,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search case-insensitive",
+        "Ms": 94,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 491,
+        "Label": "100MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "1000 random edits",
+        "Ms": 113,
+        "Label": "10MB",
+        "Extra": "pieces=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 72,
+        "Label": "10MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 197,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search literal",
+        "Ms": 15,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetLine random \u00D71000",
+        "Ms": 3,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search single-char",
+        "Ms": 62,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n) grow",
+        "Ms": 115,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search regex \\bint\\b",
+        "Ms": 70,
+        "Label": "10MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "DocumentCleanup",
+        "Name": "TrimTrailingWhitespace",
+        "Ms": 4247,
+        "Label": "500KB dirty",
+        "Extra": "trimmed=0"
+      },
+      {
+        "Suite": "Search",
+        "Name": "ReplaceAll O(n)",
+        "Ms": 51,
+        "Label": "10MB",
+        "Extra": "replacements=0"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 921,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "GetText full",
+        "Ms": 7,
+        "Label": "10MB",
+        "Extra": ""
+      },
+      {
+        "Suite": "Buffer",
+        "Name": "Delete 5MB block",
+        "Ms": 0,
+        "Label": "10MB",
+        "Extra": "remaining=9\u00A0999\u00A0990"
+      },
+      {
+        "Suite": "Search",
+        "Name": "Search absent pattern",
+        "Ms": 78,
+        "Label": "100MB",
+        "Extra": "hits=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "UpdateRegions BraceStrategy",
+        "Ms": 5389,
+        "Label": "10MB C#",
+        "Extra": "regions=0"
+      },
+      {
+        "Suite": "Folding",
+        "Name": "GetVisibleLines after FoldAll",
+        "Ms": 2,
+        "Label": "10MB C#",
+        "Extra": "regions=1"
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines incremental 100 lines",
+        "Ms": 2175,
+        "Label": "100 lines",
+        "Extra": ""
+      },
+      {
+        "Suite": "SyntaxHighlighting",
+        "Name": "TokeniseLines full",
+        "Ms": 1967,
+        "Label": "10MB C#",
+        "Extra": "lines=149\u00A0257"
+      },
+      {
+        "Suite": "ChangeTracking",
+        "Name": "GetStatus all 10k lines",
+        "Ms": 2109,
+        "Label": "10k lines",
+        "Extra": ""
+      }
+    ]
+  },
+  {
+    "RunId": "5e9dbedf",
+    "Timestamp": "2026-05-29 13:06",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 657,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      }
+    ]
+  },
+  {
+    "RunId": "ea8e192c",
+    "Timestamp": "2026-05-29 13:09",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "Load",
+        "Ms": 126531,
+        "Label": "100MB",
+        "Extra": "lines=1"
+      }
+    ]
+  },
+  {
+    "RunId": "698557a4",
+    "Timestamp": "2026-05-29 13:10",
+    "Machine": "EON-ACER",
+    "Results": [
+      {
+        "Suite": "Buffer",
+        "Name": "10k keystrokes (coalesce)",
+        "Ms": 2,
+        "Label": "end-of-doc",
+        "Extra": "pieces=1"
       }
     ]
   }

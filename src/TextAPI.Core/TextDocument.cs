@@ -75,6 +75,7 @@ public sealed class TextDocument
     /// <summary>Load text content directly.</summary>
     public void Load(string content, string? filePath = null)
     {
+        ArgumentNullException.ThrowIfNull(content);
         _buffer.Load(content);
         _decorations.Clear();
         _history.Clear();
@@ -203,6 +204,7 @@ public sealed class TextDocument
     /// <summary>Insert text at a zero-based character offset.</summary>
     public void Insert(int offset, string text)
     {
+        ArgumentNullException.ThrowIfNull(text);
         if (_readOnlyModel != null)
         {
             var (blocked, rs, re) = _readOnlyModel.WouldBlockInsertInfo(offset);
@@ -275,6 +277,7 @@ public sealed class TextDocument
     /// <summary>Replace characters in [offset, offset+deleteLength) with insertText.</summary>
     public void Replace(int offset, int deleteLength, string insertText)
     {
+        ArgumentNullException.ThrowIfNull(insertText);
         // Optimise: zero-delete replace is just an insert (participates in undo grouping).
         if (deleteLength == 0) { Insert(offset, insertText); return; }
         // Optimise: zero-insert replace is just a delete (participates in undo grouping).
@@ -702,7 +705,7 @@ public sealed class TextDocument
     /// Previous approach: N × ReplaceCommand inside CompositeCommand = O(N log N).
     ///   128k replacements: ~17 seconds.
     /// This approach: O(n) regardless of match count.
-    ///   128k replacements: target < 500ms.
+    ///   128k replacements: target &lt; 500ms.
     /// </summary>
     public int ReplaceAll(string pattern, string replacement, Search.SearchOptions? opts = null)
     {

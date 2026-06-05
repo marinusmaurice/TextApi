@@ -59,14 +59,14 @@ internal sealed class RbTreeNode
     };
 
     /// <summary>Recompute subtree aggregates from children (must be called bottom-up after any structural change).</summary>
-    internal void UpdateMetadata(RbTreeNode nil)
+    internal void UpdateMetadata()
     {
-        SubtreeCharCount     = (Left.IsNil  ? 0 : Left!.SubtreeCharCount)
+        SubtreeCharCount     = (Left!.IsNil  ? 0 : Left.SubtreeCharCount)
                              + Length
-                             + (Right.IsNil ? 0 : Right!.SubtreeCharCount);
+                             + (Right!.IsNil ? 0 : Right.SubtreeCharCount);
 
-        SubtreeLineFeedCount = (Left.IsNil  ? 0 : Left!.SubtreeLineFeedCount)
+        SubtreeLineFeedCount = (Left!.IsNil  ? 0 : Left.SubtreeLineFeedCount)
                              + LineFeedCount
-                             + (Right.IsNil ? 0 : Right!.SubtreeLineFeedCount);
+                             + (Right!.IsNil ? 0 : Right.SubtreeLineFeedCount);
     }
 }

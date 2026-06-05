@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Script DSL &amp; REPL Examples — TextAPI</title>
+<link rel="stylesheet" href="_style.css"></head>
+<body>
+<script src="_nav.js"></script>
+<main class="content">
+<h1>Script DSL &amp; REPL — Examples</h1>
+<p class="lead">Every script command with all flag combinations, ScriptResult inspection, and every CSharpScriptHost / ScriptGlobals feature.</p>
+
+<!-- ══════════════════════════════════════ SCRIPT DSL -->
+<h2>Script DSL</h2>
+
+<h3>Runner setup</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Core.Scripting</span>;
+
+<span class="kw">var</span> doc    = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+doc.<span class="fn">Load</span>(<span class="st">"Hello World\nLine 2\nLine 3"</span>);
+
+<span class="kw">var</span> runner = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(doc);</code></pre>
+
+<!-- MOVE -->
+<h3>MOVE &lt;offset&gt;</h3>
+<pre><code><span class="kw">var</span> r = runner.<span class="fn">Run</span>(<span class="st">"MOVE 6"</span>);
+Console.<span class="fn">WriteLine</span>(runner.<span class="pr">CursorOffset</span>); <span class="cm">// 6
+Console.WriteLine(r.CursorOffset);        // 6</span></code></pre>
+
+<!-- GOTO -->
+<h3>GOTO &lt;line&gt; [&lt;col&gt;]</h3>
+<pre><code><span class="cm">// GOTO uses 1-based line numbers, 0-based column</span>
+runner.<span class="fn">Run</span>(<span class="st">"GOTO 2"</span>);     <span class="cm">// line 2 (1-based), col 0</span>
+Console.<span class="fn">WriteLine</span>(runner.<span class="pr">CursorOffset</span>); <span class="cm">// 12  (start of "Line 2")
+
+runner.Run("GOTO 2 5");   // line 2, col 5
+Console.WriteLine(runner.CursorOffset); // 17</span></code></pre>
+
+<!-- INSERT -->
+<h3>INSERT "&lt;text&gt;"</h3>
+<pre><code>runner.<span class="fn">Run</span>(<span class="st">"""
+    GOTO 1 0
+    INSERT "// Header\n"
+"""</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetLine</span>(<span class="nm">0</span>)); <span class="cm">// "// Header"</span></code></pre>
+
+<pre><code><span class="cm">// Insert with escape sequences</span>
+runner.<span class="fn">Run</span>(<span class="st">"""MOVE 0
+INSERT "line1\nline2\n"
+"""</span>);</code></pre>
+
+<!-- INSERT_AT -->
+<h3>INSERT_AT &lt;offset&gt; "&lt;text&gt;"</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"World"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"INSERT_AT 0 \"Hello, \""</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "Hello, World"</span></code></pre>
+
+<!-- DELETE -->
+<h3>DELETE &lt;n&gt;</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"""
+    MOVE 5
+    DELETE 6
+"""</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "Hello"</span></code></pre>
+
+<!-- DELETE_AT -->
+<h3>DELETE_AT &lt;offset&gt; &lt;n&gt;</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello, World"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"DELETE_AT 5 2"</span>); <span class="cm">// delete ", " at offset 5</span>
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "HelloWorld"</span></code></pre>
+
+<!-- DELETE_LINE -->
+<h3>DELETE_LINE [&lt;line&gt;]</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"a\nb\nc\nd"</span>);
+
+<span class="cm">// Delete line 2 (1-based)</span>
+runner.<span class="fn">Run</span>(<span class="st">"DELETE_LINE 2"</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "a\nc\nd"
+
+// Delete cursor's current line (default when no arg)
+runner.Run("""
+    GOTO 2
+    DELETE_LINE
+""");
+Console.WriteLine(doc.GetText()); // "a\nd"</span></code></pre>
+
+<!-- SELECT -->
+<h3>SELECT &lt;start&gt; &lt;end&gt;</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"SELECT 6 11"</span>);
+Console.<span class="fn">WriteLine</span>(runner.<span class="pr">CursorOffset</span>); <span class="cm">// 11  (active end)
+// Use in combination with INSERT to replace selection:
+runner.Run("""
+    SELECT 6 11
+    INSERT "TextAPI"
+""");
+Console.WriteLine(doc.GetText()); // "Hello TextAPI"</span></code></pre>
+
+<!-- REPLACE_ALL -->
+<h3>REPLACE_ALL "&lt;pat&gt;" "&lt;rep&gt;" [flags]</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"foo Foo FOO"</span>);
+
+<span class="cm">// Case-sensitive (default)</span>
+runner.<span class="fn">Run</span>(<span class="st">"REPLACE_ALL \"foo\" \"bar\""</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "bar Foo FOO"
+
+// Case-insensitive /i
+doc.Load("foo Foo FOO");
+runner.Run("REPLACE_ALL \"foo\" \"bar\" /i");
+Console.WriteLine(doc.GetText()); // "bar bar bar"
+
+// Whole word /w
+doc.Load("cat concatenate cats");
+runner.Run("REPLACE_ALL \"cat\" \"dog\" /w");
+Console.WriteLine(doc.GetText()); // "dog concatenate cats"
+
+// Regex /r
+doc.Load("2024-01-15");
+runner.Run("REPLACE_ALL \"(\\d{4})-(\\d{2})-(\\d{2})\" \"$3/$2/$1\" /r");
+Console.WriteLine(doc.GetText()); // "15/01/2024"
+
+// Combined /i /w
+runner.Run("REPLACE_ALL \"hello\" \"world\" /i /w");</span></code></pre>
+
+<pre><code><span class="cm">// LastReplaceCount after REPLACE_ALL</span>
+<span class="kw">var</span> r = runner.<span class="fn">Run</span>(<span class="st">"REPLACE_ALL \"foo\" \"bar\""</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">LastReplaceCount</span>); <span class="cm">// number of replacements</span></code></pre>
+
+<!-- FIND -->
+<h3>FIND "&lt;pat&gt;" [flags]</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"one two one three"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"MOVE 0"</span>);
+
+runner.<span class="fn">Run</span>(<span class="st">"FIND \"one\""</span>);
+Console.<span class="fn">WriteLine</span>(runner.<span class="pr">CursorOffset</span>); <span class="cm">// 0  (first match)
+
+runner.Run("FIND \"one\"");
+Console.WriteLine(runner.CursorOffset); // 8  (second match)
+
+// Case-insensitive
+doc.Load("Hello HELLO hello");
+runner.Run("MOVE 0");
+runner.Run("FIND \"hello\" /i");
+Console.WriteLine(runner.CursorOffset); // 0
+
+// Regex
+doc.Load("abc 123 def 456");
+runner.Run("MOVE 0");
+runner.Run("FIND \"\\d+\" /r");
+Console.WriteLine(runner.CursorOffset); // 4</span></code></pre>
+
+<!-- FIND_PREV -->
+<h3>FIND_PREV "&lt;pat&gt;" [flags]</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"one two one three"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"MOVE 17"</span>); <span class="cm">// end</span>
+
+runner.<span class="fn">Run</span>(<span class="st">"FIND_PREV \"one\""</span>);
+Console.<span class="fn">WriteLine</span>(runner.<span class="pr">CursorOffset</span>); <span class="cm">// 8
+
+runner.Run("FIND_PREV \"one\"");
+Console.WriteLine(runner.CursorOffset); // 0</span></code></pre>
+
+<!-- FIND_ALL -->
+<h3>FIND_ALL "&lt;pat&gt;" [flags]</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"TODO fix\nTODO test\nDONE ship"</span>);
+<span class="kw">var</span> r = runner.<span class="fn">Run</span>(<span class="st">"FIND_ALL \"TODO\""</span>);
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">LastFindAll</span>.<span class="pr">Count</span>); <span class="cm">// 2</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> m <span class="kw">in</span> r.<span class="pr">LastFindAll</span>)
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"{m.Offset}+{m.Length}"</span>);
+<span class="cm">// 0+4
+// 9+4
+
+// Regex FIND_ALL
+r = runner.Run("FIND_ALL \"\\bT\\w+\" /r /i");
+Console.WriteLine(r.LastFindAll.Count); // "TODO" twice + "test"</span></code></pre>
+
+<!-- UNDO / REDO -->
+<h3>UNDO and REDO</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"original"</span>);
+runner.<span class="fn">Run</span>(<span class="st">"INSERT_AT 0 \"NEW \""</span>);
+Console.<span class="fn">WriteLine</span>(doc.<span class="fn">GetText</span>()); <span class="cm">// "NEW original"
+
+runner.Run("UNDO");
+Console.WriteLine(doc.GetText()); // "original"
+
+runner.Run("REDO");
+Console.WriteLine(doc.GetText()); // "NEW original"</span></code></pre>
+
+<!-- NOP -->
+<h3>NOP</h3>
+<pre><code><span class="cm">// Useful as a conditional placeholder</span>
+runner.<span class="fn">Run</span>(<span class="st">"""
+    FIND "marker"
+    NOP
+"""</span>);
+<span class="cm">// NOP always succeeds, does nothing</span></code></pre>
+
+<!-- SCRIPT RESULT -->
+<h2>ScriptResult — Every Property</h2>
+
+<h3>Success and ErrorMessage</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"test"</span>);
+<span class="kw">var</span> r = runner.<span class="fn">Run</span>(<span class="st">"""
+    MOVE 0
+    DELETE 4
+    MOVE 9999
+"""</span>);
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);       <span class="cm">// false</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>);  <span class="cm">// "offset out of range"</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorLine</span>);    <span class="cm">// 3  (script line number, 1-based)</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">StepsExecuted</span>); <span class="cm">// 3  (all 3 lines ran, including the failing one)</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">CursorOffset</span>); <span class="cm">// offset at point of failure</span></code></pre>
+
+<h3>StepsExecuted and Steps</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World"</span>);
+<span class="kw">var</span> r = runner.<span class="fn">Run</span>(<span class="st">"""
+    MOVE 0
+    REPLACE_ALL "Hello" "Hi"
+    FIND "World"
+"""</span>);
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">StepsExecuted</span>); <span class="cm">// 3</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> step <span class="kw">in</span> r.<span class="pr">Steps</span>)
+{
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"L{step.LineNumber} {step.Verb}"</span>);
+    Console.<span class="fn">WriteLine</span>(<span class="st">$"  ok={step.Success} caret={step.CursorAfter}"</span>);
+    <span class="kw">if</span> (step.<span class="pr">ErrorMessage</span> != <span class="kw">null</span>)
+        Console.<span class="fn">WriteLine</span>(<span class="st">$"  error: {step.ErrorMessage}"</span>);
+}</code></pre>
+
+<h3>LastReplaceCount and LastFindAll</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"a b a c a"</span>);
+<span class="kw">var</span> r = runner.<span class="fn">Run</span>(<span class="st">"""
+    REPLACE_ALL "a" "X"
+    FIND_ALL "X"
+"""</span>);
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">LastReplaceCount</span>); <span class="cm">// 3</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">LastFindAll</span>.<span class="pr">Count</span>); <span class="cm">// 3</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">LastFindAll</span>[<span class="nm">0</span>].<span class="pr">Offset</span>); <span class="cm">// 0</span></code></pre>
+
+<!-- PRE-PARSED -->
+<h3>Pre-parsed execution — parse once, run many</h3>
+<pre><code><span class="kw">var</span> script = <span class="st">"""
+    REPLACE_ALL "TODO" "DONE"
+    TRIM_TRAILING_WHITESPACE
+"""</span>;
+
+<span class="kw">var</span> commands = <span class="ty">ScriptParser</span>.<span class="fn">Parse</span>(script); <span class="cm">// IReadOnlyList&lt;ScriptCommand&gt;</span>
+
+<span class="kw">foreach</span> (<span class="kw">var</span> path <span class="kw">in</span> files)
+{
+    <span class="kw">var</span> d = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+    <span class="kw">await</span> d.<span class="fn">LoadFileAsync</span>(path);
+    <span class="kw">var</span> r2 = <span class="kw">new</span> <span class="ty">ScriptRunner</span>(d).<span class="fn">Execute</span>(commands); <span class="cm">// no re-parse</span>
+    <span class="kw">if</span> (r2.<span class="pr">Success</span>) <span class="kw">await</span> d.<span class="fn">SaveFileAsync</span>();
+}</code></pre>
+
+<!-- ══════════════════════════════════════ REPL -->
+<h2>C# REPL (CSharpScriptHost)</h2>
+
+<h3>Setup</h3>
+<pre><code><span class="kw">using</span> <span class="ty">TextAPI.Repl</span>;
+<span class="kw">using</span> <span class="ty">TextAPI.Core.Cursor</span>;
+
+<span class="kw">var</span> doc  = <span class="kw">new</span> <span class="ty">TextDocument</span>();
+<span class="kw">var</span> mc   = <span class="kw">new</span> <span class="ty">MultiCursor</span>(doc);
+<span class="kw">var</span> host = <span class="kw">new</span> <span class="ty">CSharpScriptHost</span>(doc, mc);</code></pre>
+
+<h3>ExecuteAsync — basic</h3>
+<pre><code>doc.<span class="fn">Load</span>(<span class="st">"Hello World\nLine 2"</span>);
+<span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"Print(doc.LineCount);"</span>);
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);  <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Output</span>);   <span class="cm">// "2"</span></code></pre>
+
+<h3>ScriptExecutionResult — all properties</h3>
+<pre><code><span class="cm">// Success run</span>
+<span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"1 + 1"</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);       <span class="cm">// true</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ReturnValue</span>);   <span class="cm">// 2</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Output</span>);        <span class="cm">// ""  (no Print)</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>);  <span class="cm">// null</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Exception</span>);     <span class="cm">// null
+
+// Failed run
+var r2 = await host.ExecuteAsync("throw new Exception(\"oops\");");
+Console.WriteLine(r2.Success);       // false
+Console.WriteLine(r2.ErrorMessage);  // "oops"
+Console.WriteLine(r2.Exception?.GetType().Name); // "Exception"</span></code></pre>
+
+<h3>Print / print globals</h3>
+<pre><code><span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    Print("line 1");
+    print("line 2");
+    Print();         // blank line
+    Print(42);       // any object
+    Print(null);     // prints blank line
+"""</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Output</span>);
+<span class="cm">// line 1
+// line 2
+//
+// 42
+//</span></code></pre>
+
+<h3>doc global — full document access</h3>
+<pre><code><span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    doc.Load("Hello\nWorld\nFoo");
+    Print(doc.LineCount);   // 3
+    Print(doc.Length);      // 15
+    Print(doc.GetLine(0));  // "Hello"
+    doc.Insert(0, "// ");
+    Print(doc.GetLine(0));  // "// Hello"
+    doc.Undo();
+    Print(doc.GetLine(0));  // "Hello"
+"""</span>);</code></pre>
+
+<h3>mc global — multi-cursor</h3>
+<pre><code><span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    doc.Load("line1\nline2\nline3");
+    mc.AddColumnSelection(0, 2, 0);  // cursor on each line at col 0
+    mc.InsertText("// ");             // comment all 3 lines
+    Print(doc.GetLine(0));           // "// line1"
+"""</span>);</code></pre>
+
+<h3>NewPipeline() global</h3>
+<pre><code><span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    doc.Load("TODO fix\nTODO test");
+    var result = NewPipeline()
+        .Add(new ReplaceAllOperation { Find = "TODO", Replace = "DONE" })
+        .Add(new TrimTrailingWhitespaceOperation())
+        .Execute();
+    Print(result.Success);
+    Print(result.AuditLog.Summary);
+"""</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Output</span>);
+<span class="cm">// True
+// 2 op(s) succeeded; +8/-8 chars</span></code></pre>
+
+<h3>RunJson() global</h3>
+<pre><code><span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    doc.Load("foo bar foo");
+    var pr = RunJson(@"{
+      ""operations"": [
+        { ""type"": ""REPLACE_ALL"", ""find"": ""foo"", ""replace"": ""qux"" }
+      ]
+    }");
+    Print(pr.Success);
+    Print(doc.GetText());
+"""</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Output</span>);
+<span class="cm">// True
+// qux bar qux</span></code></pre>
+
+<h3>ParseOps() global</h3>
+<pre><code><span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    var ops = ParseOps(@"{
+      ""operations"": [
+        { ""type"": ""APPEND"", ""text"": ""\n// EOF"" }
+      ]
+    }");
+    Print(ops.Count);                // 1
+    Print(ops[0].GetType().Name);    // "AppendOperation"
+    // Inspect without executing — useful for preview/validation
+"""</span>);</code></pre>
+
+<h3>Persistent state across submissions</h3>
+<pre><code><span class="cm">// Submission 1 — declare helper</span>
+<span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    int CountTodos() => doc.CountMatches("TODO");
+"""</span>);
+
+<span class="cm">// Submission 2 — use helper (still in scope)</span>
+<span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    Print(CountTodos());
+"""</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Output</span>); <span class="cm">// e.g. "3"
+
+// Submission 3 — add another variable
+await host.ExecuteAsync("""
+    var prefix = "RESOLVED: ";
+    doc.ReplaceAll("TODO", prefix + "TODO");
+""");
+
+// Submission 4 — prefix still in scope
+await host.ExecuteAsync("Print(prefix);"); // "RESOLVED: "</span></code></pre>
+
+<h3>HasState</h3>
+<pre><code>Console.<span class="fn">WriteLine</span>(host.<span class="pr">HasState</span>); <span class="cm">// false (fresh host)</span>
+<span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"var x = 1;"</span>);
+Console.<span class="fn">WriteLine</span>(host.<span class="pr">HasState</span>); <span class="cm">// true</span></code></pre>
+
+<h3>Reset() — clear all session state</h3>
+<pre><code><span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"var secretVar = 42;"</span>);
+Console.<span class="fn">WriteLine</span>(host.<span class="pr">HasState</span>); <span class="cm">// true
+
+host.Reset();
+Console.WriteLine(host.HasState);  // false
+
+// secretVar is gone
+var r = await host.ExecuteAsync("Print(secretVar);");
+Console.WriteLine(r.Success);       // false — CS0103 name not found</span></code></pre>
+
+<h3>Cancellation</h3>
+<pre><code><span class="kw">using var</span> cts = <span class="kw">new</span> <span class="ty">CancellationTokenSource</span>(<span class="ty">TimeSpan</span>.<span class="fn">FromSeconds</span>(<span class="nm">3</span>));
+
+<span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    while (true) { }  // infinite loop
+"""</span>, cts.<span class="pr">Token</span>);
+
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">Success</span>);      <span class="cm">// false</span>
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ErrorMessage</span>); <span class="cm">// "The operation was canceled."</span></code></pre>
+
+<h3>Pre-imported namespaces (no using needed)</h3>
+<pre><code><span class="cm">// All of these work without explicit using directives:</span>
+<span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    // System
+    var list = new List&lt;int&gt; { 1, 2, 3 };
+    var query = list.Where(x => x > 1).ToList();   // System.Linq
+
+    // TextAPI
+    var d = new TextDocument();
+    var opts = new SearchOptions { UseRegex = true };
+    var m = new MultiCursor(d);
+
+    // Operations
+    var op = new ReplaceAllOperation { Find = "a", Replace = "b" };
+    var pl = new DocumentPipeline(d);
+
+    Print(query.Count);   // 2
+"""</span>);</code></pre>
+
+<h3>Multi-line expression return value</h3>
+<pre><code><span class="cm">// The last expression in a submission is the ReturnValue</span>
+<span class="kw">var</span> r = <span class="kw">await</span> host.<span class="fn">ExecuteAsync</span>(<span class="st">"""
+    var lines = doc.GetText().Split('\n');
+    lines.Length
+"""</span>);
+Console.<span class="fn">WriteLine</span>(r.<span class="pr">ReturnValue</span>); <span class="cm">// number of lines (int)</span></code></pre>
+</main></body></html>
