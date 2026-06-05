@@ -5,6 +5,8 @@ Everything a code editor needs — from the piece-table buffer to syntax highlig
 multi-cursor editing, code folding, snippet expansion, and a live C# REPL — packaged
 as a clean, testable library with no UI dependencies.
 
+Check out the docs folder for a more comprehensive documentation
+
 ---
 
 ## Table of Contents
